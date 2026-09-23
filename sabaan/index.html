@@ -1,0 +1,1535 @@
+<!doctype html>
+<html lang="ru" data-theme="b">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Sabaan</title>
+<meta name="description" content="Sabaan — среднесрочная аренда жилья на Пхукете через тайских агентов с переводом чата ИИ. Демонстрация для встречи.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --radius-lg:20px; --radius-md:14px; --radius-sm:10px;
+    --ok:#2E6B4F; --ok-soft:#E1EFE6;
+    --warn:#92651C; --warn-soft:#F7ECD8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --ok:#8AD3A8; --ok-soft:#1E3327; --warn:#E3B564; --warn-soft:#39300F; }
+  }
+
+  /* ===== «Тропический модернизм» ===== */
+  :root{
+    --bg:#F4F7F1; --bg-alt:#E7F0E1; --card:#FFFFFF; --card-alt:#FAFCF8;
+    --ink:#10241C; --soft:#4C5F55; --faint:#86988C;
+    --border:#D6E4D0; --border-soft:#EAF3E6;
+    --accent:#E8A23D; --accent-hover:#C6851F; --accent-soft:#FBEBCF; --accent-contrast:#10241C;
+    --teal:#0E4B3C; --teal-soft:#D9EBE3; --teal-contrast:#FFFFFF;
+    --shadow:0 12px 32px rgba(16,36,28,.16);
+    --font-display:'Space Grotesk',-apple-system,sans-serif; --font-display-th:'Noto Sans Thai',sans-serif;
+    --font-body:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif; --font-body-th:'Noto Sans Thai',sans-serif;
+    --scrim-strong:rgba(8,20,14,.85); --scrim-mid:rgba(8,20,14,.3); --hero-ink:#F4F7F1; --hero-slogan:#FBEBCF;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0D1712; --bg-alt:#132019; --card:#132019; --card-alt:#182821;
+      --ink:#EAF3E9; --soft:#B9CBC0; --faint:#7E9488;
+      --border:#20362B; --border-soft:#192B22;
+      --accent:#F4BD68; --accent-hover:#F8CE8B; --accent-soft:#2B2413; --accent-contrast:#10241C;
+      --teal:#3E9C7E; --teal-soft:#152A22; --teal-contrast:#08150F;
+      --shadow:0 12px 32px rgba(0,0,0,.55);
+    }
+  }
+  h1, h2, h3{letter-spacing:-.02em}
+  /* Тайский: тональные знаки и диакритики стоят стеком над буквой — отрицательный трекинг их сталкивает. */
+  html[lang="th"] h1, html[lang="th"] h2, html[lang="th"] h3{letter-spacing:normal}
+  .display{font-weight:700}
+  html[lang="th"] .display{font-weight:800}
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;max-width:100%;overflow-x:hidden}
+  body{
+    background:var(--bg); color:var(--ink); font-family:var(--font-body);
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  html[lang="th"] body, [lang="th"]{font-family:var(--font-body-th), var(--font-body)}
+  html[lang="th"] .display, [lang="th"].display{font-family:var(--font-display-th), var(--font-display)}
+  .display{font-family:var(--font-display)}
+  a{color:var(--accent)}
+  .wrap{max-width:1040px;margin:0 auto;padding-inline:16px}
+  section{padding-block:44px}
+  @media (min-width:768px){ section{padding-block:72px} }
+  h1,h2,h3{margin:0; color:var(--ink)}
+  h2{font-family:var(--font-display); font-weight:700; font-size:26px; letter-spacing:-.01em}
+  @media (min-width:768px){ h2{font-size:34px} }
+  p{margin:0}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--accent);
+    background:var(--accent-soft); padding:6px 12px; border-radius:20px;
+  }
+  .lead{color:var(--soft); font-size:16px; max-width:62ch}
+  @media (min-width:768px){ .lead{font-size:18px} }
+
+  /* focus */
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+    outline:2.5px solid var(--accent); outline-offset:2px; border-radius:6px;
+  }
+
+  /* top bar */
+  .topbar{
+    position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .topbar-inner{display:flex; align-items:center; justify-content:space-between; gap:10px; padding-block:10px; flex-wrap:wrap}
+  .brand{display:flex; align-items:baseline; gap:8px; font-family:var(--font-display); font-weight:700; font-size:19px}
+  .brand small{font-family:var(--font-body); font-weight:600; font-size:11px; color:var(--faint); letter-spacing:.03em}
+  @media (max-width:479px){ .brand small{display:none} }
+  .switchers{display:flex; gap:8px; align-items:center; flex-wrap:wrap}
+  .langsw{display:flex; gap:4px; background:var(--card-alt); border:1px solid var(--border); border-radius:999px; padding:3px}
+  .langsw button{
+    font:inherit; font-size:13px; font-weight:700; color:var(--soft); background:none; border:0;
+    padding:7px 13px; border-radius:999px; cursor:pointer; min-height:32px;
+  }
+  .langsw button[aria-pressed="true"]{background:var(--accent); color:var(--accent-contrast)}
+
+  .draft-strip{
+    display:none; font-size:12px; color:var(--warn); background:var(--warn-soft);
+    border-top:1px solid var(--border-soft); text-align:center; padding:6px 10px;
+  }
+  html[lang="th"] .draft-strip{display:block}
+
+  /* hero — фото на всю ширину со скримом */
+  .hero{position:relative; overflow:hidden; display:flex; align-items:flex-end;
+    min-height:100vh; min-height:calc(100svh - 62px)}
+  @media (min-width:768px){ .hero{min-height:640px} }
+  .hero-media{position:absolute; inset:0; z-index:0}
+  .hero-media img{width:100%; height:100%; object-fit:cover; display:block}
+  .hero-media .scrim{position:absolute; inset:0;
+    background:linear-gradient(to top, var(--scrim-strong) 0%, var(--scrim-mid) 46%, transparent 78%)}
+  .hero .wrap{position:relative; z-index:1; padding-block:36px 40px; width:100%}
+  .badges{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px}
+  .badge{
+    font-size:12.5px; font-weight:600; color:var(--hero-ink); background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.35); backdrop-filter:blur(4px); padding:6px 12px; border-radius:999px;
+  }
+  .hero .eyebrow{background:rgba(255,255,255,.18); backdrop-filter:blur(6px); color:var(--hero-ink)}
+  .hero h1{font-size:44px; line-height:1.02; margin-top:14px; color:var(--hero-ink)}
+  @media (min-width:768px){ .hero h1{font-size:72px} }
+  .slogan{font-size:18px; color:var(--hero-slogan); font-weight:600; margin-top:10px; max-width:42ch}
+  @media (min-width:768px){ .slogan{font-size:22px} }
+  .hero-lead{margin-top:16px; color:var(--hero-ink); opacity:.94; max-width:62ch}
+  .cta-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:26px}
+  .btn{
+    font:inherit; font-size:15px; font-weight:700; border-radius:999px; padding:13px 22px;
+    border:1px solid transparent; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    min-height:44px; text-decoration:none; line-height:1.1;
+  }
+  .btn-primary{background:var(--accent); color:var(--accent-contrast)}
+  .btn-primary:hover{background:var(--accent-hover)}
+  .btn-ghost{background:var(--card); color:var(--ink); border-color:var(--border)}
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent)}
+  .hero .btn-ghost{background:rgba(255,255,255,.12); color:var(--hero-ink); border-color:rgba(255,255,255,.4); backdrop-filter:blur(6px)}
+  .hero .btn-ghost:hover{border-color:rgba(255,255,255,.7); color:var(--hero-ink)}
+  .btn-teal{background:var(--teal); color:var(--teal-contrast)}
+  .topbar-cta{font-size:13px; padding:7px 13px 7px 11px; min-height:32px; gap:5px; white-space:nowrap}
+
+  /* cards / sections alt bg */
+  .alt{background:var(--bg-alt)}
+  .card{background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg); box-shadow:var(--shadow)}
+
+  /* why & for whom */
+  .why-block{margin-top:30px}
+  .why-block:first-of-type{margin-top:26px}
+  .why-block h3{font-family:var(--font-display); font-size:19px; font-weight:700; margin-bottom:14px}
+  .why-goals{list-style:none; margin:0; padding:0; display:grid; gap:10px}
+  .why-goals li{
+    display:flex; gap:10px; align-items:flex-start; font-size:14.5px; color:var(--soft);
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 14px;
+  }
+  .why-goals li::before{content:"—"; color:var(--accent); flex:none; font-weight:700}
+  .pains-grid{display:grid; grid-template-columns:1fr; gap:18px; margin-top:6px}
+  @media (min-width:768px){ .pains-grid{grid-template-columns:repeat(3,1fr)} }
+  .pain-col{display:flex; flex-direction:column; gap:10px}
+  .pain-label{
+    display:inline-flex; align-self:flex-start; font-size:11px; font-weight:800; letter-spacing:.05em;
+    text-transform:uppercase; padding:5px 11px; border-radius:999px;
+  }
+  .pain-label.role-client{background:var(--accent-soft); color:var(--accent-hover)}
+  .pain-label.role-agent{background:var(--teal-soft); color:var(--teal)}
+  .pain-label.role-owner{background:var(--card-alt); color:var(--soft); border:1px solid var(--border)}
+  .pain-list{list-style:none; margin:0; padding:0; display:grid; gap:8px}
+  .pain-list li{font-size:13.5px; color:var(--soft); padding:10px 12px; background:var(--card); border:1px solid var(--border); border-radius:var(--radius-sm)}
+
+  /* how it works */
+  .steps{display:grid; grid-template-columns:1fr; gap:14px; margin-top:28px}
+  @media (min-width:640px){ .steps{grid-template-columns:1fr 1fr} }
+  @media (min-width:1000px){ .steps{grid-template-columns:repeat(5,1fr)} }
+  .step{padding:20px; display:flex; flex-direction:column; gap:8px}
+  .step-num{
+    width:32px; height:32px; border-radius:10px; background:var(--accent-soft); color:var(--accent);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-family:var(--font-display);
+  }
+  .step h3{font-size:16px; font-weight:700}
+  .step p{color:var(--soft); font-size:14px}
+
+  /* chat demo */
+  .chat-shell{margin-top:26px; display:flex; flex-direction:column; align-items:center; gap:14px}
+  .seg{display:inline-flex; gap:4px; background:var(--card-alt); border:1px solid var(--border); border-radius:999px; padding:3px; flex-wrap:wrap}
+  .seg button{
+    font:inherit; font-size:13.5px; font-weight:700; color:var(--soft); background:none; border:0;
+    padding:9px 14px; border-radius:999px; cursor:pointer; min-height:40px;
+  }
+  .seg button[aria-pressed="true"]{background:var(--teal); color:var(--teal-contrast)}
+  .demo-note{font-size:12.5px; color:var(--faint); text-align:center}
+  .phone{
+    width:100%; max-width:480px;
+    background:var(--card); border:1px solid var(--border); border-radius:var(--radius-lg);
+    box-shadow:var(--shadow); overflow:hidden; display:flex; flex-direction:column; min-height:420px;
+  }
+  .phone-head{background:var(--teal); color:var(--teal-contrast); padding:14px 16px}
+  .phone-head b{display:block; font-size:15px}
+  .phone-head span{font-size:12px; opacity:.85}
+  .phone-body{flex:1; padding:14px; display:flex; flex-direction:column; gap:12px; overflow-y:auto; max-height:460px}
+  .bubble-row{display:flex}
+  .bubble-row.me{justify-content:flex-end}
+  .bubble{max-width:86%; display:flex; flex-direction:column; gap:6px}
+  .bubble-main{
+    padding:10px 13px; border-radius:16px; font-size:14.5px; background:var(--bg-alt); color:var(--ink);
+    border:1px solid var(--border-soft);
+  }
+  .bubble-row.me .bubble-main{background:var(--accent); color:var(--accent-contrast); border-color:transparent}
+  .bubble-orig{
+    font:inherit; font-size:12.5px; color:var(--soft); background:none; border:1px dashed var(--border);
+    border-radius:12px; padding:7px 10px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:6px;
+  }
+  .bubble-orig:hover{border-color:var(--accent); color:var(--accent)}
+  .bubble-orig .q{opacity:.6}
+  .chat-input-row{display:flex; gap:8px; padding:12px; border-top:1px solid var(--border-soft); background:var(--card-alt)}
+  .chat-input-row input{
+    flex:1; font:inherit; font-size:15px; padding:11px 13px; border-radius:12px; border:1px solid var(--border);
+    background:var(--card); color:var(--ink); min-height:44px;
+  }
+  .chat-input-row button{min-height:44px}
+  .toast{
+    position:fixed; left:50%; bottom:22px; transform:translateX(-50%); z-index:80;
+    background:var(--ink); color:var(--bg); font-size:14px; font-weight:600; padding:10px 18px;
+    border-radius:24px; opacity:0; pointer-events:none; transition:opacity .18s;
+  }
+  .toast.on{opacity:1}
+
+  /* request card */
+  .req-toggle-row{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-top:22px}
+  .req-card{margin-top:14px; padding:22px; display:grid; gap:12px}
+  .req-field{display:flex; justify-content:space-between; gap:16px; padding-block:9px; border-bottom:1px solid var(--border-soft)}
+  .req-field:last-child{border-bottom:0}
+  .req-field b{font-weight:600; color:var(--soft); font-size:13.5px}
+  .req-field span{font-weight:700; text-align:right}
+
+  /* bullet lists */
+  .bullets{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:12px}
+  .bullets li{
+    display:flex; gap:12px; align-items:flex-start; background:var(--card); border:1px solid var(--border);
+    border-radius:var(--radius-md); padding:14px 16px;
+  }
+  .bullets li .ico{
+    flex:none; width:26px; height:26px; border-radius:8px; background:var(--teal-soft); color:var(--teal);
+    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:13px;
+  }
+  .bullets.trust li .ico{background:var(--accent-soft); color:var(--accent)}
+  .note-box{
+    margin-top:16px; padding:14px 16px; border-radius:var(--radius-md); background:var(--warn-soft);
+    color:var(--soft); font-size:13.5px; border:1px solid var(--border-soft);
+  }
+
+  /* prototype links */
+  .proto-cards{display:grid; grid-template-columns:1fr; gap:14px; margin-top:28px}
+  @media (min-width:640px){ .proto-cards{grid-template-columns:repeat(2,1fr)} }
+  @media (min-width:1000px){ .proto-cards{grid-template-columns:repeat(3,1fr)} }
+  .proto-card{
+    display:flex; flex-direction:column; gap:8px; padding:22px; min-height:44px;
+    text-decoration:none; color:inherit; transition:border-color .15s, transform .15s;
+  }
+  .proto-card:hover{border-color:var(--teal); transform:translateY(-2px)}
+  .proto-card h3{font-family:var(--font-display); font-size:18px; font-weight:700; color:var(--teal)}
+  .proto-card p{color:var(--soft); font-size:14px}
+
+  /* catalog */
+  .catalog-example-line{margin-top:16px; font-size:13px; color:var(--soft)}
+  .catalog-cards{display:grid; grid-template-columns:1fr; gap:16px; margin-top:20px}
+  @media (min-width:640px){ .catalog-cards{grid-template-columns:repeat(2,1fr)} }
+  @media (min-width:1000px){ .catalog-cards{grid-template-columns:repeat(4,1fr)} }
+  .catalog-card{padding:0; overflow:hidden; display:flex; flex-direction:column; text-decoration:none; color:inherit}
+  .catalog-photo-wrap{position:relative; aspect-ratio:4/3; background:var(--bg-alt)}
+  .catalog-photo-wrap img{width:100%; height:100%; object-fit:cover; display:block}
+  .catalog-district-badge{
+    position:absolute; top:10px; left:10px; font-size:11px; font-weight:700; color:var(--ink);
+    background:rgba(255,255,255,.88); backdrop-filter:blur(4px); padding:4px 10px; border-radius:999px;
+  }
+  .catalog-example-badge{
+    position:absolute; top:10px; right:10px; font-size:10px; font-weight:700; color:var(--accent-contrast);
+    background:var(--accent); padding:4px 9px; border-radius:999px; letter-spacing:.02em;
+  }
+  .catalog-card-body{padding:16px 18px 18px; display:flex; flex-direction:column; gap:10px; flex:1}
+  .catalog-card h3{font-family:var(--font-display); font-size:16px; font-weight:700}
+  .catalog-sub{color:var(--soft); font-size:13px}
+  .catalog-price{display:flex; flex-direction:column; gap:2px; font-size:13px; color:var(--soft)}
+  .catalog-price b{color:var(--ink); font-variant-numeric:tabular-nums}
+  .catalog-total{font-family:var(--font-display); font-size:19px; font-weight:700; margin-top:2px}
+  .catalog-total small{font-family:var(--font-body); font-size:12px; font-weight:600; color:var(--soft)}
+  .catalog-cal-bar{display:flex; width:100%; height:10px; border-radius:6px; overflow:hidden; border:1px solid var(--border)}
+  .catalog-cal-seg{height:100%}
+  .catalog-cal-caption{font-size:11px; color:var(--faint); margin-top:5px}
+  .catalog-card-body .btn{margin-top:auto; align-self:flex-start}
+  .catalog-legend{display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:18px; font-size:12px; color:var(--soft)}
+  .catalog-legend span{display:inline-flex; align-items:center; gap:6px}
+  .catalog-legend i{width:9px; height:9px; border-radius:3px; display:inline-block; flex:none}
+  .cal-c-free{background:var(--ok)}
+  .cal-c-negotiating{background:var(--warn)}
+  .cal-c-confirmed{background:var(--teal)}
+  .cal-c-blocked{background:var(--accent)}
+
+  /* seasons */
+  .season-card{margin-top:18px; padding:22px}
+  .season-example{font-size:13px; color:var(--faint); margin-bottom:10px}
+  .season-price{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .season-price b{font-family:var(--font-display); font-size:38px; font-weight:700}
+  .season-dates{color:var(--soft); font-size:13.5px; margin-top:4px}
+  .season-derived{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:16px}
+  .derived-item{background:var(--bg-alt); border-radius:var(--radius-sm); padding:10px 12px}
+  .derived-item span{display:block; font-size:12px; color:var(--faint)}
+  .derived-item b{font-size:16px; font-variant-numeric:tabular-nums}
+  .season-loyalty{margin-top:14px; padding:12px 14px; border-radius:var(--radius-sm); background:var(--teal-soft); color:var(--teal); font-size:13.5px; font-weight:600}
+
+  /* market stats */
+  .stats{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:26px}
+  @media (min-width:768px){ .stats{grid-template-columns:repeat(4,1fr)} }
+  .stat{padding:18px; display:flex; flex-direction:column; gap:6px}
+  .stat b{font-family:var(--font-display); font-size:26px; font-weight:700}
+  .stat p{font-size:13.5px; color:var(--soft)}
+  .stat small{font-size:11.5px; color:var(--faint)}
+
+  /* caveats */
+  .caveats{list-style:none; margin:22px 0 0; padding:0; display:grid; gap:10px}
+  .caveats li{
+    padding:12px 16px; border-radius:var(--radius-sm); background:var(--card); border:1px dashed var(--border);
+    color:var(--soft); font-size:14px;
+  }
+
+  /* final cta */
+  .final-cta{padding:32px 22px; text-align:center}
+  .final-cta .cta-row{justify-content:center}
+
+  footer{padding:26px 0 40px; text-align:center; color:var(--faint); font-size:13px}
+  footer .sources{max-width:70ch; margin:12px auto 0; font-size:11.5px; line-height:1.6}
+  footer a{color:var(--faint); text-decoration:underline}
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden;
+    clip:rect(0,0,0,0); white-space:nowrap; border:0;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important; animation:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">Sabaan <small id="brand-tag">demda.pro</small></div>
+    <div class="switchers">
+      <div class="langsw" role="group" aria-label="Язык страницы" id="langsw">
+        <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        <button type="button" data-lang="th" aria-pressed="false">TH</button>
+      </div>
+      <a href="/sabaan/app/#/" class="btn btn-teal topbar-cta" id="topbar-proto-link">
+        <span aria-hidden="true">&rarr;</span><span id="topbar-proto-text"></span>
+      </a>
+    </div>
+  </div>
+  <div class="draft-strip">ข้อความฉบับร่าง — กำลังตรวจสอบ</div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="hero-media">
+      <img id="hero-img" src="img/b/hero.jpg" width="1440" height="810" alt="" fetchpriority="high">
+      <div class="scrim"></div>
+    </div>
+    <div class="wrap">
+      <span class="eyebrow" id="hero-kicker"></span>
+      <h1 class="display">Sabaan</h1>
+      <p class="slogan" id="hero-slogan"></p>
+      <div class="badges" id="hero-badges"></div>
+      <div class="cta-row">
+        <a href="#how" class="btn btn-ghost" id="hero-cta1"></a>
+        <a href="#cta" class="btn btn-primary" id="hero-cta2"></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="why" class="alt">
+    <div class="wrap">
+      <h2 id="why-heading"></h2>
+      <p class="lead" id="why-idea" style="margin-top:16px"></p>
+
+      <div class="why-block">
+        <h3 id="why-goals-heading"></h3>
+        <ul class="why-goals" id="why-goals-list"></ul>
+      </div>
+
+      <div class="why-block">
+        <h3 id="why-pains-heading"></h3>
+        <div class="pains-grid" id="why-pains-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <h2 id="how-heading"></h2>
+      <div class="steps" id="how-steps"></div>
+    </div>
+  </section>
+
+  <section class="alt" id="demo-chat">
+    <div class="wrap">
+      <h2 id="chat-heading"></h2>
+      <p class="lead" id="chat-desc"></p>
+      <div class="chat-shell">
+        <div class="phone">
+          <div class="phone-head">
+            <b id="chat-phone-title"></b>
+            <span id="chat-phone-sub"></span>
+          </div>
+          <div class="phone-body" id="chat-body"></div>
+          <form class="chat-input-row" id="chat-form">
+            <input type="text" id="chat-input" autocomplete="off">
+            <button type="submit" class="btn btn-teal" id="chat-send"></button>
+          </form>
+        </div>
+        <p class="demo-note" id="chat-demo-note"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="request-card">
+    <div class="wrap">
+      <h2 id="req-heading"></h2>
+      <p class="lead" id="req-desc"></p>
+      <div class="req-toggle-row">
+        <div class="seg" role="group" id="req-lang-group" aria-label="">
+          <button type="button" data-cardlang="ru" aria-pressed="true">RU</button>
+          <button type="button" data-cardlang="th" aria-pressed="false">TH</button>
+        </div>
+      </div>
+      <div class="req-card card" id="req-fields"></div>
+    </div>
+  </section>
+
+  <section class="alt" id="catalog">
+    <div class="wrap">
+      <h2 id="catalog-heading"></h2>
+      <p class="lead" id="catalog-lead"></p>
+      <p class="catalog-example-line" id="catalog-example-line"></p>
+      <div class="catalog-cards" id="catalog-cards"></div>
+      <div class="catalog-legend" id="catalog-legend"></div>
+      <div class="cta-row" style="margin-top:22px">
+        <a href="/sabaan/app/#/client/catalog" class="btn btn-teal" id="catalog-viewall"></a>
+      </div>
+      <div class="note-box" id="catalog-note"></div>
+    </div>
+  </section>
+
+  <section id="for-agent">
+    <div class="wrap">
+      <h2 id="agent-heading"></h2>
+      <p class="lead" id="agent-intro"></p>
+      <ul class="bullets" id="agent-bullets"></ul>
+      <div class="cta-row" style="margin-top:22px">
+        <a href="#cta" class="btn btn-primary" id="agent-cta"></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="trust">
+    <div class="wrap">
+      <h2 id="trust-heading"></h2>
+      <p class="lead" id="trust-intro"></p>
+      <ul class="bullets trust" id="trust-bullets"></ul>
+      <div class="note-box" id="trust-note"></div>
+    </div>
+  </section>
+
+  <section id="seasons">
+    <div class="wrap">
+      <h2 id="season-heading"></h2>
+      <p class="lead" id="season-desc"></p>
+      <div class="seg" role="group" id="season-group" style="margin-top:22px" aria-label="">
+        <button type="button" data-season="high" aria-pressed="true" id="season-tab-high"></button>
+        <button type="button" data-season="shoulder" aria-pressed="false" id="season-tab-shoulder"></button>
+        <button type="button" data-season="low" aria-pressed="false" id="season-tab-low"></button>
+      </div>
+      <div class="season-card card">
+        <p class="season-example" id="season-example"></p>
+        <div class="season-price"><b id="season-price"></b><span id="season-per-month"></span></div>
+        <p class="season-dates" id="season-dates"></p>
+        <div class="season-derived">
+          <div class="derived-item"><span id="season-two-months-label"></span><b id="season-two-months-value"></b></div>
+          <div class="derived-item"><span id="season-commission-label"></span><b id="season-commission-value"></b></div>
+        </div>
+        <div class="season-loyalty" id="season-note"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="market">
+    <div class="wrap">
+      <h2 id="market-heading"></h2>
+      <div class="stats" id="market-stats"></div>
+    </div>
+  </section>
+
+  <section id="caveats">
+    <div class="wrap">
+      <h2 id="caveats-heading"></h2>
+      <ul class="caveats" id="caveats-list"></ul>
+    </div>
+  </section>
+
+  <section id="prototype" class="alt">
+    <div class="wrap">
+      <h2 id="proto-heading"></h2>
+      <p class="lead" id="proto-lead"></p>
+      <div class="cta-row" style="margin-top:18px">
+        <a href="/sabaan/app/#/" class="btn btn-teal" id="hero-cta3"></a>
+      </div>
+      <div class="proto-cards" id="proto-cards"></div>
+      <div class="note-box" id="proto-note"></div>
+    </div>
+  </section>
+
+  <section class="alt" id="cta">
+    <div class="wrap">
+      <div class="card final-cta">
+        <h2 id="cta-heading"></h2>
+        <p class="lead" id="cta-text" style="margin:12px auto 0"></p>
+        <div class="cta-row">
+          <a href="https://t.me/demda" target="_blank" rel="noopener" class="btn btn-primary" id="cta-btn-tg"></a>
+          <a href="mailto:demda@demda.pro" class="btn btn-ghost" id="cta-btn-mail"></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p id="footer-text"></p>
+    <p class="sources" id="footer-sources"></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- словарь текстов ---------- */
+  var DICT = {
+    ru: {
+      title: "Sabaan — дом на Пхукете на вашем языке",
+      nav: { protoLink: "Прототип" },
+      hero: {
+        kicker: "Черновая версия — для встречи с агентом",
+        slogan: "Дом на Пхукете — на две недели, месяц или сезон, на вашем языке",
+        lead: "Тайский агент отвечает на родном языке, клиент читает по-русски — Sabaan переводит переписку и держит оригинал под рукой цитатой на каждое сообщение. Не доска объявлений: заявка приходит с бюджетом и сроком, оплата — рублями.",
+        badges: ["Первая версия", "Демонстрационные данные", "Оплата рублями", "Срок — от двух недель до сезона"],
+        photoAlt: "Дом на Пхукете — атмосфера выбранного направления",
+        cta1: "Как это работает",
+        cta2: "Обсудить участие",
+        cta3: "Открыть прототип"
+      },
+      why: {
+        heading: "Зачем и для кого",
+        idea: "Идея началась в фейсбуке. Я состою в русских и тайских группах про Пхукет и вижу с одной стороны людей, которые едут на короткий срок и пишут: бюджет такой-то, район такой-то, спален столько-то. С другой стороны — объявления агентов и собственников, и часть из них дешевле того, что эти же люди готовы платить, и подходит под их запрос. Эти два потока просто не встречаются — разный язык, разные группы, разные каналы.",
+        goalsHeading: "Что мы хотим сделать",
+        goals: [
+          "Свести тех, кто ищет жильё на Пхукете на короткий срок, с теми, у кого оно уже есть и подходит по цене.",
+          "Русскоязычный менеджер ведёт клиента, тайский агент отвечает на родном языке — Sabaan переводит, оригинал всегда под рукой.",
+          "Честная цена: цена собственника и комиссия агента показаны раздельно, а не одной суммой.",
+          "Оплата рублями — просто, без обмена валюты клиентом самостоятельно.",
+          "Новый канал клиентов для агента — без лишней работы; для собственника короткая сдача в сезон может быть выгоднее годового контракта — по расчёту на цифрах, не на обещании."
+        ],
+        painsHeading: "Кому что болит",
+        painLabels: {client:"Клиент", agent:"Агент", owner:"Собственник"},
+        pains: {
+          client: [
+            "Не видно, честная ли цена собственника — или агент накинул «для вида».",
+            "Пока идут переговоры, нет гарантии, что даты не уйдут к другому.",
+            "Не знает статус сделки прямо сейчас — приходится спрашивать в чате заново."
+          ],
+          agent: [
+            "Один объект в трёх местах сразу — забыл поменять цену в одном, начались нестыковки.",
+            "Не видно, что объект уже сдан мимо Sabaan — двойное бронирование всплывает поздно.",
+            "Комиссия не в одном месте — приходится самому помнить, сколько и когда придёт."
+          ],
+          owner: [
+            "Боится простоя — короткая сдача кажется рискованнее «сдал на год и забыл».",
+            "Не видит статус оплаты в реальном времени — узнаёт от агента постфактум.",
+            "Не готов разбираться в сложном кабинете — если это сложнее, чем ответить в LINE, пользоваться не будет."
+          ]
+        }
+      },
+      how: {
+        heading: "Как это работает",
+        steps: [
+          {t:"Запрос", d:"Оставьте заявку — менеджер свяжется в Telegram, WhatsApp или MAX и подберёт жильё. Или выберите объект сами в каталоге и забронируйте даты."},
+          {t:"Карточка на двух языках", d:"Запрос переводится и уходит тайским агентам — всем сразу или по району."},
+          {t:"Предложение агента", d:"Агент присылает объекты: цену собственника, свою комиссию и сезонные условия — отдельными полями."},
+          {t:"Чат с переводом", d:"Стороны пишут каждый на своём языке; ИИ переводит, оригинал всегда под рукой цитатой."},
+          {t:"Сделка", d:"Договор, депозит, заезд — по тайской практике через агента. Sabaan получает комиссию с агента."}
+        ]
+      },
+      chat: {
+        heading: "Живая демонстрация: чат с переводом",
+        desc: "Каждое сообщение всегда показано с переводом для собеседника и оригиналом-цитатой снизу — видно сразу обе стороны диалога и оба направления перевода. Нажмите на оригинал — он скопируется, как цитата в Telegram. Напишите своё сообщение по-русски или по-тайски — язык и сторона определятся сами.",
+        demoNote: "Демонстрация: перевод для нового сообщения — один из заготовленных примеров, а не настоящий ИИ.",
+        placeholder: "Напишите сообщение по-русски или по-тайски…",
+        send: "Отправить",
+        copied: "Скопировано",
+        phoneTitle: "Чат с агентом",
+        phoneSub: "Панджа · Раваи",
+        original: "оригинал"
+      },
+      req: {
+        heading: "Пример запроса клиента",
+        desc: "Так карточка запроса выглядит для менеджера и агента — на двух языках. Переключите язык карточки.",
+        fields: {district:"Район", term:"Срок", checkin:"Заезд", bedrooms:"Спальни", budget:"Бюджет", clientLang:"Язык клиента"}
+      },
+      catalog: {
+        heading: "Каталог: выберите сами",
+        lead: "Не хотите ждать подбора — выберите объект сами. Календарь показывает занятость по датам, бронирование создаёт заявку менеджеру.",
+        exampleLine: "Примеры оформления карточек — объекты вымышленные, фото иллюстративные.",
+        exampleBadge: "Пример",
+        photoAltSuffix: "иллюстративное фото",
+        districts: {rawai:"Раваи", bangtao:"Банг Тао", kata:"Ката", chalong:"Чалонг"},
+        types: {villa:"Вилла", "1br":"Кондо", studio:"Студия", "3br":"Дом"},
+        bedrooms: {1:"1 спальня", 2:"2 спальни", 3:"3 спальни"},
+        ownerPriceLabel: "Цена собственника",
+        commissionLabel: "Комиссия агента",
+        perMonth: "в месяц",
+        calendarCaption: "Занятость на ближайшие 60 дней (с 1 декабря 2026)",
+        legend: {free:"свободно", negotiating:"в переговорах", confirmed:"подтверждено", blocked:"занято вручную"},
+        bookBtn: "Забронировать",
+        viewAllBtn: "Смотреть весь каталог",
+        note: "Демонстрационные объекты и календарь — для показа; бронирование создаёт заявку, дальше с вами свяжется менеджер. Фото — иллюстративные, в проде заменим на фото объектов агента."
+      },
+      agent: {
+        heading: "Для тайского агента",
+        intro: "Новый канал клиентов — без новой работы.",
+        bullets: [
+          "Готовый запрос на тайском с бюджетом и параметрами — не нужно читать русские группы.",
+          "Отвечаете на родном языке — перевод берёт на себя ИИ, оригинал всегда под рукой.",
+          "Сезонные цены и лояльность на стыке сезонов — заполняете низкий сезон, не теряя в цене резко.",
+          "Цена собственника отдельно от вашей комиссии — прозрачно для всех сторон."
+        ],
+        cta: "Обсудить участие"
+      },
+      trust: {
+        heading: "Честная цена и доверие",
+        intro: "Прозрачность работает в вашу пользу: чем честнее сделки — тем выше приоритет и доверие клиентов.",
+        bullets: [
+          "Цена собственника и ваша комиссия видны раздельно — все стороны понимают, за что платят.",
+          "После сделки собственник получает короткое подтверждение суммы и срока — недопониманий позже не будет.",
+          "Договор аренды загружается в систему — сделка зафиксирована, вопросов не остаётся.",
+          "Рейтинг по подтверждённым сделкам — чем больше честных закрытых сделок, тем выше вы в выдаче и тем охотнее вам доверяют эксклюзив по району.",
+          "Контакт клиента открывается вам сразу после фиксации сделки — ваша репутация работает на вас."
+        ],
+        note: "Если заявленная и фактическая цена расходятся — по этой сделке комиссия не начисляется, при повторных случаях доступ приостанавливается. Правило одинаково для всех и защищает репутацию честных агентов."
+      },
+      season: {
+        heading: "Сезоны и цена",
+        desc: "Пример: вилла с 2 спальнями в Раваи — тот самый объект из запроса выше. Переключите сезон — увидите, как меняется цена и правило лояльности.",
+        example: "Вилла · 2 спальни · Раваи",
+        tabHigh: "Высокий", tabShoulder: "Переходный", tabLow: "Низкий",
+        perMonth: "в месяц",
+        twoMonthsLabel: "за 2 месяца",
+        commissionLabel: "Комиссия Sabaan (демо 12%)",
+        highDates: "ноябрь–апрель, пик декабрь–февраль",
+        highNote: "Высокий сезон — устойчивый спрос, цена без наценки за срочность.",
+        shoulderDates: "апрель и ноябрь — стык сезонов",
+        shoulderNote: "Правило лояльности: на стыке сезонов агент и собственник могут дать цену ближе к низкому сезону, чтобы не терять клиента.",
+        lowDates: "май–октябрь",
+        lowNote: "Низкий сезон — месячная сдача выгоднее пустой квартиры."
+      },
+      market: {
+        heading: "Цифры рынка",
+        stats: [
+          {v:"35 000 THB/мес", c:"медианная аренда на Пхукете", s:"Thaiger / SiamRealEstate, дек. 2025 – май 2026, 54 628 заявок"},
+          {v:"≈35%", c:"доля среднесрочной аренды (3–12 мес) в общем спросе на аренду", s:"Thaiger / SiamRealEstate"},
+          {v:"≈833 000", c:"российских туристов посетили Пхукет в 2025 году", s:"Statista / Travel And Tour World"},
+          {v:">80%", c:"заполняемость 1-спальных в Банг Тао, Q1 2026, эффект визы DTV", s:"MORE Group"}
+        ]
+      },
+      caveats: {
+        heading: "Честно",
+        items: [
+          "Это первая версия для обсуждения — не готовый продукт.",
+          "Цифры в демонстрации (чат, карточка, сезоны) — примеры, не реальные сделки.",
+          "Аренду жилья можно оплатить рублями.",
+          "Минимальный срок аренды задаёт объект — от двух недель до сезона."
+        ]
+      },
+      prototype: {
+        heading: "Посмотрите кабинеты изнутри",
+        lead: "Пять готовых входов в интерактивный прототип — с демонстрационными данными, как на встрече.",
+        cards: {
+          manager: {
+            title: "Кабинет менеджера",
+            desc: "Входящие запросы, подтверждение сделки, чат по-русски с переводом, контроль честной цены."
+          },
+          agent: {
+            title: "Кабинет агента",
+            desc: "Запросы на тайском, объекты с раздельными ценами, календарь, чат с переводом, финансы, сравнение «годовой контракт vs гибрид»."
+          },
+          owner: {
+            title: "Кабинет собственника",
+            desc: "Подтверждение суммы и срока, объекты, занятость, агенты по каждому объекту."
+          },
+          scenario: {
+            title: "Сценарий показа",
+            desc: "Весь путь по шагам — 10 минут, от заявки клиента до закрытой сделки."
+          },
+          catalog: {
+            title: "Каталог с бронированием",
+            desc: "Карточки объектов, календарь занятости, бронирование дат — путь клиента без менеджера."
+          }
+        },
+        note: "Прототип, демонстрационные данные; переводы подготовлены моделью, сверка носителем впереди."
+      },
+      cta: {
+        heading: "Интересно агенту?",
+        text: "Обсудим участие, ваши объекты и районы, комиссию и формат работы.",
+        btnTg: "Обсудить в Telegram",
+        btnMail: "Написать на почту"
+      },
+      footer: {
+        text: "Проект студии demda.pro, 2026",
+        sources: "Источники цифр раздела «Цифры рынка»: Thaiger / SiamRealEstate (thethaiger.com), Statista и Travel And Tour World, MORE Group (moregroup.estate). Курс THB/RUB и часть оценок — округлены, не проверялись отдельным запросом."
+      }
+    },
+    en: {
+      title: "Sabaan — a home in Phuket, in your language",
+      nav: { protoLink: "Prototype" },
+      hero: {
+        kicker: "Draft version — for the meeting with the agent",
+        slogan: "Your home in Phuket — two weeks, a month or a season, in your language",
+        lead: "The Thai agent replies in their own language, the client reads everything in Russian — Sabaan translates the conversation and keeps the original one tap away as a quote on every message. Not a listings board: requests arrive with a budget and a term, payment is in rubles.",
+        badges: ["First version", "Demo data", "Payment in rubles", "Term — from two weeks to a season"],
+        photoAlt: "A home in Phuket — the mood of this design direction",
+        cta1: "How it works",
+        cta2: "Discuss becoming a partner",
+        cta3: "Open the prototype"
+      },
+      why: {
+        heading: "Why, and for whom",
+        idea: "The idea started on Facebook. I'm in Russian and Thai groups about Phuket, and on one side I see people looking for a short stay — budget, district, number of bedrooms, all spelled out. On the other side are listings from agents and owners, and some of them are cheaper than what these people are ready to pay, and match what they're asking for. The two sides just never meet — different language, different groups, different channels.",
+        goalsHeading: "What we want to do",
+        goals: [
+          "Bring together people looking for short-term housing in Phuket and the properties that already fit their budget.",
+          "A Russian-speaking manager guides the client, the Thai agent replies in their own language — Sabaan translates, the original is always at hand.",
+          "Fair price: the owner's price and the agent's commission are shown separately, not as one number.",
+          "Payment in rubles — simple, without the client handling currency exchange themselves.",
+          "A new client channel for the agent — no extra work; for the owner, a short let in season can beat an annual contract, by the numbers, not a promise."
+        ],
+        painsHeading: "The pains we're closing",
+        painLabels: {client:"Client", agent:"Agent", owner:"Owner"},
+        pains: {
+          client: [
+            "Can't tell if the owner's price is real — or the agent padded it \"just in case.\"",
+            "No guarantee the dates stay theirs while negotiations are still going.",
+            "Doesn't know the deal's status right now — has to ask again in the chat."
+          ],
+          agent: [
+            "One property listed in three places — forgot to update the price in one, now things don't match.",
+            "No way to see a property was already let outside Sabaan — double booking shows up too late.",
+            "Commission isn't in one place — has to remember by hand how much and when it's coming."
+          ],
+          owner: [
+            "Afraid of vacancy — a short let feels riskier than \"rent for a year and forget about it.\"",
+            "Doesn't see payment status in real time — hears about it from the agent after the fact.",
+            "Doesn't want to learn a complicated dashboard — if it's harder than replying on LINE, won't use it."
+          ]
+        }
+      },
+      how: {
+        heading: "How it works",
+        steps: [
+          {t:"Request", d:"Leave a request — a manager will contact you on Telegram, WhatsApp or MAX and find housing for you. Or choose a property yourself in the catalog and book the dates."},
+          {t:"Bilingual card", d:"The request is translated and sent to Thai agents — to everyone at once or by district."},
+          {t:"Agent's offer", d:"The agent sends properties: owner price, their own commission and seasonal terms — as separate fields."},
+          {t:"Translated chat", d:"Each side writes in their own language; the AI translates, the original is always one tap away as a quote."},
+          {t:"Deal", d:"Contract, deposit, move-in — following Thai practice, through the agent. Sabaan gets a commission from the agent."}
+        ]
+      },
+      chat: {
+        heading: "Live demo: chat with translation",
+        desc: "Every message always shows the translation for the other side plus the original quoted below it — you see both sides of the conversation and both translation directions at once. Tap the original to copy it, like a quote in Telegram. Type your own message in Russian or Thai — the language and the side are detected automatically.",
+        demoNote: "Demo: the translation for a new message is one of a few pre-written examples, not a real AI.",
+        placeholder: "Type a message in Russian or Thai…",
+        send: "Send",
+        copied: "Copied",
+        phoneTitle: "Manager ↔ agent chat",
+        phoneSub: "Sabaan · translation demo",
+        original: "original"
+      },
+      req: {
+        heading: "Example client request",
+        desc: "This is what the request card looks like for the manager and the agent — bilingual. Switch the card language.",
+        fields: {district:"District", term:"Term", checkin:"Move-in", bedrooms:"Bedrooms", budget:"Budget", clientLang:"Client's language"}
+      },
+      catalog: {
+        heading: "Catalog: choose yourself",
+        lead: "Don't want to wait for a match — pick a property yourself. The calendar shows availability by date, booking creates a request to the manager.",
+        exampleLine: "These are example cards — the properties are fictional, the photos illustrative.",
+        exampleBadge: "Example",
+        photoAltSuffix: "illustrative photo",
+        districts: {rawai:"Rawai", bangtao:"Bang Tao", kata:"Kata", chalong:"Chalong"},
+        types: {villa:"Villa", "1br":"Condo", studio:"Studio", "3br":"House"},
+        bedrooms: {1:"1 bedroom", 2:"2 bedrooms", 3:"3 bedrooms"},
+        ownerPriceLabel: "Owner price",
+        commissionLabel: "Agent commission",
+        perMonth: "per month",
+        calendarCaption: "Availability for the next 60 days (from Dec 1, 2026)",
+        legend: {free:"available", negotiating:"in talks", confirmed:"confirmed", blocked:"blocked manually"},
+        bookBtn: "Book",
+        viewAllBtn: "View the full catalog",
+        note: "Demo properties and calendar — for the presentation; booking creates a request, then a manager will contact you. Photos are illustrative — in production we'll replace them with real property photos."
+      },
+      agent: {
+        heading: "For the Thai agent",
+        intro: "A new client channel — no extra work.",
+        bullets: [
+          "A ready request in Thai, with budget and parameters — no need to read Russian groups.",
+          "You reply in your own language — the AI handles translation, the original is always at hand.",
+          "Seasonal pricing and loyalty at the season boundary — fill the low season without a sharp price cut.",
+          "Owner's price separate from your commission — transparent for everyone."
+        ],
+        cta: "Discuss becoming a partner"
+      },
+      trust: {
+        heading: "Fair price and trust",
+        intro: "Transparency works in your favour: the more honest the deals, the higher your priority and client trust.",
+        bullets: [
+          "Owner's price and your commission are shown separately — everyone understands what they're paying for.",
+          "After the deal, the owner gets a short confirmation of the amount and term — no misunderstandings later.",
+          "The rental contract is uploaded into the system — the deal is on record, no open questions.",
+          "A rating based on confirmed deals — the more honest closed deals, the higher you rank and the more likely you get exclusivity in your district.",
+          "The client's contact opens up to you right after the deal is confirmed — your reputation works for you."
+        ],
+        note: "If the declared and actual price differ, the commission on that deal is not paid; repeated cases suspend access. The rule is the same for everyone and protects the reputation of honest agents."
+      },
+      season: {
+        heading: "Seasons and price",
+        desc: "Example: a 2-bedroom villa in Rawai — the same property from the request above. Switch the season to see how the price and the loyalty rule change.",
+        example: "Villa · 2 bedrooms · Rawai",
+        tabHigh: "High", tabShoulder: "Shoulder", tabLow: "Low",
+        perMonth: "per month",
+        twoMonthsLabel: "for 2 months",
+        commissionLabel: "Sabaan commission (demo 12%)",
+        highDates: "November–April, peak December–February",
+        highNote: "High season — steady demand, no rush surcharge on the price.",
+        shoulderDates: "April and November — the season boundary",
+        shoulderNote: "Loyalty rule: at the season boundary the agent and the owner can offer a price closer to the low season to keep the client.",
+        lowDates: "May–October",
+        lowNote: "Low season — a month-long let beats an empty unit."
+      },
+      market: {
+        heading: "Market numbers",
+        stats: [
+          {v:"35,000 THB/mo", c:"median rent in Phuket", s:"Thaiger / SiamRealEstate, Dec 2025 – May 2026, 54,628 enquiries"},
+          {v:"≈35%", c:"share of mid-term (3–12 mo) rentals in overall rental demand", s:"Thaiger / SiamRealEstate"},
+          {v:"≈833,000", c:"Russian tourists visited Phuket in 2025", s:"Statista / Travel And Tour World"},
+          {v:">80%", c:"1BR occupancy in Bang Tao, Q1 2026, DTV visa effect", s:"MORE Group"}
+        ]
+      },
+      caveats: {
+        heading: "Honestly",
+        items: [
+          "This is a first version for discussion — not a finished product.",
+          "Numbers in the demo (chat, card, seasons) are examples, not real deals.",
+          "You can pay for the rental in rubles.",
+          "The minimum rental term is set by the property — from two weeks to a season."
+        ]
+      },
+      prototype: {
+        heading: "See the workspaces from the inside",
+        lead: "Five ready entry points into the interactive prototype — with demo data, same as at the meeting.",
+        cards: {
+          manager: {
+            title: "Manager workspace",
+            desc: "Incoming requests, deal confirmation, a Russian-language chat with translation, and oversight of fair pricing."
+          },
+          agent: {
+            title: "Agent workspace",
+            desc: "Requests in Thai, properties with owner price and commission shown separately, calendar, translated chat, finances, an “annual vs hybrid” comparison."
+          },
+          owner: {
+            title: "Owner view",
+            desc: "Confirmation of amount and term, properties, occupancy, agents per property."
+          },
+          scenario: {
+            title: "Full walkthrough",
+            desc: "The whole path, step by step — 10 minutes, from a client request to a closed deal."
+          },
+          catalog: {
+            title: "Catalog with booking",
+            desc: "Property cards, an availability calendar, date booking — the client's path without a manager."
+          }
+        },
+        note: "Prototype, demo data; translations were prepared by a model — native-speaker review is still ahead."
+      },
+      cta: {
+        heading: "Is an agent interested?",
+        text: "Let's discuss participation, your properties and districts, commission and the way of working.",
+        btnTg: "Discuss on Telegram",
+        btnMail: "Send an email"
+      },
+      footer: {
+        text: "A project by demda.pro studio, 2026",
+        sources: "Sources for the \"Market numbers\" section: Thaiger / SiamRealEstate (thethaiger.com), Statista and Travel And Tour World, MORE Group (moregroup.estate). The THB/RUB rate and some estimates are rounded and not separately verified."
+      }
+    },
+    th: {
+      title: "Sabaan — บ้านในภูเก็ต ในภาษาของคุณ",
+      nav: { protoLink: "ต้นแบบ" },
+      hero: {
+        kicker: "ฉบับร่าง — เตรียมพูดคุยกับเอเจนต์",
+        slogan: "บ้านในภูเก็ต ตั้งแต่สองสัปดาห์ถึงหนึ่งฤดูกาล ในภาษาของคุณ",
+        lead: "เอเจนต์ชาวไทยตอบเป็นภาษาไทยได้เลย ลูกค้าอ่านทุกข้อความเป็นภาษารัสเซีย — Sabaan แปลให้และเก็บต้นฉบับไว้เป็นข้อความอ้างอิงให้แตะดูได้ทุกครั้ง ไม่ใช่เว็บรวมประกาศ: คำขอมาพร้อมงบประมาณและระยะเวลา ชำระเงินเป็นรูเบิล",
+        badges: ["เวอร์ชันแรก", "ข้อมูลตัวอย่าง", "ชำระเป็นรูเบิล", "ระยะเวลา — ตั้งแต่ 2 สัปดาห์ถึง 1 ฤดูกาล"],
+        photoAlt: "บ้านในภูเก็ต — บรรยากาศของธีมนี้",
+        cta1: "ดูขั้นตอนการทำงาน",
+        cta2: "คุยเรื่องความร่วมมือ",
+        cta3: "เปิดต้นแบบ"
+      },
+      why: {
+        heading: "ทำไมและเพื่อใคร",
+        idea: "ไอเดียเริ่มจาก Facebook ผมอยู่ในกลุ่มรัสเซียและไทยเกี่ยวกับภูเก็ต และเห็นฝั่งหนึ่งคือคนที่มองหาที่พักระยะสั้น เขียนงบประมาณ เขต จำนวนห้องนอนไว้ชัดเจน อีกฝั่งคือประกาศจากเอเจนต์และเจ้าของ ซึ่งบางส่วนราคาถูกกว่าที่คนกลุ่มแรกพร้อมจ่าย และตรงกับที่พวกเขาต้องการ สองฝั่งนี้แค่ไม่เคยเจอกัน — ภาษาต่างกัน กลุ่มต่างกัน ช่องทางต่างกัน",
+        goalsHeading: "เราอยากทำอะไร",
+        goals: [
+          "นำคนที่มองหาที่พักระยะสั้นในภูเก็ตมาเจอกับที่พักที่มีอยู่แล้วและราคาตรงกับที่พวกเขาจ่ายได้",
+          "ผู้จัดการที่พูดภาษารัสเซียดูแลลูกค้า เอเจนต์ชาวไทยตอบเป็นภาษาของตัวเอง — Sabaan แปลให้ ต้นฉบับอยู่ใกล้มือเสมอ",
+          "ราคาที่ซื่อตรง: ราคาเจ้าของและค่าคอมมิชชันเอเจนต์แสดงแยกกัน ไม่ใช่ยอดเดียวรวมกัน",
+          "ชำระเป็นรูเบิล — ง่าย ไม่ต้องให้ลูกค้าแลกเงินเอง",
+          "ช่องทางลูกค้าใหม่สำหรับเอเจนต์ โดยไม่ต้องทำงานเพิ่ม ส่วนเจ้าของ การให้เช่าระยะสั้นในไฮซีซั่นอาจคุ้มกว่าสัญญารายปี คำนวณจากตัวเลขจริง ไม่ใช่คำสัญญา"
+        ],
+        painsHeading: "ปัญหาที่เราแก้",
+        painLabels: {client:"ลูกค้า", agent:"เอเจนต์", owner:"เจ้าของ"},
+        pains: {
+          client: [
+            "ไม่รู้ว่าราคาเจ้าของจริงหรือเอเจนต์บวกเพิ่มไว้",
+            "ระหว่างเจรจา ไม่มีอะไรรับประกันว่าวันที่จะยังว่างสำหรับตัวเอง",
+            "ไม่รู้สถานะดีลตอนนี้ ต้องถามในแชทซ้ำ"
+          ],
+          agent: [
+            "ที่พักเดียวอยู่สามที่พร้อมกัน ลืมแก้ราคาที่หนึ่งแล้วข้อมูลไม่ตรงกัน",
+            "ไม่รู้ว่าที่พักถูกปล่อยเช่าไปนอกระบบ Sabaan แล้ว กว่าจะรู้ก็จองซ้อนไปแล้ว",
+            "ค่าคอมมิชชันไม่รวมอยู่ที่เดียว ต้องจำเองว่าเท่าไหร่และเมื่อไหร่จะได้"
+          ],
+          owner: [
+            "กลัวห้องว่าง — ให้เช่าระยะสั้นดูเสี่ยงกว่า \"ให้เช่าปีเดียวจบ\"",
+            "ไม่เห็นสถานะการชำระเงินแบบเรียลไทม์ รู้จากเอเจนต์ทีหลัง",
+            "ไม่อยากเรียนรู้ระบบที่ซับซ้อน ถ้ายากกว่าการตอบใน LINE ก็จะไม่ใช้"
+          ]
+        }
+      },
+      how: {
+        heading: "ขั้นตอนการทำงาน",
+        steps: [
+          {t:"คำขอ", d:"ฝากคำขอ — ผู้จัดการจะติดต่อคุณทาง Telegram, WhatsApp หรือ MAX และช่วยหาที่พักให้ หรือเลือกที่พักเองในแคตตาล็อกแล้วจองวันที่ได้เลย"},
+          {t:"การ์ดสองภาษา", d:"คำขอถูกแปลและส่งถึงเอเจนต์ชาวไทย — ส่งให้ทุกคนพร้อมกันหรือตามเขต"},
+          {t:"ข้อเสนอจากเอเจนต์", d:"เอเจนต์ส่งที่พัก: ราคาเจ้าของ ค่าคอมมิชชันของคุณ และเงื่อนไขตามฤดูกาล แยกเป็นช่องต่างหาก"},
+          {t:"แชทพร้อมคำแปล", d:"แต่ละฝ่ายพิมพ์ด้วยภาษาของตัวเอง ระบบแปลให้ทันที ต้นฉบับอยู่ใกล้มือเสมอ"},
+          {t:"ปิดดีล", d:"สัญญา มัดจำ การเข้าพัก — ตามธรรมเนียมไทยผ่านเอเจนต์ Sabaan รับค่าคอมมิชชันจากเอเจนต์"}
+        ]
+      },
+      chat: {
+        heading: "ตัวอย่างจริง: แชทพร้อมคำแปล",
+        desc: "ทุกข้อความแสดงคำแปลสำหรับอีกฝ่ายเสมอ พร้อมต้นฉบับอ้างอิงไว้ด้านล่าง — เห็นทั้งสองฝ่ายและคำแปลทั้งสองทิศทางพร้อมกัน แตะที่ต้นฉบับเพื่อคัดลอก เหมือนการอ้างอิงข้อความใน Telegram พิมพ์ข้อความของคุณเป็นภาษารัสเซียหรือภาษาไทย ระบบจะตรวจจับภาษาและฝ่ายให้เอง",
+        demoNote: "ตัวอย่าง: คำแปลสำหรับข้อความใหม่เป็นหนึ่งในประโยคที่เตรียมไว้ล่วงหน้า ไม่ใช่ AI จริง",
+        placeholder: "พิมพ์ข้อความเป็นภาษารัสเซียหรือภาษาไทย…",
+        send: "ส่ง",
+        copied: "คัดลอกแล้ว",
+        phoneTitle: "แชทกับผู้จัดการ",
+        phoneSub: "Sabaan · ผู้จัดการ",
+        original: "ต้นฉบับ"
+      },
+      req: {
+        heading: "ตัวอย่างคำขอของลูกค้า",
+        desc: "การ์ดนี้แสดงให้ทั้งผู้จัดการและเอเจนต์เห็น — สองภาษา สลับภาษาของการ์ดได้",
+        fields: {district:"เขต", term:"ระยะเวลา", checkin:"วันเข้าพัก", bedrooms:"ห้องนอน", budget:"งบประมาณ", clientLang:"ภาษาของลูกค้า"}
+      },
+      catalog: {
+        heading: "แคตตาล็อก: เลือกเอง",
+        lead: "ไม่อยากรอให้จัดหาที่พักให้ — เลือกที่พักได้เองเลย ปฏิทินแสดงสถานะว่าง/ไม่ว่างตามวันที่ การจองจะสร้างคำขอถึงผู้จัดการ",
+        exampleLine: "การ์ดตัวอย่างเหล่านี้ — ที่พักเป็นเรื่องสมมติ รูปภาพเป็นเพียงภาพประกอบ",
+        exampleBadge: "ตัวอย่าง",
+        photoAltSuffix: "รูปประกอบ",
+        districts: {rawai:"ราไวย์", bangtao:"บางเทา", kata:"กะตะ", chalong:"ฉลอง"},
+        types: {villa:"วิลล่า", "1br":"คอนโด", studio:"สตูดิโอ", "3br":"บ้าน"},
+        bedrooms: {1:"1 ห้องนอน", 2:"2 ห้องนอน", 3:"3 ห้องนอน"},
+        ownerPriceLabel: "ราคาเจ้าของ",
+        commissionLabel: "ค่าคอมมิชชันเอเจนต์",
+        perMonth: "ต่อเดือน",
+        calendarCaption: "สถานะว่าง/ไม่ว่าง 60 วันข้างหน้า (ตั้งแต่ 1 ธันวาคม 2026)",
+        legend: {free:"ว่าง", negotiating:"กำลังเจรจา", confirmed:"ยืนยันแล้ว", blocked:"บล็อกด้วยตนเอง"},
+        bookBtn: "จอง",
+        viewAllBtn: "ดูแคตตาล็อกทั้งหมด",
+        note: "ที่พักและปฏิทินเป็นข้อมูลตัวอย่างสำหรับการนำเสนอ การจองจะสร้างคำขอ จากนั้นผู้จัดการจะติดต่อคุณ รูปภาพเป็นภาพประกอบ ในเวอร์ชันจริงจะเปลี่ยนเป็นรูปที่พักจริง"
+      },
+      agent: {
+        heading: "สำหรับเอเจนต์ชาวไทย",
+        intro: "ช่องทางลูกค้าใหม่ โดยไม่ต้องทำงานเพิ่ม",
+        bullets: [
+          "คำขอพร้อมงบประมาณเป็นภาษาไทย — ไม่ต้องอ่านกลุ่มภาษารัสเซีย",
+          "ตอบเป็นภาษาไทยได้เลย ระบบแปลให้ ต้นฉบับอยู่ใกล้มือเสมอ",
+          "ราคาตามฤดูกาลและส่วนลดช่วงเปลี่ยนฤดู — เติมเต็มโลว์ซีซั่นโดยไม่ต้องลดราคาแรงเกินไป",
+          "ราคาเจ้าของแยกจากค่าคอมมิชชันของคุณอย่างชัดเจน"
+        ],
+        cta: "คุยเรื่องความร่วมมือ"
+      },
+      trust: {
+        heading: "ราคาที่ซื่อตรงและความไว้ใจ",
+        intro: "ความโปร่งใสเป็นประโยชน์กับคุณ ยิ่งดีลซื่อตรง ยิ่งได้ความสำคัญและความไว้ใจจากลูกค้ามากขึ้น",
+        bullets: [
+          "ราคาเจ้าของและค่าคอมมิชชันของคุณแสดงแยกกัน ทุกฝ่ายเข้าใจว่าจ่ายเงินไปเพื่ออะไร",
+          "หลังปิดดีล เจ้าของจะได้รับการยืนยันจำนวนเงินและระยะเวลาสั้นๆ ไม่มีความเข้าใจผิดภายหลัง",
+          "สัญญาเช่าถูกอัปโหลดเข้าระบบ ดีลถูกบันทึกไว้ ไม่มีคำถามค้างคา",
+          "คะแนนความน่าเชื่อถือจากดีลที่ยืนยันแล้ว — ยิ่งปิดดีลซื่อตรงมาก ยิ่งได้อันดับดีขึ้นและมีโอกาสได้สิทธิ์พิเศษในเขตของคุณ",
+          "ข้อมูลติดต่อของลูกค้าจะเปิดให้คุณทันทีหลังยืนยันดีล ชื่อเสียงของคุณทำงานให้คุณ"
+        ],
+        note: "หากราคาที่แจ้งกับราคาจริงไม่ตรงกัน ค่าคอมมิชชันของดีลนั้นจะไม่ถูกจ่าย และหากเกิดซ้ำ การใช้งานจะถูกระงับ กฎนี้ใช้เหมือนกันกับทุกคนและปกป้องชื่อเสียงของเอเจนต์ที่ซื่อตรง"
+      },
+      season: {
+        heading: "ฤดูกาลและราคา",
+        desc: "ตัวอย่าง: วิลล่า 2 ห้องนอนที่ราไวย์ — ที่พักเดียวกับคำขอด้านบน สลับฤดูกาลเพื่อดูราคาที่เปลี่ยนไปและกฎส่วนลดช่วงเปลี่ยนฤดู",
+        example: "วิลล่า · 2 ห้องนอน · ราไวย์",
+        tabHigh: "สูง", tabShoulder: "เปลี่ยนผ่าน", tabLow: "ต่ำ",
+        perMonth: "ต่อเดือน",
+        twoMonthsLabel: "สำหรับ 2 เดือน",
+        commissionLabel: "ค่าคอมมิชชัน Sabaan (ตัวอย่าง 12%)",
+        highDates: "พฤศจิกายน–เมษายน จุดสูงสุดธันวาคม–กุมภาพันธ์",
+        highNote: "ไฮซีซั่น — ความต้องการสูงสม่ำเสมอ ราคาไม่มีการเร่งเพิ่ม",
+        shoulderDates: "เมษายนและพฤศจิกายน — ช่วงเปลี่ยนฤดู",
+        shoulderNote: "กฎส่วนลดช่วงเปลี่ยนฤดู: เอเจนต์และเจ้าของสามารถให้ราคาที่ใกล้โลว์ซีซั่นเพื่อไม่ให้เสียลูกค้า",
+        lowDates: "พฤษภาคม–ตุลาคม",
+        lowNote: "โลว์ซีซั่น — ปล่อยเช่ารายเดือนดีกว่าปล่อยว่าง"
+      },
+      market: {
+        heading: "ตัวเลขตลาด",
+        stats: [
+          {v:"35,000 บาท/เดือน", c:"ค่าเช่ามัธยฐานบนภูเก็ต", s:"Thaiger / SiamRealEstate ธ.ค. 2025–พ.ค. 2026 จาก 54,628 คำขอ"},
+          {v:"≈35%", c:"สัดส่วนการเช่าระยะกลาง (3–12 เดือน) ในความต้องการเช่าทั้งหมด", s:"Thaiger / SiamRealEstate"},
+          {v:"≈833,000", c:"นักท่องเที่ยวรัสเซียมาภูเก็ตในปี 2025", s:"Statista / Travel And Tour World"},
+          {v:">80%", c:"อัตราการเข้าพักคอนโด 1 ห้องนอนที่บางเทา ไตรมาส 1 ปี 2026 จากวีซ่า DTV", s:"MORE Group"}
+        ]
+      },
+      caveats: {
+        heading: "ข้อเท็จจริงที่ต้องพูดตรงๆ",
+        items: [
+          "นี่คือเวอร์ชันแรกสำหรับพูดคุย ยังไม่ใช่ผลิตภัณฑ์ที่พร้อมใช้งาน",
+          "ตัวเลขในตัวอย่าง (แชท การ์ด ฤดูกาล) เป็นตัวอย่างสมมติ ไม่ใช่ดีลจริง",
+          "สามารถชำระค่าเช่าที่พักเป็นเงินรูเบิลได้",
+          "ระยะเวลาเช่าขั้นต่ำกำหนดโดยที่พัก — ตั้งแต่ 2 สัปดาห์ถึง 1 ฤดูกาล"
+        ]
+      },
+      prototype: {
+        heading: "ดูภายในหน้าจอทำงานจริง",
+        lead: "ต้นแบบพร้อมใช้งาน 5 หน้าจอ พร้อมข้อมูลตัวอย่างแบบเดียวกับที่ใช้พูดคุยกันวันนี้",
+        cards: {
+          manager: {
+            title: "หน้าจอผู้จัดการ",
+            desc: "คำขอที่เข้ามา การยืนยันดีล แชทภาษารัสเซียพร้อมคำแปล และการตรวจสอบราคาที่ซื่อตรง"
+          },
+          agent: {
+            title: "หน้าจอเอเจนต์",
+            desc: "คำขอเป็นภาษาไทย ที่พักพร้อมราคาเจ้าของและค่าคอมมิชชันแยกกัน ปฏิทิน แชทพร้อมคำแปล การเงิน และการเปรียบเทียบ «สัญญารายปี กับ แบบผสม»"
+          },
+          owner: {
+            title: "มุมมองเจ้าของ",
+            desc: "การยืนยันจำนวนเงินและระยะเวลา ที่พักทั้งหมด สถานะว่าง/ไม่ว่าง และเอเจนต์ของแต่ละที่พัก"
+          },
+          scenario: {
+            title: "ขั้นตอนสาธิตทั้งหมด",
+            desc: "เส้นทางทั้งหมดทีละขั้นตอน ใช้เวลา 10 นาที ตั้งแต่คำขอของลูกค้าจนถึงปิดดีล"
+          },
+          catalog: {
+            title: "แคตตาล็อกพร้อมระบบจอง",
+            desc: "การ์ดที่พัก ปฏิทินสถานะว่าง/ไม่ว่าง และการจองวันที่ — เส้นทางของลูกค้าที่ไม่ต้องผ่านผู้จัดการ"
+          }
+        },
+        note: "ต้นแบบนี้ใช้ข้อมูลตัวอย่าง คำแปลจัดทำโดยโมเดล AI ยังรอการตรวจสอบโดยเจ้าของภาษา"
+      },
+      cta: {
+        heading: "เอเจนต์สนใจไหม?",
+        text: "มาคุยกันเรื่องความร่วมมือ ที่พักและเขตของคุณ ค่าคอมมิชชัน และรูปแบบการทำงาน",
+        btnTg: "คุยทาง Telegram",
+        btnMail: "ส่งอีเมล"
+      },
+      footer: {
+        text: "โปรเจกต์โดยสตูดิโอ demda.pro, 2026",
+        sources: "แหล่งที่มาของตัวเลขในหมวด «ตัวเลขตลาด»: Thaiger / SiamRealEstate (thethaiger.com), Statista และ Travel And Tour World, MORE Group (moregroup.estate) อัตราแลกเปลี่ยน THB/RUB และบางตัวเลขเป็นการประมาณ ไม่ได้ตรวจสอบแยกต่างหาก"
+      }
+    }
+  };
+
+  /* ---------- данные, не зависящие от языка страницы ---------- */
+  var CARD_DATA = {
+    ru: {district:"Раваи", term:"1 месяц", checkin:"с 15 декабря", bedrooms:"2", budget:"40 000 THB / мес", clientLang:"русский"},
+    th: {district:"ราไวย์", term:"1 เดือน", checkin:"วันที่ 15 ธันวาคม", bedrooms:"2 ห้อง", budget:"40,000 บาท / เดือน", clientLang:"รัสเซีย"}
+  };
+
+  /* Тайский агент в демонстрации — женщина (Панджа): частицы ค่ะ/คะ, не ค่ะ/ครับ. */
+  var CHAT_MESSAGES = [
+    {from:"agent",   ru:"Здравствуйте! Есть кондо с одной спальней в Раваи, 35 000 бат в месяц.", th:"สวัสดีค่ะ มีคอนโด 1 ห้องนอนที่ราไวย์ ราคา 35,000 บาทต่อเดือนค่ะ", en:"Hello! There's a one-bedroom condo in Rawai, 35,000 baht a month."},
+    {from:"manager", ru:"Добрый день! Клиенту нужно 2 спальни и бюджет 40 000 бат. Заезд 15 декабря на месяц.", th:"สวัสดีค่ะ ลูกค้าต้องการ 2 ห้องนอน งบประมาณ 40,000 บาท เข้าพักวันที่ 15 ธันวาคม เป็นเวลา 1 เดือนค่ะ", en:"Hi! The client needs 2 bedrooms with a budget of 40,000 baht. Move-in December 15 for one month."},
+    {from:"agent",   ru:"Есть вилла с 2 спальнями у пляжа, сейчас высокий сезон — 42 000 бат.", th:"มีวิลล่า 2 ห้องนอนใกล้หาด ราคาช่วงนี้ 42,000 บาท เพราะเป็นช่วงไฮซีซั่นค่ะ", en:"There's a 2-bedroom villa near the beach — it's high season, so 42,000 baht."},
+    {from:"manager", ru:"Это чуть выше бюджета. Возможна скидка, если клиент останется на два месяца?", th:"แพงกว่างบนิดหน่อยค่ะ ถ้าลูกค้าพักสองเดือนลดราคาได้ไหมคะ", en:"That's a bit above budget. Any discount if the client stays for two months?"},
+    {from:"agent",   ru:"Да, я поговорила с собственником — сделаем 39 000 бат в месяц.", th:"ได้ค่ะ ดิฉันคุยกับเจ้าของแล้ว ลดให้เป็น 39,000 บาทต่อเดือนค่ะ", en:"Yes, I talked to the owner — let's make it 39,000 baht a month."}
+  ];
+
+  var DEMO_TRANSLATIONS = [
+    {ru:"Хорошо, уточню у клиента и вернусь с ответом.", th:"ได้ค่ะ เดี๋ยวดิฉันสอบถามลูกค้าแล้วจะแจ้งกลับนะคะ", en:"Okay, I'll check with the client and get back to you."},
+    {ru:"Спасибо, жду фото и договор аренды.", th:"ขอบคุณค่ะ รอดูรูปกับสัญญาเช่าด้วยนะคะ", en:"Thanks, I'll wait for the photos and the rental contract."},
+    {ru:"Клиент подтвердил даты, готовим бронирование.", th:"ลูกค้ายืนยันวันที่แล้วค่ะ เตรียมทำการจองได้เลยค่ะ", en:"The client confirmed the dates, we're preparing the booking."},
+    {ru:"Можно ли посмотреть объект видео-звонком?", th:"ขอดูที่พักผ่านวิดีโอคอลได้ไหมคะ", en:"Could we view the property on a video call?"}
+  ];
+
+  var SEASON_PRICE = {high:42000, shoulder:34000, low:30000};
+  var COMMISSION_RATE = 0.12;
+
+  var PROTO_LINKS = [
+    {key:"manager", href:"/sabaan/app/#/manager/inbox"},
+    {key:"agent", href:"/sabaan/app/#/agent/inbox"},
+    {key:"owner", href:"/sabaan/app/#/owner/view/o1"},
+    {key:"catalog", href:"/sabaan/app/#/client/catalog"},
+    {key:"scenario", href:"/sabaan/app/#/"}
+  ];
+
+  /* Демо-объекты для раздела «Каталог». Взято из app/src/demo/properties.ts (высокий сезон,
+     цена собственника и комиссия агента раздельно) и app/src/demo/calendar.ts (сегменты
+     занятости на 60 дней от 2026-12-01 — свободно/в переговорах/подтверждено/занято вручную). */
+  var CATALOG_PROPERTIES = [
+    {
+      id: "p-villa-rawai",
+      title: {ru:"Вилла с 2 спальнями в Раваи", en:"2-bedroom villa in Rawai", th:"วิลล่า 2 ห้องนอนที่ราไวย์"},
+      district: "rawai", type: "villa", bedrooms: 2,
+      ownerPrice: 37000, commission: 5000,
+      calendar: [{status:"free", days:14}, {status:"negotiating", days:31}, {status:"free", days:15}]
+    },
+    {
+      id: "p-condo-bangtao",
+      title: {ru:"Кондо с 1 спальней в Банг Тао", en:"1-bedroom condo in Bang Tao", th:"คอนโด 1 ห้องนอนที่บางเทา"},
+      district: "bangtao", type: "1br", bedrooms: 1,
+      ownerPrice: 35000, commission: 5000,
+      calendar: [{status:"confirmed", days:14}, {status:"free", days:21}, {status:"confirmed", days:25}]
+    },
+    {
+      id: "p-kata-studio",
+      title: {ru:"Студия в Ката", en:"Studio in Kata", th:"สตูดิโอที่กะตะ"},
+      district: "kata", type: "studio", bedrooms: 0,
+      ownerPrice: 21500, commission: 3500,
+      calendar: [{status:"free", days:40}, {status:"confirmed", days:16}, {status:"free", days:4}]
+    },
+    {
+      id: "p-house-chalong",
+      title: {ru:"Дом с 3 спальнями в Чалонге", en:"3-bedroom house in Chalong", th:"บ้าน 3 ห้องนอนที่ฉลอง"},
+      district: "chalong", type: "3br", bedrooms: 3,
+      ownerPrice: 39500, commission: 5500,
+      calendar: [{status:"confirmed", days:60}]
+    }
+  ];
+
+  /* Фото — hero + по одной карточке на каждый демо-объект каталога.
+     Ширина/высота — фактические размеры файлов в img/b/, для атрибутов width/height. */
+  var PHOTOS = {
+    hero: {src:"img/b/hero.jpg", w:1440, h:810},
+    "p-villa-rawai": {src:"img/b/villa-rawai.jpg", w:800, h:534},
+    "p-condo-bangtao": {src:"img/b/condo-bangtao.jpg", w:800, h:1200},
+    "p-kata-studio": {src:"img/b/studio-kata.jpg", w:800, h:534},
+    "p-house-chalong": {src:"img/b/house-chalong.jpg", w:800, h:575}
+  };
+
+  /* ---------- состояние ---------- */
+  var state = {
+    lang: "ru",
+    cardLang: "ru",
+    season: "high",
+    demoIdx: 0
+  };
+
+  try {
+    var saved = window.localStorage.getItem("sabaan-lang");
+    if (saved && DICT[saved]) state.lang = saved;
+  } catch (e) { /* localStorage недоступен — остаёмся на ru */ }
+
+  /* ---------- утилиты ---------- */
+  function el(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[<>&"]/g, function(c){ return {"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;"}[c]; }); }
+  function set(id, text){ var e = el(id); if (e) e.textContent = text; }
+  function money(n, lang){
+    var num = n.toLocaleString("en-US");
+    return lang === "th" ? num + " บาท" : num + " THB";
+  }
+
+  function showToast(msg){
+    var t = el("toast");
+    t.textContent = msg;
+    t.classList.add("on");
+    clearTimeout(t._h);
+    t._h = setTimeout(function(){ t.classList.remove("on"); }, 2000);
+  }
+
+  function copyText(text){
+    var done = function(){ showToast(DICT[state.lang].chat.copied); };
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done).catch(function(){ fallbackCopy(text, done); });
+        return;
+      }
+    } catch (e) { /* переходим к запасному способу */ }
+    fallbackCopy(text, done);
+  }
+
+  function fallbackCopy(text, done){
+    try {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      ta.setSelectionRange(0, text.length);
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      showToast(text);
+    }
+  }
+
+  /* ---------- фото направления ---------- */
+  function updateHeroPhoto(){
+    var d = DICT[state.lang];
+    var photo = PHOTOS.hero;
+    var img = el("hero-img");
+    if (!img) return;
+    img.src = photo.src;
+    img.width = photo.w;
+    img.height = photo.h;
+    img.alt = d.hero.photoAlt;
+  }
+
+  /* ---------- рендер статичных секций ---------- */
+  function renderStatic(lang){
+    var d = DICT[lang];
+    document.documentElement.lang = lang;
+    document.title = d.title;
+    document.body.classList.toggle("lang-th", lang === "th");
+
+    set("topbar-proto-text", d.nav.protoLink);
+
+    set("hero-kicker", d.hero.kicker);
+    set("hero-slogan", d.hero.slogan);
+    set("hero-lead", d.hero.lead);
+    el("hero-badges").innerHTML = d.hero.badges.map(function(b){ return '<span class="badge">' + esc(b) + "</span>"; }).join("");
+    set("hero-cta1", d.hero.cta1);
+    set("hero-cta2", d.hero.cta2);
+    set("hero-cta3", d.hero.cta3);
+
+    set("why-heading", d.why.heading);
+    set("why-idea", d.why.idea);
+    set("why-goals-heading", d.why.goalsHeading);
+    el("why-goals-list").innerHTML = d.why.goals.map(function(g){ return "<li>" + esc(g) + "</li>"; }).join("");
+    set("why-pains-heading", d.why.painsHeading);
+    el("why-pains-grid").innerHTML = ["client", "agent", "owner"].map(function(role){
+      var items = d.why.pains[role].map(function(p){ return "<li>" + esc(p) + "</li>"; }).join("");
+      return '<div class="pain-col"><span class="pain-label role-' + role + '">' + esc(d.why.painLabels[role]) +
+        '</span><ul class="pain-list">' + items + "</ul></div>";
+    }).join("");
+
+    set("how-heading", d.how.heading);
+    el("how-steps").innerHTML = d.how.steps.map(function(s, i){
+      return '<div class="step card"><div class="step-num">' + (i+1) + '</div><h3>' + esc(s.t) + '</h3><p>' + esc(s.d) + '</p></div>';
+    }).join("");
+
+    set("chat-heading", d.chat.heading);
+    set("chat-desc", d.chat.desc);
+    set("chat-demo-note", d.chat.demoNote);
+    set("chat-send", d.chat.send);
+    el("chat-input").placeholder = d.chat.placeholder;
+
+    set("req-heading", d.req.heading);
+    set("req-desc", d.req.desc);
+    el("req-lang-group").setAttribute("aria-label", d.req.heading);
+
+    set("catalog-heading", d.catalog.heading);
+    set("catalog-lead", d.catalog.lead);
+    set("catalog-example-line", d.catalog.exampleLine);
+    set("catalog-viewall", d.catalog.viewAllBtn);
+    set("catalog-note", d.catalog.note);
+
+    set("agent-heading", d.agent.heading);
+    set("agent-intro", d.agent.intro);
+    el("agent-bullets").innerHTML = d.agent.bullets.map(function(b, i){
+      return '<li><span class="ico">' + (i+1) + '</span><span>' + esc(b) + '</span></li>';
+    }).join("");
+    set("agent-cta", d.agent.cta);
+
+    set("trust-heading", d.trust.heading);
+    set("trust-intro", d.trust.intro);
+    el("trust-bullets").innerHTML = d.trust.bullets.map(function(b, i){
+      return '<li><span class="ico">' + (i+1) + '</span><span>' + esc(b) + '</span></li>';
+    }).join("");
+    set("trust-note", d.trust.note);
+
+    set("season-heading", d.season.heading);
+    set("season-desc", d.season.desc);
+    set("season-example", d.season.example);
+    set("season-tab-high", d.season.tabHigh);
+    set("season-tab-shoulder", d.season.tabShoulder);
+    set("season-tab-low", d.season.tabLow);
+    set("season-per-month", d.season.perMonth);
+    set("season-two-months-label", d.season.twoMonthsLabel);
+    set("season-commission-label", d.season.commissionLabel);
+    el("season-group").setAttribute("aria-label", d.season.heading);
+
+    set("market-heading", d.market.heading);
+    el("market-stats").innerHTML = d.market.stats.map(function(s){
+      return '<div class="stat card"><b>' + esc(s.v) + '</b><p>' + esc(s.c) + '</p><small>' + esc(s.s) + '</small></div>';
+    }).join("");
+
+    set("caveats-heading", d.caveats.heading);
+    el("caveats-list").innerHTML = d.caveats.items.map(function(c){ return "<li>" + esc(c) + "</li>"; }).join("");
+
+    set("proto-heading", d.prototype.heading);
+    set("proto-lead", d.prototype.lead);
+    el("proto-cards").innerHTML = PROTO_LINKS.map(function(link){
+      var c = d.prototype.cards[link.key];
+      return '<a class="proto-card card" href="' + esc(link.href) + '"><h3>' + esc(c.title) + '</h3><p>' + esc(c.desc) + '</p></a>';
+    }).join("");
+    set("proto-note", d.prototype.note);
+
+    set("cta-heading", d.cta.heading);
+    set("cta-text", d.cta.text);
+    set("cta-btn-tg", d.cta.btnTg);
+    set("cta-btn-mail", d.cta.btnMail);
+
+    set("footer-text", d.footer.text);
+    set("footer-sources", d.footer.sources);
+
+    document.querySelectorAll("#langsw button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.lang === lang ? "true" : "false");
+    });
+
+    updateHeroPhoto();
+    renderChat();
+    renderCard();
+    renderCatalog();
+    renderSeasons();
+  }
+
+  /* ---------- чат ----------
+     Демо не зависит от языка страницы: для каждого сообщения большой текст —
+     перевод на язык ДРУГОЙ стороны (что реально получает собеседник), а
+     цитата снизу — оригинал на языке автора. Правило фиксировано по m.from,
+     RU/EN/TH переключатель языка страницы меняет только интерфейсные подписи. */
+  function nativeLangOf(role){ return role === "agent" ? "th" : "ru"; }
+  function otherLangOf(role){ return role === "agent" ? "ru" : "th"; }
+
+  function renderChat(){
+    var d = DICT[state.lang].chat;
+
+    set("chat-phone-title", d.phoneTitle);
+    set("chat-phone-sub", d.phoneSub);
+    el("chat-input").placeholder = d.placeholder;
+
+    var html = CHAT_MESSAGES.map(function(m){ return chatBubbleHtml(m, d); }).join("");
+    el("chat-body").innerHTML = html;
+    bindOriginalButtons();
+    var body = el("chat-body");
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function chatBubbleHtml(m, d){
+    var translatedLang = otherLangOf(m.from);
+    var originalLang = nativeLangOf(m.from);
+    var big = m[translatedLang];
+    var original = m[originalLang];
+    var alignRight = m.from === "manager";
+
+    var rowClass = alignRight ? "bubble-row me" : "bubble-row";
+    var mainHtml = '<div class="bubble-main" lang="' + translatedLang + '">' + esc(big) + "</div>";
+    var quoteHtml = '<button type="button" class="bubble-orig" data-copy="' + esc(original).replace(/"/g, "&quot;") +
+      '" lang="' + originalLang + '" aria-label="' + esc(d.original) + ": " + esc(original) + '">' +
+      '<span class="q">“</span>' + esc(original) + '<span class="q">”</span></button>';
+    return '<div class="' + rowClass + '"><div class="bubble">' + mainHtml + quoteHtml + "</div></div>";
+  }
+
+  function bindOriginalButtons(){
+    document.querySelectorAll(".bubble-orig").forEach(function(b){
+      b.onclick = function(){ copyText(b.dataset.copy); };
+    });
+  }
+
+  function sendChatMessage(text){
+    var isThai = /[฀-๿]/.test(text);
+    var role = isThai ? "agent" : "manager";
+    var pair = DEMO_TRANSLATIONS[state.demoIdx % DEMO_TRANSLATIONS.length];
+    state.demoIdx++;
+    var msg = {from: role, en: pair.en};
+    if (isThai) { msg.th = text; msg.ru = pair.ru; }
+    else { msg.ru = text; msg.th = pair.th; }
+    CHAT_MESSAGES.push(msg);
+    renderChat();
+  }
+
+  /* ---------- карточка запроса ---------- */
+  function renderCard(){
+    var d = DICT[state.lang].req;
+    var data = CARD_DATA[state.cardLang];
+    var langAttr = state.cardLang;
+    var rows = [
+      ["district", d.fields.district],
+      ["term", d.fields.term],
+      ["checkin", d.fields.checkin],
+      ["bedrooms", d.fields.bedrooms],
+      ["budget", d.fields.budget],
+      ["clientLang", d.fields.clientLang]
+    ];
+    el("req-fields").innerHTML = rows.map(function(r){
+      return '<div class="req-field"><b>' + esc(r[1]) + '</b><span lang="' + langAttr + '">' + esc(data[r[0]]) + "</span></div>";
+    }).join("");
+    document.querySelectorAll("#req-lang-group button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.cardlang === state.cardLang ? "true" : "false");
+    });
+  }
+
+  /* ---------- каталог ---------- */
+  function renderCatalog(){
+    var d = DICT[state.lang].catalog;
+    var moneyLang = state.lang === "th" ? "th" : "en";
+    var CAL_TOTAL_DAYS = 60;
+    var photos = PHOTOS;
+
+    el("catalog-cards").innerHTML = CATALOG_PROPERTIES.map(function(p){
+      var subParts = [d.districts[p.district], d.types[p.type]];
+      if (p.bedrooms > 0) subParts.push(d.bedrooms[p.bedrooms]);
+      var sub = subParts.join(" · ");
+      var total = p.ownerPrice + p.commission;
+      var barHtml = p.calendar.map(function(seg){
+        var pct = (seg.days / CAL_TOTAL_DAYS * 100).toFixed(2);
+        return '<div class="catalog-cal-seg cal-c-' + seg.status + '" style="width:' + pct + '%"></div>';
+      }).join("");
+      var href = "/sabaan/app/#/client/property/" + p.id;
+      var photo = photos[p.id];
+      var title = p.title[state.lang];
+      var photoAlt = title + ". " + d.photoAltSuffix;
+      return '<a class="catalog-card card" href="' + esc(href) + '">' +
+        '<div class="catalog-photo-wrap">' +
+          '<img src="' + esc(photo.src) + '" width="' + photo.w + '" height="' + photo.h + '" alt="' + esc(photoAlt) + '" loading="lazy">' +
+          '<span class="catalog-district-badge">' + esc(d.districts[p.district]) + '</span>' +
+          '<span class="catalog-example-badge">' + esc(d.exampleBadge) + '</span>' +
+        '</div>' +
+        '<div class="catalog-card-body">' +
+        '<h3>' + esc(title) + '</h3>' +
+        '<p class="catalog-sub">' + esc(sub) + '</p>' +
+        '<div class="catalog-price">' +
+          '<span>' + esc(d.ownerPriceLabel) + ': <b>' + money(p.ownerPrice, moneyLang) + '</b></span>' +
+          '<span>' + esc(d.commissionLabel) + ': <b>' + money(p.commission, moneyLang) + '</b></span>' +
+        '</div>' +
+        '<div class="catalog-total">' + money(total, moneyLang) + ' <small>' + esc(d.perMonth) + '</small></div>' +
+        '<div class="catalog-cal">' +
+          '<div class="catalog-cal-bar">' + barHtml + '</div>' +
+          '<p class="catalog-cal-caption">' + esc(d.calendarCaption) + '</p>' +
+        '</div>' +
+        '<span class="btn btn-primary">' + esc(d.bookBtn) + '</span>' +
+        '</div>' +
+        '</a>';
+    }).join("");
+
+    el("catalog-legend").innerHTML = ["free", "negotiating", "confirmed", "blocked"].map(function(s){
+      return '<span><i class="cal-c-' + s + '"></i>' + esc(d.legend[s]) + '</span>';
+    }).join("");
+  }
+
+  /* ---------- сезоны ---------- */
+  function renderSeasons(){
+    var d = DICT[state.lang].season;
+    var price = SEASON_PRICE[state.season];
+    var lang = state.lang === "th" ? "th" : "ru";
+
+    document.querySelectorAll("#season-group button").forEach(function(b){
+      b.setAttribute("aria-pressed", b.dataset.season === state.season ? "true" : "false");
+    });
+
+    set("season-price", money(price, lang === "th" ? "th" : "en"));
+    set("season-two-months-value", money(price * 2, lang === "th" ? "th" : "en"));
+    set("season-commission-value", money(Math.round(price * COMMISSION_RATE), lang === "th" ? "th" : "en"));
+
+    var dates, note;
+    if (state.season === "high") { dates = d.highDates; note = d.highNote; }
+    else if (state.season === "shoulder") { dates = d.shoulderDates; note = d.shoulderNote; }
+    else { dates = d.lowDates; note = d.lowNote; }
+    set("season-dates", dates);
+    set("season-note", note);
+  }
+
+  /* ---------- обработчики ---------- */
+  document.querySelectorAll("#langsw button").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.lang = b.dataset.lang;
+      try { window.localStorage.setItem("sabaan-lang", state.lang); } catch (e) { /* игнорируем */ }
+      renderStatic(state.lang);
+    });
+  });
+
+  document.querySelectorAll("#req-lang-group button").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.cardLang = b.dataset.cardlang;
+      renderCard();
+    });
+  });
+
+  document.querySelectorAll("#season-group button").forEach(function(b){
+    b.addEventListener("click", function(){
+      state.season = b.dataset.season;
+      renderSeasons();
+    });
+  });
+
+  el("chat-form").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var input = el("chat-input");
+    var text = input.value.trim();
+    if (!text) return;
+    sendChatMessage(text);
+    input.value = "";
+    input.focus();
+  });
+
+  /* ---------- первый рендер ---------- */
+  renderStatic(state.lang);
+})();
+</script>
+</body>
+</html>
