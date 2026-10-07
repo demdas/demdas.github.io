@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F5F2EC">
+<!-- Язык и тема выставляются до отрисовки: страница не мигает светлым при тёмной теме.
+     Ключи localStorage общие с прототипом (тот же origin): vg-theme = system|light|dark, vg-lang = ru|en|zh. ?lang= важнее и записывается. -->
+<script>
+(function (d) {
+  var s = null, th = 'system', lg = null, q = null;
+  try { s = window.localStorage; th = s.getItem('vg-theme'); lg = s.getItem('vg-lang'); q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+  if (th !== 'light' && th !== 'dark') th = 'system';
+  if (q === 'ru' || q === 'en' || q === 'zh') { lg = q; try { s.setItem('vg-lang', q); } catch (e) {} }
+  if (lg !== 'ru' && lg !== 'en' && lg !== 'zh') { var n = (navigator.language || '').toLowerCase(); lg = n.indexOf('zh') === 0 ? 'zh' : n.indexOf('ru') === 0 ? 'ru' : 'en'; }
+  var dk = th === 'dark' || (th === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  d.setAttribute('data-theme', dk ? 'dark' : 'light'); d.setAttribute('data-pref', th);
+  d.setAttribute('data-lang', lg); d.lang = lg === 'zh' ? 'zh-Hans' : lg;
+  var m = d.querySelector('meta[name=theme-color]'); if (m) m.content = dk ? '#0B100F' : '#F5F2EC';
+  if (lg === 'zh') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.setAttribute('data-zh', ''); l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap'; document.head.appendChild(l); }
+})(document.documentElement);
+</script>
+<title data-i18n="page_title">Villa Group · система для застройщика: описание</title>
+<meta name="description" content="Villa Group: описание системы для застройщика на Пхукете. Лоты и продажи, кабинет покупателя, консьерж, магазин, сводка партнёра." data-i18n-attr="content:meta_desc">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@600&display=swap">
+<link rel="stylesheet" href="landing.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+</defs></svg>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top" data-i18n-attr="aria-label:ui_home" aria-label="demda.pro, наверх"><b class="bm">demda.pro</b><span class="bn" data-i18n="topbar_name">demda.pro · система для застройщика</span></a>
+  <div class="sp"></div>
+  <a class="btn btn-o" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span></a>
+  <div class="pop">
+    <button class="ctl" id="lang-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-menu" data-i18n-attr="aria-label:ui_lang" aria-label="Язык"><span id="lang-cur">RU</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="menu" id="lang-menu" role="menu" hidden>
+      <button type="button" role="menuitemradio" aria-checked="true" data-v="ru"><span>Русский</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="en"><span>English</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="zh"><span>简体中文</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+    </div>
+  </div>
+  <div class="pop">
+    <button class="ctl" id="theme-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu" aria-label="Тема">
+      <svg class="ti ti-system" aria-hidden="true"><use href="#i-monitor"/></svg><svg class="ti ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ti ti-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+    </button>
+    <div class="menu" id="theme-menu" role="menu" hidden>
+      <button type="button" role="menuitemradio" aria-checked="true" data-v="system"><svg aria-hidden="true"><use href="#i-monitor"/></svg><span data-i18n="ui_theme_system">Как в системе</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="light"><svg aria-hidden="true"><use href="#i-sun"/></svg><span data-i18n="ui_theme_light">Светлая</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="dark"><svg aria-hidden="true"><use href="#i-moon"/></svg><span data-i18n="ui_theme_dark">Тёмная</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+    </div>
+  </div>
+</div></header>
+
+<main id="top">
+<section class="hero wrap">
+  <h1 data-i18n="h1">Виллы, магазин и консьерж в одной системе</h1>
+  <p class="lead" data-i18n="lead">Покупатель следит за стройкой и платежами на своём языке. Вы видите три бизнеса в одних цифрах.</p>
+  <div class="hero-cta">
+    <a class="btn btn-p btn-l" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <p class="note" data-i18n="demo_note">Villa Group и проект Hillside 19 — названия для демо. В вашей системе будут ваши проекты и ваши данные.</p>
+  </div>
+  <div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><picture><source media="(max-width:767px)" srcset="img/d-hero-m-800.webp"><img src="img/d-hero-1600.webp" width="1600" height="900" fetchpriority="high" decoding="async" alt="Готовая вилла с плоской кровлей и бассейном на склоне холма, вокруг тропическая зелень" data-i18n-attr="alt:alt_d_hero" onerror="this.hidden=true"></picture></div>
+</section>
+
+<section class="sec wrap rv pain">
+  <h2 data-i18n="pain_title">Три бизнеса, одни и те же клиенты</h2>
+  <div class="pain-t" data-i18n="pain_text" data-i18n-as="p"><p>Человек покупает у вас виллу. Потом заказывает в вашем магазине мебель и отделку. После передачи ключей пишет консьержу: встретить в аэропорту, убрать дом, починить кондиционер.</p><p>Сейчас это три отдельные истории. Платежи записаны на листочке и в таблице. Фото со стройки уходят в чат. Заявки консьержу приходят в личные сообщения, а исполнители отвечают по-тайски. Инвестор из Китая спрашивает, как идёт стройка, и ответ собирают вручную. Сколько один клиент принёс всем трём бизнесам, никто не скажет.</p></div>
+  <ul class="biz">
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><!-- d-biz-build: кадр на замене (-v2), до прихода стоит заглушка; вернуть img по образцу соседних --></div><b data-i18n="biz_build" data-i18n-i="0">Застройка</b><span data-i18n="biz_build" data-i18n-i="1">Виллы на продажу</span></li>
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-biz-shop-800.webp" srcset="img/d-biz-shop-800.webp 800w, img/d-biz-shop-1600.webp 1600w" sizes="(min-width:1024px) 390px, (min-width:768px) 33vw, 82vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Шоурум отделки и мебели: стенд с образцами плитки и камня, диван и светильник" data-i18n-attr="alt:alt_d_biz_shop" onerror="this.hidden=true"></div><b data-i18n="biz_shop" data-i18n-i="0">Магазин</b><span data-i18n="biz_shop" data-i18n-i="1">Мебель и отделка</span></li>
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-biz-service-800.webp" srcset="img/d-biz-service-800.webp 800w, img/d-biz-service-1600.webp 1600w" sizes="(min-width:1024px) 390px, (min-width:768px) 33vw, 82vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Горничная заправляет кровать в спальне виллы" data-i18n-attr="alt:alt_d_biz_service_maid" onerror="this.hidden=true"></div><b data-i18n="biz_service" data-i18n-i="0">Консьерж</b><span data-i18n="biz_service" data-i18n-i="1">Трансфер, уборка, ремонт</span></li>
+  </ul>
+</section>
+
+<section class="sec wrap" id="modules">
+  <h2 class="rv" data-i18n="modules_title">Из чего состоит система</h2>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">01</span><h3 data-i18n="m1_title">Лоты и продажи</h3><p data-i18n="m1_text">Все виллы проекта на одной схеме: свободна, бронь, продана и сколько построено. У каждого покупателя карточка с графиком платежей по этапам стройки. Сразу видно, какой платёж следующий и какой просрочен. Сделки идут по воронке, от первого звонка до договора. По каждому клиенту записано, кто его привёл: агент, сайт, рекомендация или партнёр в Китае.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-1-ru-light-800.webp"><img src="img/demo/frame-1-ru-light-1600.webp" srcset="img/demo/frame-1-ru-light-800.webp 800w, img/demo/frame-1-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Лоты» в демо: 19 вилл проекта Hillside 19, у каждой статус и полоса готовности стройки" data-i18n-attr="alt:alt_frame_1" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-1-ru-dark-800.webp"><img src="img/demo/frame-1-ru-dark-1600.webp" srcset="img/demo/frame-1-ru-dark-800.webp 800w, img/demo/frame-1-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Лоты» в демо: 19 вилл проекта Hillside 19, у каждой статус и полоса готовности стройки" data-i18n-attr="alt:alt_frame_1" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_1">Лоты. Все 19 вилл Hillside 19 на одной схеме. Цвет показывает статус, полоса показывает, сколько построено.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">02</span><h3 data-i18n="m2_title">Кабинет покупателя и инвестора</h3><p data-i18n="m2_text">Покупатель открывает ссылку и видит свою виллу. Там этапы стройки с фото и отчётами, сколько оплачено и сколько осталось, договоры и акты. Кабинет работает на русском, английском и китайском, язык покупатель выбирает сам. Инвестор видит сводку по всему проекту: сколько вилл продано, сколько денег пришло, на каком этапе стройка.</p></div>
+    <figure class="mod-f" data-frame="zh"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-2-zh-light-800.webp"><img src="img/demo/frame-2-zh-light-1600.webp" srcset="img/demo/frame-2-zh-light-800.webp 800w, img/demo/frame-2-zh-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Кабинет покупателя на китайском: этапы стройки с фото, сколько оплачено и сколько осталось" data-i18n-attr="alt:alt_frame_2" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-2-zh-dark-800.webp"><img src="img/demo/frame-2-zh-dark-1600.webp" srcset="img/demo/frame-2-zh-dark-800.webp 800w, img/demo/frame-2-zh-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Кабинет покупателя на китайском: этапы стройки с фото, сколько оплачено и сколько осталось" data-i18n-attr="alt:alt_frame_2" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_2">Кабинет покупателя на китайском. Этапы стройки с фото, оплачено и осталось, договоры и акты.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">03</span><h3 data-i18n="m3_title">Консьерж</h3><p data-i18n="m3_text">Владелец виллы оставляет заявку: встреча в аэропорту, трансфер, уборка, ремонт. Диспетчер назначает исполнителя и видит, сколько времени заявка ждёт ответа. Переписка переводится сама. Владелец пишет по-русски или по-китайски, исполнитель читает по-тайски. Когда работа сделана, владелец получает счёт.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-3-ru-light-800.webp"><img src="img/demo/frame-3-ru-light-1600.webp" srcset="img/demo/frame-3-ru-light-800.webp 800w, img/demo/frame-3-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Заявка К-118 в консьерже: встреча в аэропорту, переписка с владельцем и перевод сообщений" data-i18n-attr="alt:alt_frame_3" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-3-ru-dark-800.webp"><img src="img/demo/frame-3-ru-dark-1600.webp" srcset="img/demo/frame-3-ru-dark-800.webp 800w, img/demo/frame-3-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Заявка К-118 в консьерже: встреча в аэропорту, переписка с владельцем и перевод сообщений" data-i18n-attr="alt:alt_frame_3" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_3">Консьерж. Владелец и диспетчер переписываются в одном чате, сообщения переводятся. Таймер показывает, сколько заявка ждёт ответа.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">04</span><h3 data-i18n="m4_title">Магазин мебели и отделки</h3><p data-i18n="m4_text">Магазин работает как отдельный бизнес. В каталоге отделка, сантехника, кухни, мебель, свет и текстиль. По каждой позиции видно, сколько лежит на складе и что везут под заказ. Цены две: розничная и для партнёров. Заказы трёх видов: на ваши стройки, от других застройщиков и подрядчиков, от покупателей и владельцев вилл. У каждой поставки свой срок, выручка считается по каждому виду заказов. Покупатель виллы выбирает отделку прямо в своём кабинете, и заказ сразу попадает в магазин.</p><div class="mod-w"><div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-warehouse-800.webp" srcset="img/d-warehouse-800.webp 800w, img/d-warehouse-1600.webp 1600w" sizes="(min-width:1024px) 420px, 100vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Склад магазина: стеллажи с коробками и паллеты с плиткой" data-i18n-attr="alt:alt_d_warehouse" onerror="this.hidden=true"></div></div></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-4-ru-light-800.webp"><img src="img/demo/frame-4-ru-light-1600.webp" srcset="img/demo/frame-4-ru-light-800.webp 800w, img/demo/frame-4-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Заказы» магазина: заказы трёх каналов со статусом, суммой и сроком поставки" data-i18n-attr="alt:alt_frame_4" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-4-ru-dark-800.webp"><img src="img/demo/frame-4-ru-dark-1600.webp" srcset="img/demo/frame-4-ru-dark-800.webp 800w, img/demo/frame-4-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Заказы» магазина: заказы трёх каналов со статусом, суммой и сроком поставки" data-i18n-attr="alt:alt_frame_4" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_4">Магазин. Заказы своих строек, подрядчиков и покупателей в одном списке. У каждой позиции видно склад и срок поставки.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">05</span><h3 data-i18n="m5_title">Сводка партнёра</h3><p data-i18n="m5_text">Три бизнеса на одном экране. Сколько вилл продано и сколько денег пришло. Какие платежи просрочены. Сколько за месяц заработали консьерж и магазин. Отдельно видно, сколько каждый клиент принёс всем трём бизнесам. Суммы показываются в батах, долларах или юанях.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-5-ru-light-800.webp"><img src="img/demo/frame-5-ru-light-1600.webp" srcset="img/demo/frame-5-ru-light-800.webp 800w, img/demo/frame-5-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Сводка партнёра в демо: продажи вилл, поступления, консьерж и магазин на одном экране" data-i18n-attr="alt:alt_frame_5" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-5-ru-dark-800.webp"><img src="img/demo/frame-5-ru-dark-1600.webp" srcset="img/demo/frame-5-ru-dark-800.webp 800w, img/demo/frame-5-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Сводка партнёра в демо: продажи вилл, поступления, консьерж и магазин на одном экране" data-i18n-attr="alt:alt_frame_5" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_5">Сводка партнёра. Стройка, продажи, консьерж и магазин на одном экране. Суммы в батах, долларах или юанях.</figcaption></figure>
+  </article>
+</section>
+
+<section class="sec wrap rv">
+  <h2 data-i18n="journey_title">Что видит покупатель от брони до ключей</h2>
+  <ol class="jr">
+    <li><i class="jn">1</i><h3 data-i18n="journey_1" data-i18n-as="jh">Покупает виллу.</h3><p data-i18n="journey_1" data-i18n-as="jt">Менеджер ставит бронь, и вилла на схеме становится занятой. Покупатель получает ссылку на свой кабинет.</p></li>
+    <li><i class="jn">2</i><h3 data-i18n="journey_2" data-i18n-as="jh">Следит за стройкой на своём языке.</h3><p data-i18n="journey_2" data-i18n-as="jt">У каждого этапа фото и короткий отчёт. Покупатель из Шанхая читает по-китайски, из Москвы по-русски.</p></li>
+    <li><i class="jn">3</i><h3 data-i18n="journey_3" data-i18n-as="jh">Платит по этапам.</h3><p data-i18n="journey_3" data-i18n-as="jt">В кабинете видно, сколько платить дальше и до какого числа. Деньги пришли — менеджер отмечает платёж, и в кабинете появляется квитанция. Сами деньги идут как сейчас: система их не принимает, она показывает график.</p></li>
+    <li><i class="jn">4</i><h3 data-i18n="journey_4" data-i18n-as="jh">Выбирает отделку и мебель в вашем магазине.</h3><p data-i18n="journey_4" data-i18n-as="jt">Варианты берёт из каталога, смета пересчитывается сразу. Заказ уходит в магазин и привязан к его вилле.</p></li>
+    <li><i class="jn">5</i><h3 data-i18n="journey_5" data-i18n-as="jh">Получает ключи и пользуется консьержем.</h3><p data-i18n="journey_5" data-i18n-as="jt">Встречу в аэропорту, уборку перед приездом и мелкий ремонт заказывает из того же кабинета.</p></li>
+  </ol>
+</section>
+
+<section class="sec wrap rv">
+  <h2 data-i18n="process_title">Как пойдёт работа</h2>
+  <ol class="steps">
+    <li><span class="sn">1</span><p data-i18n="process_steps" data-i18n-i="0">Берём один ваш проект. Нужны список вилл, графики оплат и несколько фото со стройки. Разбираемся, как вы продаёте сейчас и кто что должен видеть.</p></li>
+    <li><span class="sn">2</span><p data-i18n="process_steps" data-i18n-i="1">Через две недели после получения данных показываем первые экраны. На них ваши виллы, ваши покупатели и ваши платежи. После показа считаем цену первой версии.</p></li>
+    <li><span class="sn">3</span><p data-i18n="process_steps" data-i18n-i="2">Первая версия, на которой можно работать, готова через 8 недель от начала. В неё входят лоты, продажи и кабинет покупателя и инвестора на трёх языках. Китайские тексты кабинета до запуска вычитывает носитель языка.</p></li>
+    <li><span class="sn">4</span><p data-i18n="process_steps" data-i18n-i="3">Потом подключаем консьержа и магазин. Они встают на ту же базу клиентов и вилл, переделывать ничего не придётся.</p></li>
+  </ol>
+  <p class="pnote" data-i18n="process_note">Систему ставим на сервер в Азии. Сервер ваш, данные тоже ваши.</p>
+</section>
+
+<section class="sec wrap rv">
+  <div class="cta">
+    <div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-interior-800.webp" srcset="img/d-interior-800.webp 800w, img/d-interior-1600.webp 1600w" sizes="(min-width:1024px) 520px, 100vw" width="1600" height="900" loading="lazy" decoding="async" alt="Гостиная готовой виллы с выходом на террасу и бассейн, отделка из дерева и камня" data-i18n-attr="alt:alt_d_interior" onerror="this.hidden=true"></div>
+    <div class="cta-t">
+      <h2 data-i18n="cta_title">Откройте демо и покажите партнёрам</h2>
+      <p data-i18n="cta_text">В демо работает каждая кнопка. Можно поставить бронь, отметить платёж, переключить кабинет на китайский, собрать заказ в магазине. Данные выдуманы, демо можно сбросить в любой момент.</p>
+      <a class="btn btn-p btn-l" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <p class="contact" data-i18n="contact" data-i18n-as="contact">Пишите Дмитрию в Telegram <a href="https://t.me/demda" rel="noopener">@demda</a> или на почту <a href="mailto:hello@demda.pro">hello@demda.pro</a>. Пришлите один проект, и через две недели покажем его в системе.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="wrap foot"><span data-i18n="footer_note">Прототип demda.pro. Названия компаний, имена людей и цифры вымышлены. Фото взяты из открытых фотобанков и не изображают реальные объекты.</span> <a href="img/CREDITS.md" data-i18n="footer_credits">Авторы фото</a></footer>
+
+<script src="landing-texts.js"></script>
+<script src="landing.js"></script>
+</body>
+</html>
