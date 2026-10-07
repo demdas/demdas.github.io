@@ -1,957 +1,152 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Villa Group · Hillside 19 — прототип системы</title>
-<meta name="description" content="Прототип единой системы для девелопера вилл: стройка, продажи, консьерж, магазин. Демо-данные.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F5F2EC">
+<!-- Язык и тема выставляются до отрисовки: страница не мигает светлым при тёмной теме.
+     Ключи localStorage общие с прототипом (тот же origin): vg-theme = system|light|dark, vg-lang = ru|en|zh. ?lang= важнее и записывается. -->
+<script>
+(function (d) {
+  var s = null, th = 'system', lg = null, q = null;
+  try { s = window.localStorage; th = s.getItem('vg-theme'); lg = s.getItem('vg-lang'); q = new URLSearchParams(location.search).get('lang'); } catch (e) {}
+  if (th !== 'light' && th !== 'dark') th = 'system';
+  if (q === 'ru' || q === 'en' || q === 'zh') { lg = q; try { s.setItem('vg-lang', q); } catch (e) {} }
+  if (lg !== 'ru' && lg !== 'en' && lg !== 'zh') { var n = (navigator.language || '').toLowerCase(); lg = n.indexOf('zh') === 0 ? 'zh' : n.indexOf('ru') === 0 ? 'ru' : 'en'; }
+  var dk = th === 'dark' || (th === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  d.setAttribute('data-theme', dk ? 'dark' : 'light'); d.setAttribute('data-pref', th);
+  d.setAttribute('data-lang', lg); d.lang = lg === 'zh' ? 'zh-Hans' : lg;
+  var m = d.querySelector('meta[name=theme-color]'); if (m) m.content = dk ? '#0B100F' : '#F5F2EC';
+  if (lg === 'zh') { var l = document.createElement('link'); l.rel = 'stylesheet'; l.setAttribute('data-zh', ''); l.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap'; document.head.appendChild(l); }
+})(document.documentElement);
+</script>
+<title data-i18n="page_title">Villa Group · система для застройщика: описание</title>
+<meta name="description" content="Villa Group: описание системы для застройщика на Пхукете. Лоты и продажи, кабинет покупателя, консьерж, магазин, сводка партнёра." data-i18n-attr="content:meta_desc">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+Display:wght@600&display=swap">
-<style>
-:root{
-  --bg:#F5F2EC; --bg-alt:#EAE4D9; --card:#FFFFFF; --line:#E2DCD1;
-  --ink:#18211F; --soft:#4F5A56; --faint:#646D69;
-  --sea:#12424A; --sea-hover:#0C3238; --sea-soft:#E3EEEC; --on-sea:#FFFFFF;
-  --brass:#826329; --brass-soft:#F3EAD8;
-  --ok:#2F6B4A; --ok-soft:#E3F0E7; --warn:#8F5B12; --warn-soft:#F6EBD6;
-  --err:#A3352B; --err-soft:#F7E2DF; --info:#2D5A8C; --info-soft:#E2EBF5;
-  --lift:0 16px 40px rgba(24,33,31,.14);
-  --font-ui:'Inter','Noto Sans SC','Noto Sans Thai',system-ui,-apple-system,sans-serif;
-  --font-display:'Noto Serif Display','Noto Serif SC',Georgia,serif;
-  --nav-h:64px;
-}
-@media (prefers-color-scheme:dark){:root{
-  --bg:#121716; --bg-alt:#171D1C; --card:#1A201F; --line:#2A3230;
-  --ink:#ECE8E1; --soft:#B3B8B4; --faint:#8C9490;
-  --sea:#6FB3B8; --sea-hover:#8CC7CB; --sea-soft:#16302F; --on-sea:#0D1F21;
-  --brass:#D2AE6A; --brass-soft:#2B2416;
-  --ok:#7CC59C; --ok-soft:#1A2E23; --warn:#E3B15E; --warn-soft:#33280F;
-  --err:#EE8A7F; --err-soft:#3A1E1B; --info:#8DB4E0; --info-soft:#172435;
-  --lift:0 16px 40px rgba(0,0,0,.5);}}
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--font-ui);font-size:15px;line-height:22px;font-variant-numeric:tabular-nums;min-height:100vh;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom))}
-body.has-bar{padding-bottom:calc(var(--nav-h) + 84px + env(safe-area-inset-bottom))}
-button,select,input,textarea{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:0;text-align:inherit}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
-h1,h2,.disp{font-family:var(--font-display);font-weight:600}
-:lang(zh) h1,:lang(zh) h2,:lang(zh) .disp{font-family:'Noto Serif SC',var(--font-display);line-height:1.35}
-:lang(zh) body,body:lang(zh){line-height:25px}
-h1{font-size:28px;line-height:34px}
-h2{font-size:22px;line-height:28px}
-h3{font-size:17px;line-height:24px;font-weight:600}
-.cap{font-size:11px;line-height:16px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--faint)}
-.faint{color:var(--faint)} .soft{color:var(--soft)} .sm{font-size:13px;line-height:18px}
-.hint{font-size:13px;line-height:18px;color:var(--faint);margin-top:4px}
-
-/* top */
-.top{position:sticky;top:0;z-index:30;background:var(--card);border-bottom:1px solid var(--line);height:56px;display:flex;align-items:center;gap:12px;padding:0 16px}
-.brandmark{font-family:var(--font-display);font-weight:600;font-size:20px;line-height:1;white-space:nowrap}
-.brandmark i{font-style:normal;color:var(--brass)}
-.brandsub{font-size:13px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.sp{flex:1}
-.avatar{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 4px 0 0}
-.avatar b{width:36px;height:36px;border-radius:50%;background:var(--sea);color:var(--on-sea);display:grid;place-items:center;font-size:13px;font-weight:600;letter-spacing:.02em}
-.avatar span{display:none;font-size:13px;text-align:left;line-height:16px}
-.asView{display:none}
-
-/* segments */
-.seg{display:inline-flex;background:var(--bg-alt);border-radius:999px;padding:3px;gap:2px;max-width:100%;overflow-x:auto;scrollbar-width:none}
-.seg::-webkit-scrollbar{display:none}
-.seg button{min-height:44px;padding:0 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--soft);white-space:nowrap;text-align:center}
-.seg button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(24,33,31,.18)}
-.seg.sm button{padding:0 11px;min-width:44px}
-.caps{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
-.caps::-webkit-scrollbar{display:none}
-.capsule{min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:14px;font-weight:500;white-space:nowrap;color:var(--soft);text-align:center}
-.capsule[aria-pressed=true]{background:var(--sea);border-color:var(--sea);color:var(--on-sea)}
-.capsule i{font-style:normal;opacity:.7;margin-left:6px}
-
-/* shell */
-.side{display:none}
-.bnav{position:fixed;left:0;right:0;bottom:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--line);display:flex;z-index:40}
-.bnav a{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:11px;line-height:14px;font-weight:500;color:var(--faint);text-decoration:none;position:relative}
-.bnav svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
-.bnav a[aria-current=page]{color:var(--sea)}
-.bnav a[aria-current=page]::before{content:"";position:absolute;top:0;left:28%;right:28%;height:3px;border-radius:0 0 3px 3px;background:var(--sea)}
-@media (max-width:359px){.bnav a:not([aria-current=page]) span{display:none}}
-.main{padding:20px 16px 24px;max-width:1360px;margin:0 auto}
-.head{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.head .tools{display:flex;gap:8px 12px;flex-wrap:wrap;align-items:center}
-.foot{padding:4px 16px 24px;text-align:center;font-size:12px;color:var(--faint)}
-
-/* cards */
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;min-width:0}
-a.card,button.card{display:block;width:100%;text-decoration:none;transition:border-color .15s,background .15s}
-a.card:hover,button.card:hover{border-color:var(--sea)}
-.grid{display:grid;gap:12px}
-.kpis{grid-template-columns:repeat(2,1fr)}
-.kpi{min-height:112px;display:flex!important;flex-direction:column;gap:6px}
-.kpi .v{font-size:24px;line-height:30px;font-weight:600}
-.kpi .v.brass{color:var(--brass)} .kpi .v.err{color:var(--err)}
-.stack>*+*{margin-top:12px}
-.row{display:flex;align-items:center;gap:10px}
-.between{justify-content:space-between}
-.wrap{flex-wrap:wrap}
-.mt{margin-top:16px} .mt-s{margin-top:8px}
-.bar{height:6px;border-radius:999px;background:var(--bg-alt);overflow:hidden}
-.bar i{display:block;height:100%;background:var(--sea);border-radius:999px;transition:width .2s ease-out}
-.bar.ok i{background:var(--ok)} .bar.brass i{background:var(--brass)}
-.badge{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:8px;font-size:12px;font-weight:600;white-space:nowrap}
-.b-ok{background:var(--ok-soft);color:var(--ok)} .b-warn{background:var(--warn-soft);color:var(--warn)}
-.b-err{background:var(--err-soft);color:var(--err)} .b-info{background:var(--info-soft);color:var(--info)}
-.b-free{border:1px solid var(--line);color:var(--soft)} .b-sea{background:var(--sea-soft);color:var(--sea)}
-.btn{min-height:44px;padding:0 18px;border-radius:10px;font-size:15px;font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;text-align:center;text-decoration:none}
-.btn-p{background:var(--sea);color:var(--on-sea)} .btn-p:hover{background:var(--sea-hover)}
-.btn-o{border-color:var(--line);background:var(--card);color:var(--ink)} .btn-o:hover{border-color:var(--sea)}
-.btn[disabled]{opacity:.45;cursor:not-allowed}
-.btn.block{width:100%}
-.btn.sm{min-height:44px;font-size:13px;padding:0 14px}
-.lnk{color:var(--sea);font-weight:600;font-size:14px;display:inline-flex;align-items:center;min-height:44px}
-.ibtn{width:44px;height:44px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:var(--card);text-align:center}
-.ibtn[disabled]{opacity:.35;cursor:not-allowed}
-.empty{padding:36px 16px;text-align:center;color:var(--soft)}
-.empty svg{width:32px;height:32px;stroke:var(--faint);fill:none;stroke-width:1.5;margin-bottom:8px}
-.ic{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
-
-/* dashboard build bars */
-.vb{display:flex;align-items:flex-end;gap:2px;height:120px;margin-top:10px}
-.vb button{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:stretch;padding:0;position:relative}
-.vb button span{display:block;border-radius:3px 3px 0 0;min-height:4px;background:var(--line);transition:opacity .15s}
-.vb button.sold span{background:var(--sea)} .vb button.reserved span{background:var(--warn)} .vb button.free span{background:var(--line)}
-.vb button:hover span{opacity:.7}
-.vbn{display:flex;gap:2px;margin-top:4px}
-.vbn span{flex:1;text-align:center;font-size:10px;color:var(--faint);min-width:0;overflow:hidden}
-.legend{display:flex;gap:6px;flex-wrap:wrap}
-.legend .badge::before{content:"";width:8px;height:8px;border-radius:2px;margin-right:6px;background:currentColor}
-.fun{display:grid;grid-template-columns:96px 1fr 22px;gap:8px;align-items:center;font-size:13px;margin-top:8px}
-.fun i{display:block;height:10px;border-radius:5px;background:var(--sea)}
-.seabox{background:var(--sea-soft);border-color:transparent}
-
-/* lots */
-.lgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.card.lot{text-align:left;display:flex;flex-direction:column;gap:6px;padding:12px}
-.lot .n{font-size:17px;line-height:24px;font-weight:600}
-.sec-t{margin:24px 0 10px}
-.dots{display:flex;gap:6px;margin-top:6px}
-.dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
-.dots i.d{background:var(--ok)} .dots i.c{background:var(--brass)}
-.pay{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
-.pay:first-child{border-top:0}
-.pay .m{flex:1 1 160px;min-width:0}
-.pay .m .sm{white-space:nowrap}
-.pay .a{font-weight:600;white-space:nowrap}
-
-/* panel */
-.panel{position:fixed;z-index:50;background:var(--card);box-shadow:var(--lift);left:0;right:0;bottom:0;height:90vh;border-radius:20px 20px 0 0;display:flex;flex-direction:column}
-.panel .grab{width:40px;height:4px;border-radius:2px;background:var(--line);margin:8px auto 0}
-.panel .ph{display:flex;align-items:center;justify-content:space-between;padding:8px 16px 8px 20px;border-bottom:1px solid var(--line)}
-.panel .pb{overflow:auto;padding:16px 20px calc(24px + env(safe-area-inset-bottom));flex:1}
-.scrim{position:fixed;inset:0;background:rgba(24,33,31,.45);z-index:45}
-.sheet-ov{position:fixed;inset:0;background:rgba(24,33,31,.55);z-index:70;display:flex;align-items:flex-end;justify-content:center}
-.sheet{background:var(--card);width:100%;max-width:520px;border-radius:20px 20px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom));max-height:92vh;overflow:auto;box-shadow:var(--lift)}
-.sheet h2{margin-bottom:12px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--nav-h) + 16px + env(safe-area-inset-bottom));background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:12px;font-size:14px;z-index:90;max-width:92vw}
-.opt{display:flex;gap:12px;align-items:center;width:100%;min-height:56px;padding:10px 14px;border:1px solid var(--line);border-radius:12px;margin-top:8px;text-align:left}
-.opt:hover:not([disabled]){border-color:var(--sea)}
-.opt[disabled]{opacity:.5;cursor:not-allowed}
-.opt .t{flex:1;min-width:0}
-
-/* villa hero & miles */
-.hero{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(160deg,#c9d6d3 0%,#8fb0ad 45%,#3f6f73 100%);color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(12,24,24,.74))}
-.hero::after{content:"";position:absolute;left:12%;right:12%;bottom:0;height:46%;background:rgba(255,255,255,.2);clip-path:polygon(0 100%,0 55%,22% 40%,50% 18%,78% 40%,100% 55%,100% 100%)}
-.hero>*{position:relative;z-index:1}
-.hero h1{color:#fff}
-.hero .badge{position:absolute;right:16px;top:16px;background:rgba(255,255,255,.92);color:#18211F}
-.miles{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 10px;margin:0 -2px}
-.mile{flex:0 0 40%;min-width:132px;scroll-snap-align:start;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--card);text-align:left;display:flex;flex-direction:column;gap:6px;min-height:44px}
-.mile[aria-pressed=true]{border:2px solid var(--brass);padding:9px}
-.mile .c{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:600;background:var(--bg-alt);color:var(--faint)}
-.mile.done .c{background:var(--ok);color:#fff} .mile.cur .c{background:var(--brass);color:#fff}
-.mile .th{height:48px;border-radius:8px}
-.ph-i{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:4/3;display:grid;place-items:center;color:rgba(255,255,255,.85)}
-.ph-i svg{width:34px;height:34px;stroke:currentColor;fill:none;stroke-width:1.5}
-.pcar{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory}
-.pcar>*{flex:0 0 86%;scroll-snap-align:start}
-.phb{display:block;width:100%}
-.big-b{font-size:28px;line-height:34px;color:var(--brass)}
-.docrow{display:flex;gap:12px;align-items:center;width:100%;padding:10px 0;min-height:56px;border-top:1px solid var(--line);text-align:left}
-.docrow:first-child{border-top:0}
-.docprev{background:var(--bg-alt);border-radius:8px;padding:20px;margin:12px 0}
-.docprev i{display:block;height:8px;border-radius:4px;background:var(--line);margin-top:10px}
-input[type=range]{width:100%;accent-color:var(--sea);height:44px}
-
-/* chat, concierge */
-.split2{display:block}
-.crow{text-decoration:none;color:inherit;display:flex;gap:12px;align-items:center;width:100%;padding:12px;border-bottom:1px solid var(--line);text-align:left;min-height:64px}
-.crow[aria-current=true]{background:var(--sea-soft)}
-.crow .ico{width:38px;height:38px;border-radius:10px;background:var(--bg-alt);display:grid;place-items:center;color:var(--sea);flex:none}
-.steps{display:flex;gap:4px;margin:12px 0}
-.steps div{flex:1;text-align:center;font-size:12px;padding:8px 2px;border-radius:8px;background:var(--bg-alt);color:var(--faint);font-weight:600}
-.steps div.on{background:var(--sea);color:var(--on-sea)} .steps div.past{background:var(--sea-soft);color:var(--sea)}
-.chat{display:flex;flex-direction:column;gap:10px;margin:12px 0}
-.msg{max-width:88%;padding:10px 12px;border-radius:14px;font-size:15px}
-.msg.o{align-self:flex-start;background:var(--bg-alt);border-bottom-left-radius:4px}
-.msg.d{align-self:flex-end;background:var(--sea-soft);border-bottom-right-radius:4px}
-.msg.s{align-self:center;background:none;color:var(--faint);font-size:12px;padding:0}
-.msg .who{font-size:11px;font-weight:600;color:var(--faint);margin-bottom:2px}
-.msg q{display:block;quotes:none;margin-top:6px;padding-left:8px;border-left:2px solid var(--line);font-size:12px;color:var(--faint);line-height:16px}
-.quick{display:flex;gap:8px;flex-wrap:wrap}
-.quick .btn{height:auto;min-height:44px;padding:8px 14px;font-weight:500;font-size:14px}
-.fake-inp{min-height:44px;border:1px dashed var(--line);border-radius:10px;padding:10px 12px;color:var(--faint);font-size:14px;margin-top:10px}
-.sla{font-weight:600} .sla.warn{color:var(--warn)} .sla.over{color:var(--err)}
-
-/* fitout */
-.pos{margin-bottom:12px}
-.vars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
-.var{border:1px solid var(--line);border-radius:12px;padding:6px;text-align:left;position:relative;display:flex;flex-direction:column;gap:4px;min-width:0}
-.var[aria-pressed=true]{border:2px solid var(--sea);padding:5px}
-.var .im{aspect-ratio:1;max-height:220px;border-radius:8px;display:grid;place-items:center;color:rgba(255,255,255,.85)}
-.var .im svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.5}
-.var .t{font-size:12px;line-height:15px;font-weight:600;overflow-wrap:anywhere}
-.var .p{font-size:12px;color:var(--soft);line-height:15px}
-.var .ck{position:absolute;right:8px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--sea);color:var(--on-sea);display:none;place-items:center}
-.var[aria-pressed=true] .ck{display:grid}
-.var .ck svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3}
-.stock{font-size:11px;font-weight:600}
-.estbar{position:fixed;left:0;right:0;bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));height:72px;background:var(--card);border-top:1px solid var(--line);z-index:35;display:flex;align-items:center;gap:12px;padding:0 16px;box-shadow:0 -6px 20px rgba(24,33,31,.08)}
-.estbox{display:none}
-
-/* kanban */
-.kb{display:grid;gap:10px}
-.deal{display:flex;flex-direction:column;gap:8px;padding:12px}
-.deal .top2{display:flex;justify-content:space-between;gap:8px;align-items:flex-start;text-align:left}
-.ini{width:30px;height:30px;border-radius:50%;background:var(--bg-alt);display:inline-grid;place-items:center;font-size:11px;font-weight:600;color:var(--soft)}
-.src{display:inline-flex;white-space:nowrap;align-self:flex-start;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--bg-alt);color:var(--soft)}
-.kcol{background:var(--bg-alt);border-radius:14px;padding:10px;min-width:0}
-.kcol-h{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:2px 4px 8px}
-.kcol-h b{font-size:14px} .kcol-h span{font-size:12px;color:var(--soft)}
-
-@media (min-width:600px){
-  .main{padding:24px 24px 28px}
-  .kpis{grid-template-columns:repeat(2,1fr)}
-  .lgrid{grid-template-columns:repeat(3,1fr)}
-  .sheet-ov{align-items:center} .sheet{border-radius:20px}
-  .hero{aspect-ratio:16/9}
-  .mile{flex-basis:30%}
-}
-@media (min-width:1024px){
-  body{padding-bottom:0;padding-left:248px}
-  body.has-bar{padding-bottom:96px}
-  .top{height:64px;padding:0 32px 0 24px;position:sticky;left:0;margin-left:-248px;padding-left:272px}
-  .brandmark{position:fixed;left:24px;top:20px;font-size:22px}
-  .brandsub{position:fixed;left:24px;top:46px;font-size:13px}
-  .asView{display:flex;align-items:center;gap:10px}
-  .asView .cap{white-space:nowrap}
-  .avatar span{display:block}
-  .side{display:block;position:fixed;left:0;top:0;bottom:0;width:248px;background:var(--card);border-right:1px solid var(--line);padding:88px 12px 24px;overflow:auto;z-index:20}
-  .side .grp{margin:18px 12px 6px}
-  .side a{display:flex;align-items:center;gap:10px;min-height:44px;padding:0 12px;border-radius:10px;font-size:15px;font-weight:500;color:var(--soft);text-decoration:none;position:relative}
-  .side a:hover{background:var(--bg)}
-  .side a[aria-current=page]{background:var(--sea-soft);color:var(--sea);font-weight:600}
-  .side a[aria-current=page]::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;border-radius:0 3px 3px 0;background:var(--sea)}
-  .bnav{display:none}
-  .main{padding:32px 32px 40px}
-  .head{flex-direction:row;justify-content:space-between;align-items:flex-end}
-  h1{font-size:40px;line-height:48px}
-  h2{font-size:28px;line-height:36px}
-  .kpis{grid-template-columns:repeat(4,1fr);gap:16px}
-  .kpi .v{font-size:36px;line-height:40px}
-  .tiles{grid-template-columns:repeat(3,1fr)}
-  .lgrid{grid-template-columns:repeat(4,1fr)}
-  body.panel-open .main{margin-right:480px;max-width:none}
-  body.panel-open .lgrid{grid-template-columns:repeat(3,1fr)}
-  .panel{left:auto;width:480px;height:auto;top:64px;border-radius:0;border-left:1px solid var(--line)}
-  .panel .grab{display:none}
-  .scrim{display:none}
-  .toast{bottom:28px}
-  .hero{aspect-ratio:auto;height:360px}
-  .mile{flex:1 1 0;min-width:0}
-  .villa2>.stack{margin-top:0!important}
-  .villa2{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
-  .split2{display:grid;grid-template-columns:400px 1fr;gap:16px;align-items:start}
-  .pcar{display:grid;grid-template-columns:repeat(3,1fr);overflow:visible}
-  .pcar>*{flex:none}
-  .fit2{display:grid;grid-template-columns:2fr 1fr;gap:16px;align-items:start}
-  .estbar{display:none}
-  .estbox{display:block;position:sticky;top:88px}
-  body.has-bar{padding-bottom:0}
-  .vars{gap:12px}
-  .kb5{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;align-items:start}
-}
-@media (min-width:1700px){ .main{padding:40px 56px} .lgrid{grid-template-columns:repeat(5,1fr)} body.panel-open .lgrid{grid-template-columns:repeat(4,1fr)} }
-.only-d{display:none} .hm{display:none} .back-m{display:inline-flex}
-@media (min-width:1024px){.only-m{display:none}.only-d{display:grid}.hm{display:block}.back-m{display:none}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
-</style>
+<link rel="stylesheet" href="landing.css">
 </head>
 <body>
-<header class="top">
-  <div class="brandmark">Villa Group<i>.</i></div>
-  <div class="brandsub" id="brandsub">Hillside 19 · Камала</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+<symbol id="i-monitor" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></symbol>
+<symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+<symbol id="i-image" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21"/></symbol>
+</defs></svg>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top" data-i18n-attr="aria-label:ui_home" aria-label="demda.pro, наверх"><b class="bm">demda.pro</b><span class="bn" data-i18n="topbar_name">demda.pro · система для застройщика</span></a>
   <div class="sp"></div>
-  <div class="asView" id="asView"></div>
-  <button class="avatar" id="avatar" aria-label="Роль и меню"></button>
-</header>
-<aside class="side" id="side" aria-label="Разделы"></aside>
-<main class="main" id="app"></main>
-<div class="foot">Прототип demda.pro, демо-данные. Все имена, суммы и документы вымышлены.</div>
-<div id="panel"></div>
-<nav class="bnav" id="bnav" aria-label="Разделы"></nav>
-<div id="layer"></div>
-<script>
-'use strict';
-/* ===== helpers ===== */
-const $ = s => document.querySelector(s);
-const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const TODAY = '2026-10-07';
-const pd = s => new Date(s + 'T00:00:00');
-const addDays = (s, n) => { const d = pd(s); d.setDate(d.getDate() + n); return iso(d); };
-const iso = d => d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-const diffDays = (a, b) => Math.round((pd(a) - pd(b)) / 864e5);
-const LOC = {ru:'ru-RU', en:'en-GB', zh:'zh-CN'};
-const RATE = {THB:1, USD:1/33, CNY:1/4.6};
-const PRICE = {A:21900000, B:28500000, C:36800000};
-const TYPES = {A:{br:2, m2:220, plot:400}, B:{br:3, m2:280, plot:520}, C:{br:4, m2:360, plot:680}};
-
-/* ===== i18n (dashboard + villa screen; other screens RU) ===== */
-const K = {
- nav_dash:['Сводка','Overview','总览'], nav_lots:['Лоты','Villas','房源'], nav_deals:['Сделки','Deals','交易'],
- nav_villa:['Вилла','My villa','我的别墅'], nav_conc:['Консьерж','Concierge','礼宾'], nav_fit:['Отделка','Fit-out','精装'],
- d_title:['Сводка группы','Group overview','集团总览'],
- d_sub:['Hillside 19 · стройка, продажи, консьерж, магазин','Hillside 19 · construction, sales, concierge, store','Hillside 19 · 施工、销售、礼宾、商城'],
- p_m:['Месяц','Month','月'], p_q:['Квартал','Quarter','季度'], p_y:['Год','Year','年'], rate:['курс демо','demo rate','演示汇率'],
- k_sold:['Продано','Sold','已售'], k_sold_v:['{a} из {b}','{a} of {b}','{a} / {b}'],
- k_sold_s:['бронь {r} · свободно {f}','reserved {r} · available {f}','预订 {r} · 可售 {f}'],
- k_in:['Поступило','Received','已收款'], k_in_s:['из {x} по договорам и броням','of {x} in contracts and reservations','合同与预订总额 {x}'],
- k_over:['Просрочки','Overdue','逾期'], k_over_s:['{n} платёж · {v}, {d} дн. просрочки','{n} payment · {v}, {d} days','{n} 笔 · {v}，{d} 天'], k_over_0:['Нет просрочек','No overdue payments','无逾期'],
- k_build:['Стройка','Construction','施工'], k_build_s:['3 очереди · сдача первой — март 2027','3 phases · first handover March 2027','3 期 · 首期 2027年3月交付'],
- b_title:['Стройка по виллам','Construction by villa','各别墅施工进度'],
- sold:['Продана','Sold','已售'], res:['Бронь','Reserved','预订'], free:['Свободна','Available','可售'],
- st1:['Проект и разрешения','Design & permits','设计与许可'], st2:['Фундамент','Foundation','地基'], st3:['Каркас и кровля','Structure & roof','主体与屋顶'],
- st4:['Инженерия','Utilities (MEP)','机电管线'], st5:['Отделка','Interior finishing','室内装修'], st6:['Ландшафт и бассейн','Landscape & pool','园林与泳池'], st7:['Передача','Handover','交付'],
- stg_s1:['Проект','Design','设计'], stg_s2:['Фундамент','Foundation','地基'], stg_s3:['Каркас','Structure','主体'], stg_s4:['Инженерия','MEP','机电'], stg_s5:['Отделка','Interior','装修'], stg_s6:['Ландшафт','Landscape','园林'], stg_s7:['Передача','Handover','交付'],
- t_sales:['Продажи','Sales','销售'], t_conc:['Консьерж','Concierge','礼宾'], t_shop:['Магазин','Store','商城'],
- f0:['Новый лид','New lead','新线索'], f1:['Квалификация','Qualification','资格审核'], f2:['Показ','Viewing','看房'], f3:['Бронь','Reservation','预订'], f4:['Договор','Contract','签约'],
- go_deals:['Открыть сделки →','Open deals →','查看交易 →'], go_conc:['Открыть заявки →','Open requests →','查看请求 →'], go_fit:['Открыть комплектацию →','Open fit-out →','查看精装配置 →'],
- c_open:['Открыто сейчас','Open now','当前待处理'], c_per:['{n} заявок · {r} · вовремя {p} %','{n} requests · {r} · on time {p}%','{n} 个请求 · {r} · 准时 {p}%'],
- c_new:['Новая без исполнителя: {id}, осталось {m} мин','Unassigned: {id}, {m} min left','待指派：{id}，剩余 {m} 分钟'],
- s_rev:['Выручка {a}, из них для вилл проекта {b}','Revenue {a}, of which for project villas {b}','营收 {a}，其中项目别墅 {b}'],
- s_ord:['Новый заказ: отделка V-07, +{x}, ждёт подтверждения','New order: V-07 fit-out, +{x}, awaiting confirmation','新订单：V-07 精装，+{x}，待确认'],
- one3:['Клиент один — бизнеса три','One client — three businesses','一位客户，三项业务'],
- one3t:['8 из 10 покупателей уже пользуются консьержем, 4 — заказали отделку в магазине.','8 of 10 buyers already use the concierge, 4 ordered fit-out from the store.','10 位买家中 8 位已使用礼宾服务，4 位已在商城订购精装。'],
- /* villa screen */
- v_h:['Вилла V-07 · Hillside 19','Villa V-07 · Hillside 19','V-07 别墅 · Hillside 19'], v_hs:['3 спальни · 280 м² · участок 520 м²','3 bedrooms · 280 m² · 520 m² plot','3 卧室 · 280 ㎡ · 地块 520 ㎡'],
- v_hand:['Передача — сентябрь 2027','Handover — September 2027','交付 — 2027年9月'],
- v_ready:['Готовность','Progress','施工进度'],
- m_done:['Готово {d}','Done {d}','完成 {d}'], m_cur:['Идёт · до {d}','In progress · until {d}','进行中 · 至 {d}'], m_plan:['План · {d}','Planned · {d}','计划 · {d}'],
- rep_t:['Отчёт прораба','Site manager report','工长报告'], rep_ok:['Технадзор: принято без замечаний','Supervision: accepted, no remarks','监理：验收通过，无问题'],
- rep_none:['Фото появятся после начала этапа','Photos will appear once the stage starts','阶段开始后将显示照片'],
- rep_date:['Отчёт от {d}','Report dated {d}','报告日期 {d}'],
- rp1:['Проектная документация утверждена, разрешение на строительство получено.','Design documentation approved, building permit received.','设计文件已批准，已取得施工许可。'],
- rp2:['Фундаментная плита залита и принята, гидроизоляция выполнена.','Foundation slab poured and accepted, waterproofing complete.','地基底板已浇筑并验收，防水完成。'],
- rp3:['Залиты колонны второго этажа, монтируется опалубка кровли. Следующий отчёт — 14.10.','Second-floor columns poured, roof formwork being installed. Next report — 14 Oct.','二层立柱已浇筑，正在安装屋顶模板。下次报告 — 10月14日。'],
- pay_t:['Платежи','Payments','付款'], pay_sum:['Оплачено {a} из {b}','Paid {a} of {b}','已付 {a} / {b}'],
- pn0:['Бронь','Reservation','预订定金'], pn1:['Договор','Contract signing','签约付款'], pn2:['Фундамент завершён','Foundation complete','地基完工'], pn3:['Каркас и кровля','Structure & roof','主体与屋顶'], pn4:['Отделка','Interior finishing','室内装修'], pn5:['Передача ключей','Key handover','交钥匙'],
- ps_paid:['Оплачено {d}','Paid {d}','已付 {d}'], ps_today:['Оплачено сегодня','Paid today','今日已付'], ps_due:['К оплате до {d}','Due by {d}','应付 {d} 前'], ps_plan:['По графику · {d}','Scheduled · {d}','按计划 · {d}'], ps_over:['Просрочено {n} дн.','Overdue {n} days','逾期 {n} 天'],
- pay_btn:['Оплатить этап','Pay this stage','支付本阶段'], pay_sh:['Оплата этапа «{s}»','Payment: {s}','支付：{s}'], pay_amt:['Сумма','Amount','金额'],
- pay_req:['Реквизиты (демо): Банк, счёт эскроу проекта, назначение: V-07 этап {n}','Details (demo): Bank, project escrow account, reference: V-07 stage {n}','账户信息（演示）：银行，项目托管账户，用途：V-07 第 {n} 阶段'],
- pay_mark:['Отметить как оплаченный (демо)','Mark as paid (demo)','标记为已付（演示）'], close:['Закрыть','Close','关闭'],
- pay_toast:['Платёж отмечен. Квитанция в документах.','Payment recorded. Receipt added to documents.','付款已记录，收据已加入文件。'],
- doc_t:['Документы','Documents','文件'], doc_note:['Набор документов — типовой, уточняется юристом проекта.','The document set is a template, to be confirmed by the project lawyer.','文件清单为通用模板，以项目律师确认为准。'],
- dc0:['Договор бронирования','Reservation agreement','预订协议'], dc1:['Договор долгосрочной аренды земли','Long-term land lease agreement','土地长期租赁合同'], dc2:['Договор строительства','Construction agreement','建设合同'], dc3:['Разрешение на строительство','Building permit','建设许可'], dc4:['Акт этапа «Фундамент»','Stage act: Foundation','阶段验收单：地基'], dc5:['Акт этапа «Каркас и кровля»','Stage act: Structure & roof','阶段验收单：主体与屋顶'], dc6:['Квитанция — этап 4','Receipt — stage 4','收据 — 第 4 阶段'],
- ds_signed:['подписан','signed','已签署'], ds_got:['получено','received','已取得'], ds_wait:['ожидается','pending','待签署'], ds_rec:['оплачено','paid','已付款'],
- doc_demo:['Демо-документ','Demo document','演示文件'],
- af_t:['Ваша вилла после передачи','Your villa after handover','交付后的别墅'], af_me:['Живу сам','I live here','自住'], af_rent:['Сдаю в управление','Rent it out','委托出租'],
- af_n:['Средняя цена ночи','Average nightly rate','平均每晚价格'], af_occ:['Загрузка','Occupancy','入住率'], af_inc:['Ожидаемый доход в год','Expected annual income','预计年收入'], af_y:['{p} % чистыми','{p}% net','净收益率 {p}%'],
- af_note:['Расчёт для примера, не обещание доходности: управление 25 %, расходы на содержание 300 000 ฿ в год.','Illustrative calculation, not a promise of yield: management 25%, upkeep 300,000 ฿ per year.','示例测算，不构成收益承诺：管理费 25%，年维护费 300,000 ฿。'],
- af_self:['Консьерж группы: встреча в аэропорту, уборка, ремонт — заявка в один клик.','Group concierge: airport pickup, cleaning, repairs — one-tap request.','集团礼宾：接机、保洁、维修 — 一键提交。'], af_go:['Открыть консьерж','Open concierge','打开礼宾'],
- v_show:['Смотреть как','View as','查看身份']
-};
-const L = () => S.cur;                       // effective UI language for current screen
-let LANG_IDX = 0;
-function t(k, v) {
-  let s = (K[k] && (K[k][LANG_IDX] || K[k][0])) || k;
-  if (v) for (const x in v) s = s.replace('{' + x + '}', v[x]);
-  return s;
-}
-function loc() { return ['ru','en','zh'][LANG_IDX]; }
-
-/* money */
-function money(thb, cur, short) {
-  cur = cur || S.cur;
-  const v = thb * RATE[cur], l = loc();
-  const sym = {THB:'฿', USD:'$', CNY:'¥'}[cur];
-  if (short) {
-    if (cur === 'THB') {
-      const m = (v / 1e6).toLocaleString(LOC[l], {minimumFractionDigits:1, maximumFractionDigits:short === 2 ? 2 : 1});
-      return l === 'ru' ? m + ' млн ฿' : '฿' + m + 'M';
-    }
-    return sym + (v / 1e6).toLocaleString('en-US', {minimumFractionDigits:cur === 'USD' ? 2 : 1, maximumFractionDigits:cur === 'USD' ? 2 : 1}) + 'M';
-  }
-  const n = Math.round(v).toLocaleString(LOC[l]);
-  return l === 'ru' && cur === 'THB' ? n + ' ฿' : (l === 'ru' ? sym + ' ' + n : sym + n);
-}
-const thb = n => money(n, 'THB');
-function fdate(s) {
-  const d = pd(s), l = loc();
-  if (l === 'zh') return d.getFullYear() + '年' + (d.getMonth() + 1) + '月' + d.getDate() + '日';
-  return d.toLocaleDateString(LOC[l], {day:'2-digit', month:'2-digit', year:'numeric'});
-}
-function fmonth(s) { return pd(s).toLocaleDateString(LOC[loc()], {month:'long', year:'numeric'}); }
-function plural(n, a, b, c) { const m = n % 10, h = n % 100; return h > 10 && h < 15 ? c : m === 1 ? a : m > 1 && m < 5 ? b : c; }
-
-/* ===== demo data ===== */
-const STAGE_B = [0, 5, 20, 50, 65, 90, 99, 101];
-const stageOf = pct => pct >= 100 ? 7 : pct >= 90 ? 6 : pct >= 65 ? 5 : pct >= 50 ? 4 : pct >= 20 ? 3 : pct >= 5 ? 2 : 1;
-const BUYERS = {
- 1:['Ольга К.','Елена М.'], 2:['Чжан Вэй','Чен Ю.'], 3:['Андрей Л.','Елена М.'], 4:['Ван Фан','Чен Ю.'], 5:['Сергей и Мария Т.','Елена М.'],
- 6:['Лю Ян','Чен Ю.'], 7:['Ли Мин','Чен Ю.'], 8:['Игорь Н.','Елена М.'], 9:['Хуан Цзе','Чен Ю.'], 10:['Павел Д.','Елена М.'],
- 11:['Чжоу Линь','Чен Ю.'], 12:['Наталья Г.','Елена М.'], 13:['Сунь Хао','Чен Ю.']
-};
-const VS = [ // type, sale, pct
- ['A','sold',88],['A','sold',84],['B','sold',70],['B','sold',62],['C','sold',55],['A','sold',46],['B','sold',38],['C','sold',34],['A','sold',18],['B','sold',15],
- ['A','res',12],['B','res',10],['C','res',8],['A','free',6],['A','free',3],['B','free',2],['B','free',2],['C','free',0],['A','free',0]
-];
-const PAY_PCT = [0, 0.3, 0.2, 0.2, 0.2, 0.1], PAY_THR = [0, 0, 20, 50, 90, 100];
-function genPays(v, i) {
-  const P = PRICE[v.type], pays = [];
-  const bron = addDays('2025-06-10', i * 11), contr = addDays(bron, 8);
-  for (let k = 0; k < 6; k++) {
-    const amt = k === 0 ? 500000 : k === 1 ? Math.round(P * 0.3) - 500000 : Math.round(P * PAY_PCT[k]);
-    let paid = null, due = null;
-    if (v.sale === 'sold') {
-      if (k === 0) paid = bron; else if (k === 1) paid = contr;
-      else if (v.pct >= PAY_THR[k]) paid = addDays(contr, 55 * (k - 1));
-      if (paid && paid > '2026-10-01') paid = '2026-09-' + String(10 + k);
-    } else if (k === 0) paid = '2026-09-' + String(18 + (i % 9));
-    if (!paid && k >= 2) due = addDays(TODAY, Math.round((PAY_THR[k] - v.pct) / 0.08));
-    if (!paid && k === 1) due = addDays(TODAY, 21);
-    pays.push({amt, paid, due});
-  }
-  if (v.n === 7) { pays[0].paid = '2026-03-12'; pays[1].paid = '2026-03-20'; pays[2].paid = '2026-07-28'; pays[3].due = '2026-11-15'; pays[4].due = '2027-03-15'; pays[5].due = '2027-09-15'; }
-  if (v.n === 4) { pays[3].paid = null; pays[3].due = addDays(TODAY, -9); pays[3].od = true; }
-  v.contract = pays[1].paid || pays[0].paid || null;
-  return pays;
-}
-function seedVillas() {
-  return VS.map((r, i) => {
-    const n = i + 1, v = {n, id:'V-' + String(n).padStart(2, '0'), type:r[0], sale:r[1], pct:r[2], buyer:null, mgr:null, pays:[], dealId:null};
-    if (BUYERS[n]) { v.buyer = BUYERS[n][0]; v.mgr = BUYERS[n][1]; }
-    if (r[1] !== 'free') v.pays = genPays(v, i);
-    return v;
-  });
-}
-function seedDeals() {
-  const D = (id, name, src, int, bud, mgr, days, col, villa) => ({id, name, src, int, bud, mgr, days, col, villa:villa || null});
-  const a = [
-   D('D1','Ма Ли','Партнёр в Китае','Тип B',30000000,'Чен Ю.',1,0), D('D2','Дмитрий С.','Сайт','Тип A',23000000,'Елена М.',2,0), D('D3','Лю Фэн','Агент партнёр','Тип C',38000000,'Чен Ю.',0,0),
-   D('D4','Анна В.','Рекомендация','Тип A',22000000,'Елена М.',3,0), D('D5','Чэнь Бо','Выставка','Тип B',29000000,'Чен Ю.',1,0),
-   D('D6','Ян Мэй','Партнёр в Китае','Тип B',29000000,'Чен Ю.',4,1), D('D7','Олег Р.','Сайт','Тип C',37000000,'Елена М.',2,1), D('D8','Фань Цзюнь','Выставка','Тип A',22000000,'Чен Ю.',5,1), D('D9','Татьяна Ш.','Агент партнёр','Тип B',28500000,'Елена М.',3,1),
-   D('D10','Гао Ян','Партнёр в Китае','V-14',21900000,'Чен Ю.',2,2), D('D11','Виктор Б.','Рекомендация','Тип B',29000000,'Елена М.',6,2), D('D12','Сюй Минь','Агент партнёр','Тип A',22000000,'Чен Ю.',1,2),
-   D('D13','Чжоу Линь','Выставка','V-11',21900000,'Чен Ю.',4,3,11), D('D14','Наталья Г.','Сайт','V-12',28500000,'Елена М.',9,3,12), D('D15','Сунь Хао','Партнёр в Китае','V-13',36800000,'Чен Ю.',2,3,13),
-   D('D16','Хуан Цзе','Агент партнёр','V-09',21900000,'Чен Ю.',20,4,9), D('D17','Павел Д.','Рекомендация','V-10',28500000,'Елена М.',12,4,10)
-  ];
-  return a;
-}
-const PERF = [
- {id:'p1', n:'Сомчай П.', role:'водитель', lang:'TH · EN', busy:'занят до 16:00'}, {id:'p2', n:'Пим Т.', role:'клининг', lang:'TH', busy:'занята до 17:00'},
- {id:'p3', n:'Арун К.', role:'техник', lang:'TH · EN', busy:null, note:'свободен после 15:00'}, {id:'p4', n:'Нок С.', role:'ассистент-переводчик', lang:'TH · EN · ZH', busy:null},
- {id:'p5', n:'Дэн Р.', role:'водитель', lang:'TH', busy:null}
-];
-const M = (from, o, ru, en, zh, th) => ({from, o, x:{ru, en, zh, th}});
-function seedReqs() {
-  const R = (id, type, ic, who, villa, when, st, perf, msgs, extra) => Object.assign({id, key:id.replace('К-','k'), type, ic, who, villa, when, st, perf, msgs}, extra || {});
-  return [
-   R('К-118','Прилёт: встреча в аэропорту HKT','plane','Ли Мин','V-07','12.10, 14:35','new',null,[
-     M('o','zh','Здравствуйте, прилетаю 12-го в 14:35, нас двое и два чемодана. Можно воду в машину?','Hello, I arrive on the 12th at 14:35, two of us and two suitcases. Could you put water in the car?','您好，我12号14:35到，两个人，两个行李箱。车里可以放点水吗？','สวัสดีครับ ผมถึงวันที่ 12 เวลา 14:35 สองคน กระเป๋าสองใบ ขอน้ำดื่มในรถได้ไหมครับ'),
-     M('d','ru','Добрый день! Встретим у выхода 3 с табличкой V-07. Вода будет. Скинуть номер водителя за час?','Hello! We will meet you at gate 3 with a V-07 sign. Water will be in the car. Shall we send the driver’s number an hour before?','您好！我们会在3号出口举牌 V-07 接您，车里备有水。需要提前一小时发司机电话吗？','สวัสดีครับ เราจะรอที่ทางออก 3 พร้อมป้าย V-07 มีน้ำในรถ ให้ส่งเบอร์คนขับก่อนหนึ่งชั่วโมงไหมครับ'),
-     M('o','zh','Да, спасибо. И можно заехать на объект по пути?','Yes, thank you. And can we stop by the site on the way?','好的，谢谢。路上可以顺便去工地看看吗？','ได้ครับ ขอบคุณ และแวะดูไซต์งานระหว่างทางได้ไหมครับ'),
-     M('d','ru','Конечно, прораб будет на месте до 18:00.','Of course, the site manager will be there until 18:00.','当然可以，工长18:00前都在现场。','ได้เลยครับ โฟร์แมนจะอยู่ที่ไซต์จนถึง 18:00')
-   ],{flight:'ZH 9071 · прилёт 14:35', sla:18, slaFrom:0}),
-   R('К-117','Трансфер на объект и обратно','car','Чжан Вэй','V-02','09.10, 10:00','asg','p1',[M('o','zh','Нужна машина на объект в четверг в 10:00.','I need a car to the site on Thursday at 10:00.','周四10点需要车去工地。','ต้องการรถไปไซต์วันพฤหัส 10:00')]),
-   R('К-116','Уборка апартаментов перед заездом','brush','Ольга К.','V-01','08.10, 16:00','work','p2',[M('o','ru','Нужна уборка к 16:00, заезжаем вечером.','Cleaning needed by 16:00, we check in this evening.','需要在16:00前打扫，我们晚上入住。','ต้องการทำความสะอาดก่อน 16:00 เราเข้าพักตอนเย็น')]),
-   R('К-115','Ремонт кондиционера в арендованном жилье','key','Ван Фан','V-04','07.10, 11:00','work','p3',[M('o','zh','Кондиционер в спальне капает и не охлаждает.','The bedroom AC is dripping and not cooling.','卧室空调漏水而且不制冷。','แอร์ในห้องนอนมีน้ำหยดและไม่เย็น')]),
-   R('К-114','Сим-карта и байк на неделю','sim','Андрей Л.','V-03','07.10','done','p1',[M('o','ru','Нужны местная сим-карта и байк на неделю.','I need a local SIM card and a scooter for a week.','需要当地电话卡和一周的摩托车。','ต้องการซิมการ์ดและมอเตอร์ไซค์หนึ่งสัปดาห์')]),
-   R('К-113','Бронь ресторана на 6 человек','food','Лю Ян','V-06','06.10','done','p4',[M('o','zh','Столик на шестерых в субботу вечером.','A table for six on Saturday evening.','周六晚上订六个人的位子。','โต๊ะสำหรับหกคนคืนวันเสาร์')]),
-   R('К-112','Отлёт: трансфер в аэропорт','plane','Игорь Н.','V-08','06.10','done','p1',[M('o','ru','Трансфер в аэропорт, вылет в 19:20.','Transfer to the airport, flight at 19:20.','送机，航班19:20起飞。','รถไปสนามบิน เที่ยวบิน 19:20')]),
-   R('К-111','Перевод на встрече у нотариуса','doc','Сергей и Мария Т.','V-05','05.10','done','p4',[M('o','ru','Нужен переводчик на подписание.','We need an interpreter for the signing.','签约时需要翻译。','ต้องการล่ามในการเซ็นสัญญา')])
-  ];
-}
-const QUICK = [
- ['Водитель будет за 15 минут до посадки','The driver will be there 15 minutes before boarding','司机将在登机前15分钟到达','คนขับจะถึงก่อนขึ้นเครื่อง 15 นาที'],
- ['Прораб подтвердил встречу на объекте','The site manager has confirmed the meeting at the site','工长已确认在工地见面','โฟร์แมนยืนยันการพบที่ไซต์งานแล้ว'],
- ['Счёт за трансфер — 1 200 ฿','Transfer invoice — 1,200 ฿','接送费用 — 1,200 ฿','ค่ารถรับส่ง — 1,200 ฿']
-];
-const FIT = [
- {n:'Пол в гостиной и спальнях', v:[['Керамогранит 60×120',0],['Инженерная доска, дуб',240000],['Травертин',520000]]},
- {n:'Кухня', v:[['Кухня 3,6 м, ламинат',0],['Кухня с островом, кварц',310000],['Кухня с островом, натуральный камень',690000]]},
- {n:'Сантехника (3 ванные)', v:[['Базовый комплект',0],['Подвесной, скрытый монтаж',160000],['Дизайнерская серия, тропический душ',380000]]},
- {n:'Кондиционирование', v:[['Сплит-системы, 4 шт.',0],['Инверторные, 5 шт.',95000],['Канальная система',340000]]},
- {n:'Освещение', v:[['Потолочные светильники',0],['Трековые и подсветка',70000],['Умный свет, сценарии',210000]]},
- {n:'Мебель гостиной и террасы', v:[['Без мебели',0],['Комплект «Терраса»',450000],['Комплект «Резиденция»',1150000]]}
-];
-const STOCK = [[1,1,0],[1,0,1],[1,1,1],[1,1,0],[1,1,1],[1,0,1]]; // 1 = на складе
-const SHOP = {m:[3480000,2150000], q:[9870000,6020000], y:[36400000,21300000]};
-const CONC = {m:[46,412000,94], q:[131,1186000,93], y:[488,4390000,92]};
-const MILE_DATES = [['done','2026-02-18'],['done','2026-07-26'],['cur','2026-11-30'],['plan','2027-02-15'],['plan','2027-03-15'],['plan','2027-08-15'],['plan','2027-09-15']];
-const DOCS0 = [['dc0','ds_signed','2026-03-12'],['dc1','ds_signed','2026-03-20'],['dc2','ds_signed','2026-03-20'],['dc3','ds_got','2026-01-22'],['dc4','ds_signed','2026-07-28'],['dc5','ds_wait',null]];
-const PHOTO_HUES = [[205,175],[28,12],[160,190],[40,25],[200,220],[100,130],[250,230]];
-
-/* ===== state ===== */
-function freshState() {
-  return {role:'partner', lang:'ru', cur:'THB', period:'m', villas:seedVillas(), deals:seedDeals(), reqs:seedReqs(),
-    filterLots:'all', filterReq:'all', readLang:'ru', fit:[0,0,0,0,0,0], order:null, mile:3, afterMode:'self', occ:68,
-    remind:false, dealTab:0, receipt:false, extraOrderTotal:0};
-}
-let S = loadState();
-function loadState() { try { const j = sessionStorage.getItem('vg-proto-v2'); if (j) return JSON.parse(j); } catch (e) {} return freshState(); }
-function save() { try { sessionStorage.setItem('vg-proto-v2', JSON.stringify(S)); } catch (e) {} }
-const V = n => S.villas[n - 1];
-const vById = id => S.villas.find(v => v.id === id);
-
-/* derived */
-function payStatus(v, k) {
-  const p = v.pays[k];
-  if (p.paid) return {c:'ok', t:p.paid === TODAY ? t('ps_today') : t('ps_paid', {d:fdate(p.paid)}), s:'paid'};
-  if (p.od || (p.due && p.due < TODAY)) return {c:'err', t:t('ps_over', {n:diffDays(TODAY, p.due)}), s:'over'};
-  if (p.due && diffDays(p.due, TODAY) <= 60) return {c:'warn', t:t('ps_due', {d:fdate(p.due)}), s:'due'};
-  return {c:'free', t:t('ps_plan', {d:p.due ? fmonth(p.due) : '—'}), s:'plan'};
-}
-const paidOf = v => v.pays.reduce((s, p) => s + (p.paid ? p.amt : 0), 0);
-const totOf = v => PRICE[v.type];
-function stats() {
-  const vs = S.villas, o = {sold:0, res:0, free:0, soldSum:0, resSum:0, paid:0, over:0, overN:0, overD:0, pct:0, stg:{}};
-  vs.forEach(v => {
-    o[v.sale]++; if (v.sale === 'sold') o.soldSum += PRICE[v.type]; if (v.sale === 'res') o.resSum += PRICE[v.type];
-    o.paid += paidOf(v); o.pct += v.pct;
-    v.pays.forEach((p, k) => { const s = payStatus(v, k); if (s.s === 'over') { o.over += p.amt; o.overN++; o.overD = Math.max(o.overD, diffDays(TODAY, p.due)); o.overV = v.id; } });
-    const st = stageOf(v.pct); o.stg[st] = (o.stg[st] || 0) + 1;
-  });
-  o.avg = Math.round(o.pct / vs.length);
-  return o;
-}
-function openReqs() { return S.reqs.filter(r => r.st !== 'done').length; }
-function slaLeft(r) { return Math.max(0, r.sla - Math.floor((Date.now() - T0) / 60000)); }
-const T0 = Date.now();
-/* ===== icons ===== */
-const ICO = {
- dash:'<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
- lots:'<path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/>',
- deals:'<rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/>',
- villa:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
- conc:'<path d="M4 14v-2a8 8 0 0116 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/>',
- fit:'<path d="M4 12V8a3 3 0 013-3h10a3 3 0 013 3v4"/><path d="M2 12h20v5H2z"/><path d="M5 17v3M19 17v3"/>',
- plane:'<path d="M2 16l20-6-2-2-8 2-5-5-2 1 3 6-6 2z"/>', car:'<path d="M3 15l2-6h14l2 6v4h-3v-2H6v2H3z"/><circle cx="7.5" cy="14" r="1"/><circle cx="16.5" cy="14" r="1"/>',
- brush:'<path d="M5 20h14M8 20V9h8v11M10 9V4h4v5"/>', key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>',
- sim:'<path d="M7 3h7l4 4v14H7z"/><rect x="10" y="12" width="5" height="5" rx="1"/>', food:'<path d="M6 3v8a2 2 0 004 0V3M8 11v10M17 3c-2 2-2 6 0 8v10"/>',
- doc:'<path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>', check:'<path d="M4 12l5 5L20 6"/>', img:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M3 18l6-5 4 3 3-3 5 4"/>',
- search:'<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>'
-};
-const ic = (n, c) => `<svg class="${c || 'ic'}" viewBox="0 0 24 24" aria-hidden="true">${ICO[n] || ''}</svg>`;
-
-/* ===== routing & chrome ===== */
-const NAV = ['dash','lots','deals','villa','conc','fit'];
-const PATH = {dash:'dashboard', lots:'lots', deals:'deals', villa:'villa', conc:'concierge', fit:'fitout'};
-const ROLES = {
- partner:{n:'Партнёр', av:'ПВ', full:'Партнёр', start:'dash'}, sales:{n:'Продажи', av:'ЕМ', full:'Менеджер продаж', start:'deals'},
- buyer:{n:'Покупатель', av:'ЛМ', full:'Ли Мин · вилла V-07', start:'villa'}, conc:{n:'Консьерж', av:'НС', full:'Диспетчер', start:'conc'}
-};
-let RT = {name:'dash', id:null};
-function parseHash() {
-  const h = (location.hash || '').replace(/^#\/?/, '').split('/');
-  const k = Object.keys(PATH).find(x => PATH[x] === h[0]) || null;
-  return k ? {name:k, id:h[1] || null} : null;
-}
-const go = (k, id) => { location.hash = '#/' + PATH[k] + (id ? '/' + id : ''); };
-
-function chrome() {
-  const L0 = (RT.name === 'dash' || RT.name === 'villa') ? ['ru','en','zh'].indexOf(S.lang) : 0;
-  LANG_IDX = L0;
-  document.documentElement.lang = loc();
-  const items = NAV.map(k => ({k, ic:k, label:t('nav_' + k)}));
-  $('#bnav').innerHTML = items.map(i => `<a href="#/${PATH[i.k]}" ${RT.name === i.k ? 'aria-current="page"' : ''}>${ic(i.ic, '')}<span>${i.label}</span></a>`).join('');
-  const grp = (cap, ks) => `<div class="cap grp">${cap}</div>` + ks.map(k => `<a href="#/${PATH[k]}" ${RT.name === k ? 'aria-current="page"' : ''}>${ic(k)}${t('nav_' + k)}</a>`).join('');
-  $('#side').innerHTML = grp('Партнёр', ['dash']) + grp('Продажи', ['lots','deals']) + grp('Покупатель', ['villa','fit']) + grp('Консьерж', ['conc']);
-  const r = ROLES[S.role];
-  $('#avatar').innerHTML = `<b>${r.av}</b><span><b style="all:unset;font-weight:600;display:block">${r.n === 'Покупатель' ? 'Ли Мин' : r.full}</b><span style="display:block;color:var(--faint);font-size:12px">${r.n === 'Покупатель' ? 'вилла V-07' : 'Демо-роль'}</span></span>`;
-  $('#asView').innerHTML = `<span class="cap">Смотреть как</span><div class="seg" role="group" aria-label="Роль">${Object.keys(ROLES).map(k => `<button data-act="role" data-v="${k}" aria-pressed="${S.role === k}">${ROLES[k].n}</button>`).join('')}</div>`;
-}
-
-/* ===== shared bits ===== */
-const initials = n => n.split(/[\s.]+/).filter(Boolean).slice(0, 2).map(x => x[0]).join('').toUpperCase();
-const seg = (act, opts, cur, cls) => `<div class="seg ${cls || ''}" role="group">${opts.map(o => `<button data-act="${act}" data-v="${o[0]}" aria-pressed="${cur === o[0]}">${o[1]}</button>`).join('')}</div>`;
-const curSeg = () => seg('cur', [['THB','฿'],['USD','$'],['CNY','¥']], S.cur, 'sm');
-const langSeg = () => seg('lang', [['ru','RU'],['en','EN'],['zh','中文']], S.lang, 'sm');
-const saleBadge = v => v.sale === 'sold' ? `<span class="badge b-sea">${t('sold')}</span>` : v.sale === 'res' ? `<span class="badge b-warn">${t('res')}</span>` : `<span class="badge b-free">${t('free')}</span>`;
-const stageName = n => t('st' + n);
-const queueOf = n => n <= 8 ? 1 : n <= 14 ? 2 : 3;
-
-/* ===== 1. DASHBOARD ===== */
-function vDash() {
-  const o = stats(), ordAmt = S.order ? S.order.amt : 0, per = S.period;
-  const dealsCnt = [0,1,2,3,4].map(c => S.deals.filter(d => d.col === c).length), mx = Math.max.apply(null, dealsCnt);
-  const cn = CONC[per], sh = SHOP[per];
-  const shopTot = sh[0] + ordAmt, shopVil = sh[1] + ordAmt;
-  const newReq = S.reqs.find(r => r.st === 'new' && !r.perf);
-  const stgLine = Object.keys(o.stg).sort().map(k => `${t('stg_s' + k)} ${o.stg[k]}`).join(' · ');
-  const bars = S.villas.map(v => `<button class="${v.sale === 'res' ? 'reserved' : v.sale}" data-go-lot="${v.id}" aria-label="${v.id}, ${v.pct}%"><span style="height:${Math.max(4, v.pct * 1.2)}px"></span></button>`).join('');
-  const nums = S.villas.map(v => `<span>${v.n % 2 || window.innerWidth >= 600 ? String(v.n).padStart(2, '0') : ''}</span>`).join('');
-  const over = o.overN ? `<a class="card kpi" href="#/lots/${o.overV}"><span class="cap">${t('k_over')}</span><span class="v err">${money(o.over, S.cur, true)}</span><span class="sm soft">${t('k_over_s', {n:o.overN, v:o.overV, d:o.overD})}</span></a>`
-    : `<div class="card kpi"><span class="cap">${t('k_over')}</span><span class="v">0</span><span class="sm soft">${t('k_over_0')}</span></div>`;
-  return `
-  <div class="head"><div><h1>${t('d_title')}</h1><p class="hint">${t('d_sub')}</p></div>
-   <div class="tools">${seg('period', [['m', t('p_m')], ['q', t('p_q')], ['y', t('p_y')]], per)}${curSeg()}<span class="sm faint">${t('rate')}</span>${langSeg()}</div></div>
-  <div class="grid kpis">
-   <div class="card kpi"><span class="cap">${t('k_sold')}</span><span class="v">${t('k_sold_v', {a:o.sold, b:19})}</span><span class="sm soft">${t('k_sold_s', {r:o.res, f:o.free})}</span></div>
-   <div class="card kpi"><span class="cap">${t('k_in')}</span><span class="v brass">${money(o.paid, S.cur, true)}</span><div class="bar brass"><i style="width:${Math.round(o.paid / (o.soldSum + o.resSum) * 100)}%"></i></div><span class="sm soft">${t('k_in_s', {x:money(o.soldSum + o.resSum, S.cur, true)})}</span></div>
-   ${over}
-   <div class="card kpi"><span class="cap">${t('k_build')}</span><span class="v">${o.avg} %</span><span class="sm soft">${t('k_build_s')}</span></div>
+  <a class="btn btn-o" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span></a>
+  <div class="pop">
+    <button class="ctl" id="lang-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="lang-menu" data-i18n-attr="aria-label:ui_lang" aria-label="Язык"><span id="lang-cur">RU</span><svg class="chev" aria-hidden="true"><use href="#i-chev"/></svg></button>
+    <div class="menu" id="lang-menu" role="menu" hidden>
+      <button type="button" role="menuitemradio" aria-checked="true" data-v="ru"><span>Русский</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="en"><span>English</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="zh"><span>简体中文</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+    </div>
   </div>
-  <div class="card mt"><div class="row between wrap"><h3>${t('b_title')}</h3><div class="legend"><span class="badge b-sea">${t('sold')}</span><span class="badge b-warn">${t('res')}</span><span class="badge b-free">${t('free')}</span></div></div>
-   <div class="vb">${bars}</div><div class="vbn">${nums}</div><p class="sm soft mt-s">${stgLine}</p></div>
-  <div class="grid tiles mt" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">
-   <div class="card"><h3>${t('t_sales')}</h3>${dealsCnt.map((c, i) => `<div class="fun"><span>${t('f' + i)}</span><i style="width:${Math.max(6, c / mx * 100)}%"></i><b>${c}</b></div>`).join('')}<a class="lnk" href="#/deals">${t('go_deals')}</a></div>
-   <div class="card"><h3>${t('t_conc')}</h3><p class="mt-s"><span class="cap">${t('c_open')}</span><br><span class="disp" style="font-size:28px;line-height:34px">${openReqs()}</span></p>
-     <p class="sm soft mt-s">${t('c_per', {n:cn[0], r:money(cn[1], S.cur), p:cn[2]})}</p>
-     ${newReq ? `<p class="sm mt-s" style="color:var(--warn)">${t('c_new', {id:newReq.id, m:'<span class="sla" data-sla="' + newReq.id + '">' + slaLeft(newReq) + '</span>'})}</p>` : ''}
-     <a class="lnk" href="#/concierge">${t('go_conc')}</a></div>
-   <div class="card"><h3>${t('t_shop')}</h3><p class="mt-s">${t('s_rev', {a:'<b>' + money(shopTot, S.cur, 2) + '</b>', b:'<b>' + money(shopVil, S.cur, 2) + '</b>'})}</p>
-     <div class="bar mt-s"><i style="width:${Math.round(shopVil / shopTot * 100)}%"></i></div>
-     ${S.order ? `<p class="sm mt-s" style="color:var(--warn)">${t('s_ord', {x:money(S.order.amt, S.cur)})}</p>` : ''}
-     <a class="lnk" href="#/fitout">${t('go_fit')}</a></div>
+  <div class="pop">
+    <button class="ctl" id="theme-btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu" aria-label="Тема">
+      <svg class="ti ti-system" aria-hidden="true"><use href="#i-monitor"/></svg><svg class="ti ti-light" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ti ti-dark" aria-hidden="true"><use href="#i-moon"/></svg>
+    </button>
+    <div class="menu" id="theme-menu" role="menu" hidden>
+      <button type="button" role="menuitemradio" aria-checked="true" data-v="system"><svg aria-hidden="true"><use href="#i-monitor"/></svg><span data-i18n="ui_theme_system">Как в системе</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="light"><svg aria-hidden="true"><use href="#i-sun"/></svg><span data-i18n="ui_theme_light">Светлая</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+      <button type="button" role="menuitemradio" aria-checked="false" data-v="dark"><svg aria-hidden="true"><use href="#i-moon"/></svg><span data-i18n="ui_theme_dark">Тёмная</span><svg class="chk" aria-hidden="true"><use href="#i-check"/></svg></button>
+    </div>
   </div>
-  <div class="card seabox mt"><h3>${t('one3')}</h3><p class="mt-s">${t('one3t')}</p></div>`;
-}
+</div></header>
 
-/* ===== 2. LOTS ===== */
-function vLots() {
-  const f = S.filterLots, c = {all:19, free:0, res:0, sold:0};
-  S.villas.forEach(v => c[v.sale]++);
-  const list = S.villas.filter(v => f === 'all' || v.sale === f);
-  const card = v => {
-    const st = stageOf(v.pct), ty = TYPES[v.type];
-    return `<a class="card lot" href="#/lots/${v.id}" ${RT.id === v.id ? 'style="border-color:var(--sea)"' : ''}>
-      <div class="row between"><span class="n">${v.id}</span>${saleBadge(v)}</div>
-      <span class="sm soft">${v.type} · ${ty.br} спальни · ${ty.m2} м²</span><b>${thb(PRICE[v.type])}</b>
-      <div class="bar ${v.pct >= 100 ? 'ok' : ''}"><i style="width:${v.pct}%"></i></div><span class="sm soft">${v.pct} % · ${t('st' + st)}</span></a>`;
-  };
-  const group = (q, ttl) => {
-    const vs = list.filter(v => queueOf(v.n) === q);
-    return vs.length ? `<h3 class="sec-t">${ttl}</h3><div class="lgrid">${vs.map(card).join('')}</div>` : '';
-  };
-  const body = list.length ? group(1, 'Очередь 1 (V-01–V-08)') + group(2, 'Очередь 2 (V-09–V-14)') + group(3, 'Очередь 3 (V-15–V-19)')
-    : `<div class="empty">${ic('search')}<p>Нет вилл с таким статусом</p><button class="btn btn-o mt-s" data-act="flt-lots" data-v="all">Сбросить фильтр</button></div>`;
-  return `<div class="head"><div><h1>Лоты · 19 вилл</h1><p class="hint">Демо: нажмите на виллу — откроется карточка с графиком платежей.</p></div></div>
-   <div class="caps">${[['all','Все'],['free','Свободна'],['res','Бронь'],['sold','Продана']].map(x => `<button class="capsule" data-act="flt-lots" data-v="${x[0]}" aria-pressed="${f === x[0]}">${x[1]}<i>${c[x[0]]}</i></button>`).join('')}</div>${body}`;
-}
-function payRows(v, withBtn) {
-  return v.pays.map((p, k) => {
-    const s = payStatus(v, k);
-    return `<div class="pay"><div class="m"><b>${t('pn' + k)}</b><div class="sm soft">${money(p.amt)}</div></div>
-      <span class="badge b-${s.c}">${s.t}</span>${withBtn && (s.s === 'due' || s.s === 'over') ? `<button class="btn btn-p sm" data-act="pay-open" data-v="${k}">${t('pay_btn')}</button>` : ''}</div>`;
-  }).join('');
-}
-function panelVilla(v) {
-  const ty = TYPES[v.type], st = stageOf(v.pct), paid = paidOf(v);
-  const dots = [1,2,3,4,5,6,7].map(n => `<i class="${n < st ? 'd' : n === st && v.pct < 100 ? 'c' : n <= st ? 'd' : ''}"></i>`).join('');
-  let who;
-  if (v.sale === 'free') who = `<div class="card" style="margin-top:16px"><b>Свободна</b><p class="sm soft mt-s">Покупателя нет. Выберите лид из «Квалификации» или «Показа» — вилла уйдёт в бронь.</p><button class="btn btn-p block mt-s" data-act="book-open" data-v="${v.id}">Забронировать</button></div>`;
-  else who = `<div class="card" style="margin-top:16px"><span class="cap">Покупатель</span><p class="mt-s"><b>${esc(v.buyer)}</b></p><p class="sm soft">Менеджер: ${esc(v.mgr)} · ${v.sale === 'res' ? 'бронь' : 'договор'} от ${fdate(v.contract || v.pays[0].paid)}</p></div>
-    <div class="card" style="margin-top:12px"><div class="row between"><h3>График платежей</h3></div>${payRows(v, false)}
-    <div class="row between" style="border-top:2px solid var(--ink);padding-top:12px;margin-top:4px"><span class="soft">Оплачено</span><b class="disp" style="color:var(--brass)">${thb(paid)} из ${thb(PRICE[v.type])}</b></div></div>`;
-  let acts = '';
-  if (v.n === 7) acts += `<a class="btn btn-o block" style="margin-top:12px" href="#/villa">Открыть кабинет покупателя</a>`;
-  if (v.n === 4) acts += S.remind ? `<button class="btn btn-o block" style="margin-top:12px" disabled>Напоминание отправлено сегодня</button>` : `<div class="note-over sm" style="margin-top:12px;color:var(--err)">Платёж «Каркас и кровля» просрочен на ${diffDays(TODAY, v.pays[3].due)} дн.</div><button class="btn btn-p block" style="margin-top:8px" data-act="remind">Напомнить покупателю</button>`;
-  if (v.sale === 'res') acts += '';
-  return `<div class="ph"><div><h2>Вилла ${v.id}</h2></div><button class="btn btn-o sm" data-act="panel-close">Закрыть</button></div>
-   <div class="pb"><div class="row wrap">${saleBadge(v)}<span class="sm soft">очередь ${queueOf(v.n)}</span></div>
-   <p class="mt-s">Тип ${v.type} · ${ty.br} спальни · ${ty.m2} м² · участок ${ty.plot} м²</p><p class="disp" style="font-size:22px;margin-top:4px">${thb(PRICE[v.type])}</p>
-   <div class="card" style="margin-top:16px"><span class="cap">Стройка</span><p class="mt-s"><b>${v.pct} %</b> · ${t('st' + st)}</p><div class="bar mt-s ${v.pct >= 100 ? 'ok' : ''}"><i style="width:${v.pct}%"></i></div><div class="dots">${dots}</div></div>
-   ${who}${acts}</div>`;
-}
+<main id="top">
+<section class="hero wrap">
+  <h1 data-i18n="h1">Виллы, магазин и консьерж в одной системе</h1>
+  <p class="lead" data-i18n="lead">Покупатель следит за стройкой и платежами на своём языке. Вы видите три бизнеса в одних цифрах.</p>
+  <div class="hero-cta">
+    <a class="btn btn-p btn-l" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    <p class="note" data-i18n="demo_note">Villa Group и проект Hillside 19 — названия для демо. В вашей системе будут ваши проекты и ваши данные.</p>
+  </div>
+  <div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><picture><source media="(max-width:767px)" srcset="img/d-hero-m-800.webp"><img src="img/d-hero-1600.webp" width="1600" height="900" fetchpriority="high" decoding="async" alt="Готовая вилла с плоской кровлей и бассейном на склоне холма, вокруг тропическая зелень" data-i18n-attr="alt:alt_d_hero" onerror="this.hidden=true"></picture></div>
+</section>
 
-/* ===== 3. MY VILLA ===== */
-function ph(stage, i, big) {
-  const h = PHOTO_HUES[(stage - 1 + i) % 7];
-  return `background:linear-gradient(${150 + i * 25}deg,hsl(${h[0]} 28% 62%),hsl(${h[1]} 32% 34%))`;
-}
-function vVilla() {
-  const v = V(7), paid = paidOf(v), tot = PRICE.B, pc = Math.round(paid / tot * 100), st = stageOf(v.pct);
-  const sel = S.mile;
-  const miles = MILE_DATES.map((m, i) => {
-    const n = i + 1, cls = m[0] === 'done' ? 'done' : m[0] === 'cur' ? 'cur' : '';
-    const lab = m[0] === 'done' ? t('m_done', {d:fdate(m[1])}) : m[0] === 'cur' ? t('m_cur', {d:fdate(m[1])}) : t('m_plan', {d:fmonth(m[1])});
-    return `<button class="mile ${cls}" data-act="mile" data-v="${n}" aria-pressed="${sel === n}"><span class="c">${n}</span><b class="sm">${stageName(n)}</b><span class="sm soft">${lab}</span>${cls ? `<span class="th" style="${ph(n, 0)}"></span>` : ''}</button>`;
-  }).join('');
-  const mi = MILE_DATES[sel - 1], hasPh = mi[0] !== 'plan', nPh = sel === 1 ? 1 : 3;
-  const photos = hasPh ? `<div class="pcar">${Array.from({length:nPh}, (_, i) => `<button class="phb" data-act="photo" data-v="${i}"><span class="ph-i" style="${ph(sel, i)}">${ic('img')}</span></button>`).join('')}</div>
-     <p class="mt-s">${t('rp' + Math.min(sel, 3))}</p><p class="sm faint">${t('rep_date', {d:fdate(sel === 3 ? TODAY : mi[1])})}</p><p class="sm" style="color:var(--ok);margin-top:4px">${t('rep_ok')}</p>`
-    : `<div class="empty">${ic('img')}<p>${t('rep_none')}</p></div>`;
-  const docs = DOCS0.map(d => ({n:d[0], s:d[1], d:d[2]})).concat(S.receipt ? [{n:'dc6', s:'ds_rec', d:TODAY}] : []);
-  const docList = docs.map((d, i) => `<button class="docrow" data-act="doc" data-v="${d.n}">${ic('doc')}<span style="flex:1"><b class="sm">${t(d.n)}</b><span class="sm faint" style="display:block">${d.d ? fdate(d.d) : '—'}</span></span><span class="badge ${d.s === 'ds_wait' ? 'b-warn' : 'b-ok'}">${t(d.s)}</span></button>`).join('');
-  const rent = S.afterMode === 'rent';
-  const inc = rentInc(S.occ);
-  const after = `<div class="card seabox mt"><h3>${t('af_t')}</h3><div class="mt-s">${seg('after', [['self', t('af_me')], ['rent', t('af_rent')]], S.afterMode)}</div>
-    ${rent ? `<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-top:14px"><div><span class="cap">${t('af_n')}</span><p class="disp" style="font-size:22px">${thb(9500)}</p></div><div><span class="cap">${t('af_occ')}</span><p class="disp" style="font-size:22px"><span id="occv">${S.occ}</span> %</p></div><div><span class="cap">${t('af_inc')}</span><p class="disp" style="font-size:22px"><span id="incv">${thb(inc)}</span></p><span class="sm soft" id="yv">${t('af_y', {p:(inc / tot * 100).toFixed(1).replace('.', loc() === 'ru' ? ',' : '.')})}</span></div></div>
-      <input type="range" min="50" max="85" step="1" value="${S.occ}" data-act="occ" aria-label="${t('af_occ')}"><p class="sm soft">${t('af_note')}</p>`
-      : `<p class="mt-s">${t('af_self')}</p><a class="btn btn-p" style="margin-top:12px" href="#/concierge/k118">${t('af_go')}</a>`}</div>`;
-  const cc = S.cur !== 'THB' ? `<span class="sm faint" style="display:block;font-weight:400">${thb(tot)}</span>` : '';
-  return `<div class="head"><div></div><div class="tools">${langSeg()}</div></div>
-  <div class="hero"><span class="badge">${t('v_hand')}</span><h1>${t('v_h')}</h1><p>${t('v_hs')}</p></div>
-  <div class="villa2 mt"><div class="stack">
-   <div class="card"><div class="row between wrap"><div><span class="cap">${t('v_ready')}</span><p class="disp" style="font-size:40px;line-height:46px">${v.pct} %</p></div><span class="badge b-info">${stageName(st)}</span></div><div class="bar mt-s"><i style="width:${v.pct}%"></i></div>
-    <div class="miles mt">${miles}</div>
-    <div class="card" style="margin-top:6px;box-shadow:none"><h3 style="margin-bottom:10px">${sel}. ${stageName(sel)} · ${t('rep_t')}</h3>${photos}</div></div></div>
-   <div class="stack mt" style="margin-top:16px">
-    <div class="card"><div class="row between wrap"><h3>${t('pay_t')}</h3>${curSeg()}</div>
-     <p class="mt-s disp big-b">${t('pay_sum', {a:money(paid), b:money(tot)})}</p>${cc}<div class="bar brass mt-s"><i style="width:${pc}%"></i></div><div class="mt-s">${payRows(v, true)}</div></div>
-    <div class="card"><h3>${t('doc_t')}</h3><div class="mt-s">${docList}</div><p class="sm faint mt-s">${t('doc_note')}</p></div>
-   </div></div>${after}`;
-}
-const rentInc = occ => Math.round(9500 * 365 * occ / 100 * 0.75 - 300000);
+<section class="sec wrap rv pain">
+  <h2 data-i18n="pain_title">Три бизнеса, одни и те же клиенты</h2>
+  <div class="pain-t" data-i18n="pain_text" data-i18n-as="p"><p>Человек покупает у вас виллу. Потом заказывает в вашем магазине мебель и отделку. После передачи ключей пишет консьержу: встретить в аэропорту, убрать дом, починить кондиционер.</p><p>Сейчас это три отдельные истории. Платежи записаны на листочке и в таблице. Фото со стройки уходят в чат. Заявки консьержу приходят в личные сообщения, а исполнители отвечают по-тайски. Инвестор из Китая спрашивает, как идёт стройка, и ответ собирают вручную. Сколько один клиент принёс всем трём бизнесам, никто не скажет.</p></div>
+  <ul class="biz">
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-biz-build-v2-800.webp" srcset="img/d-biz-build-v2-800.webp 800w, img/d-biz-build-v2-1600.webp 1600w" sizes="(min-width:1024px) 390px, (min-width:768px) 33vw, 82vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Стройка виллы: бетонный каркас в лесах, арматура, вокруг тропическая зелень" data-i18n-attr="alt:alt_d_biz_build" onerror="this.hidden=true"></div><b data-i18n="biz_build" data-i18n-i="0">Застройка</b><span data-i18n="biz_build" data-i18n-i="1">Виллы на продажу</span></li>
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-biz-shop-800.webp" srcset="img/d-biz-shop-800.webp 800w, img/d-biz-shop-1600.webp 1600w" sizes="(min-width:1024px) 390px, (min-width:768px) 33vw, 82vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Шоурум отделки и мебели: стенд с образцами плитки и камня, диван и светильник" data-i18n-attr="alt:alt_d_biz_shop" onerror="this.hidden=true"></div><b data-i18n="biz_shop" data-i18n-i="0">Магазин</b><span data-i18n="biz_shop" data-i18n-i="1">Мебель и отделка</span></li>
+    <li><div class="ph r32"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-biz-service-800.webp" srcset="img/d-biz-service-800.webp 800w, img/d-biz-service-1600.webp 1600w" sizes="(min-width:1024px) 390px, (min-width:768px) 33vw, 82vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Горничная заправляет кровать в спальне виллы" data-i18n-attr="alt:alt_d_biz_service_maid" onerror="this.hidden=true"></div><b data-i18n="biz_service" data-i18n-i="0">Консьерж</b><span data-i18n="biz_service" data-i18n-i="1">Трансфер, уборка, ремонт</span></li>
+  </ul>
+</section>
 
-/* ===== 4. CONCIERGE ===== */
-const RSTAT = {new:['Новая','info'], asg:['Назначена','warn'], work:['В работе','warn'], done:['Готово','ok']};
-const LN = {ru:'русский', en:'English', zh:'中文', th:'ไทย'};
-function slaHtml(r) {
-  if (r.st !== 'new' || r.perf || r.sla == null) return '';
-  const m = slaLeft(r);
-  return `<span class="sla ${m === 0 ? 'over' : 'warn'}" data-sla="${r.id}" data-long="${m === 0 ? 0 : 1}">${m > 0 ? m + ' мин' : 'SLA нарушен'}</span>`;
-}
-function vConc() {
-  const f = S.filterReq, c = {all:S.reqs.length, new:0, asg:0, work:0, done:0};
-  S.reqs.forEach(r => c[r.st]++);
-  const list = S.reqs.filter(r => f === 'all' || r.st === f);
-  const sel = S.reqs.find(r => r.key === RT.id) || null, deskSel = sel || list[0] || S.reqs[0];
-  const rows = list.map(r => `<a class="crow" href="#/concierge/${r.key}" ${deskSel.id === r.id ? 'aria-current="true"' : ''}><span class="ico">${ic(r.ic)}</span><span style="flex:1;min-width:0"><b class="sm" style="display:block">${r.type}</b><span class="sm soft">${esc(r.who)} · ${r.villa} · ${r.when}</span></span><span style="text-align:right;display:flex;flex-direction:column;gap:4px;align-items:flex-end"><span class="badge b-${RSTAT[r.st][1]}">${RSTAT[r.st][0]}</span>${slaHtml(r)}</span></a>`).join('')
-    || `<div class="empty">${ic('search')}<p>Нет заявок с таким статусом</p><button class="btn btn-o mt-s" data-act="flt-req" data-v="all">Сбросить фильтр</button></div>`;
-  return `<div class="head"><div><h1>Заявки владельцев</h1><p class="hint">Демо: откройте К-118 — в чате каждый читает на своём языке.</p></div></div>
-   <div class="caps" style="margin-bottom:14px">${[['all','Все'],['new','Новые'],['asg','Назначены'],['work','В работе'],['done','Готово']].map(x => `<button class="capsule" data-act="flt-req" data-v="${x[0]}" aria-pressed="${f === x[0]}">${x[1]}<i>${c[x[0]]}</i></button>`).join('')}</div>
-   <div class="split2"><div class="card ${sel ? 'hm' : ''}" style="padding:0;overflow:hidden">${rows}</div><div class="${sel ? '' : 'hm'}">${reqDetail(deskSel)}</div></div>`;
-}
-function reqDetail(r) {
-  const order = ['new','asg','work','done'], ix = order.indexOf(r.st), p = PERF.find(x => x.id === r.perf);
-  const steps = ['Новая','Назначена','В работе','Готово'].map((n, i) => `<div class="${i === ix ? 'on' : i < ix ? 'past' : ''}">${n}</div>`).join('');
-  const rl = S.readLang;
-  const msgs = r.msgs.map(m => {
-    if (m.from === 's') return `<div class="msg s">${esc(m.text)}</div>`;
-    const orig = m.o !== rl && !m.pending;
-    return `<div class="msg ${m.from}"><div class="who">${m.from === 'o' ? esc(r.who) + ' · владелец' : 'Диспетчер'}</div><span ${rl === 'zh' ? 'lang="zh"' : rl === 'th' ? 'lang="th"' : ''}>${esc(m.pending ? m.x[m.o] : m.x[rl])}</span>${m.pending ? '<q>переводим…</q>' : orig ? `<q>оригинал · ${LN[m.o]}: ${esc(m.x[m.o])}</q>` : ''}</div>`;
-  }).join('');
-  const nextBtn = r.st === 'asg' ? '<button class="btn btn-p" data-act="next-status">Начать работу →</button>' : r.st === 'work' ? '<button class="btn btn-p" data-act="next-status">Отметить выполненной →</button>' : '';
-  return `<div class="card"><a class="back-m lnk" href="#/concierge">← Назад к заявкам</a>
-   <div class="row between wrap"><h3>${r.type}</h3><span class="badge b-${RSTAT[r.st][1]}">${RSTAT[r.st][0]}</span></div>
-   <p class="sm soft">${esc(r.who)} · ${r.villa} · ${r.when}${r.flight ? ' · рейс ' + r.flight : ''}</p>
-   <div class="steps">${steps}</div>
-   <div class="row between wrap"><span class="sm">${p ? 'Исполнитель: <b>' + p.n + '</b> (' + p.role + ')' : 'Исполнитель не назначен'} ${slaHtml(r) ? '· осталось ' + slaHtml(r) : ''}</span>
-    <span class="row">${!r.perf ? '<button class="btn btn-p sm" data-act="assign-open">Назначить исполнителя</button>' : ''}${nextBtn}</span></div>
-   <hr style="border:0;border-top:1px solid var(--line);margin:14px 0 8px">
-   <div class="row between wrap"><span class="cap">Я читаю на</span>${seg('read', [['ru','RU'],['en','EN'],['zh','ZH'],['th','TH']], rl, 'sm')}</div>
-   <div class="chat">${msgs}</div>
-   <div class="quick">${QUICK.map((q, i) => `<button class="btn btn-o" data-act="quick" data-v="${i}">${q[0]}</button>`).join('')}</div>
-   <div class="fake-inp" aria-disabled="true">В демо — быстрые ответы</div>
-   <p class="sm faint mt-s">Перевод — ИИ, демо на заготовленных фразах.</p></div>`;
-}
+<section class="sec wrap" id="modules">
+  <h2 class="rv" data-i18n="modules_title">Из чего состоит система</h2>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">01</span><h3 data-i18n="m1_title">Лоты и продажи</h3><p data-i18n="m1_text">Все виллы проекта на одной схеме: свободна, бронь, продана и сколько построено. У каждого покупателя карточка с графиком платежей по этапам стройки. Сразу видно, какой платёж следующий и какой просрочен. Сделки идут по воронке, от первого звонка до договора. По каждому клиенту записано, кто его привёл: агент, сайт, рекомендация или партнёр в Китае.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-1-ru-light-800.webp"><img src="img/demo/frame-1-ru-light-1600.webp" srcset="img/demo/frame-1-ru-light-800.webp 800w, img/demo/frame-1-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Лоты» в демо: 19 вилл проекта Hillside 19, у каждой статус и полоса готовности стройки" data-i18n-attr="alt:alt_frame_1" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-1-ru-dark-800.webp"><img src="img/demo/frame-1-ru-dark-1600.webp" srcset="img/demo/frame-1-ru-dark-800.webp 800w, img/demo/frame-1-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Лоты» в демо: 19 вилл проекта Hillside 19, у каждой статус и полоса готовности стройки" data-i18n-attr="alt:alt_frame_1" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_1">Лоты. Все 19 вилл Hillside 19 на одной схеме. Цвет показывает статус, полоса показывает, сколько построено.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">02</span><h3 data-i18n="m2_title">Кабинет покупателя и инвестора</h3><p data-i18n="m2_text">Покупатель открывает ссылку и видит свою виллу. Там этапы стройки с фото и отчётами, сколько оплачено и сколько осталось, договоры и акты. Кабинет работает на русском, английском и китайском, язык покупатель выбирает сам. Инвестор видит сводку по всему проекту: сколько вилл продано, сколько денег пришло, на каком этапе стройка.</p></div>
+    <figure class="mod-f" data-frame="zh"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-2-zh-light-800.webp"><img src="img/demo/frame-2-zh-light-1600.webp" srcset="img/demo/frame-2-zh-light-800.webp 800w, img/demo/frame-2-zh-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Кабинет покупателя на китайском: этапы стройки с фото, сколько оплачено и сколько осталось" data-i18n-attr="alt:alt_frame_2" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-2-zh-dark-800.webp"><img src="img/demo/frame-2-zh-dark-1600.webp" srcset="img/demo/frame-2-zh-dark-800.webp 800w, img/demo/frame-2-zh-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Кабинет покупателя на китайском: этапы стройки с фото, сколько оплачено и сколько осталось" data-i18n-attr="alt:alt_frame_2" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_2">Кабинет покупателя на китайском. Этапы стройки с фото, оплачено и осталось, договоры и акты.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">03</span><h3 data-i18n="m3_title">Консьерж</h3><p data-i18n="m3_text">Владелец виллы оставляет заявку: встреча в аэропорту, трансфер, уборка, ремонт. Диспетчер назначает исполнителя и видит, сколько времени заявка ждёт ответа. Переписка переводится сама. Владелец пишет по-русски или по-китайски, исполнитель читает по-тайски. Когда работа сделана, владелец получает счёт.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-3-ru-light-800.webp"><img src="img/demo/frame-3-ru-light-1600.webp" srcset="img/demo/frame-3-ru-light-800.webp 800w, img/demo/frame-3-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Заявка К-118 в консьерже: встреча в аэропорту, переписка с владельцем и перевод сообщений" data-i18n-attr="alt:alt_frame_3" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-3-ru-dark-800.webp"><img src="img/demo/frame-3-ru-dark-1600.webp" srcset="img/demo/frame-3-ru-dark-800.webp 800w, img/demo/frame-3-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Заявка К-118 в консьерже: встреча в аэропорту, переписка с владельцем и перевод сообщений" data-i18n-attr="alt:alt_frame_3" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_3">Консьерж. Владелец и диспетчер переписываются в одном чате, сообщения переводятся. Таймер показывает, сколько заявка ждёт ответа.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">04</span><h3 data-i18n="m4_title">Магазин мебели и отделки</h3><p data-i18n="m4_text">Магазин работает как отдельный бизнес. В каталоге отделка, сантехника, кухни, мебель, свет и текстиль. По каждой позиции видно, сколько лежит на складе и что везут под заказ. Цены две: розничная и для партнёров. Заказы трёх видов: на ваши стройки, от других застройщиков и подрядчиков, от покупателей и владельцев вилл. У каждой поставки свой срок, выручка считается по каждому виду заказов. Покупатель виллы выбирает отделку прямо в своём кабинете, и заказ сразу попадает в магазин.</p><div class="mod-w"><div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-warehouse-800.webp" srcset="img/d-warehouse-800.webp 800w, img/d-warehouse-1600.webp 1600w" sizes="(min-width:1024px) 420px, 100vw" width="1600" height="1067" loading="lazy" decoding="async" alt="Склад магазина: стеллажи с коробками и паллеты с плиткой" data-i18n-attr="alt:alt_d_warehouse" onerror="this.hidden=true"></div></div></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-4-ru-light-800.webp"><img src="img/demo/frame-4-ru-light-1600.webp" srcset="img/demo/frame-4-ru-light-800.webp 800w, img/demo/frame-4-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Заказы» магазина: заказы трёх каналов со статусом, суммой и сроком поставки" data-i18n-attr="alt:alt_frame_4" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-4-ru-dark-800.webp"><img src="img/demo/frame-4-ru-dark-1600.webp" srcset="img/demo/frame-4-ru-dark-800.webp 800w, img/demo/frame-4-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Экран «Заказы» магазина: заказы трёх каналов со статусом, суммой и сроком поставки" data-i18n-attr="alt:alt_frame_4" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_4">Магазин. Заказы своих строек, подрядчиков и покупателей в одном списке. У каждой позиции видно склад и срок поставки.</figcaption></figure>
+  </article>
+  <article class="mod rv">
+    <div class="mod-t"><span class="mn">05</span><h3 data-i18n="m5_title">Сводка партнёра</h3><p data-i18n="m5_text">Три бизнеса на одном экране. Сколько вилл продано и сколько денег пришло. Какие платежи просрочены. Сколько за месяц заработали консьерж и магазин. Отдельно видно, сколько каждый клиент принёс всем трём бизнесам. Суммы показываются в батах, долларах или юанях.</p></div>
+    <figure class="mod-f" data-frame="ru"><div class="shot th-light"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-5-ru-light-800.webp"><img src="img/demo/frame-5-ru-light-1600.webp" srcset="img/demo/frame-5-ru-light-800.webp 800w, img/demo/frame-5-ru-light-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Сводка партнёра в демо: продажи вилл, поступления, консьерж и магазин на одном экране" data-i18n-attr="alt:alt_frame_5" onerror="this.hidden=true"></picture></div><div class="shot th-dark"><picture><source media="(max-width:767px)" srcset="img/demo/frame-m-5-ru-dark-800.webp"><img src="img/demo/frame-5-ru-dark-1600.webp" srcset="img/demo/frame-5-ru-dark-800.webp 800w, img/demo/frame-5-ru-dark-1600.webp 1600w" sizes="(min-width:1024px) 700px, (min-width:768px) 100vw, 280px" width="1600" height="1000" loading="lazy" decoding="async" alt="Сводка партнёра в демо: продажи вилл, поступления, консьерж и магазин на одном экране" data-i18n-attr="alt:alt_frame_5" onerror="this.hidden=true"></picture></div><figcaption data-i18n="caption_5">Сводка партнёра. Стройка, продажи, консьерж и магазин на одном экране. Суммы в батах, долларах или юанях.</figcaption></figure>
+  </article>
+</section>
 
-/* ===== 5. FIT-OUT ===== */
-const fitSur = () => S.fit.reduce((s, x, i) => s + FIT[i].v[x][1], 0);
-function vFit() {
-  const sur = fitSur(), allSame = S.fit.every(x => x === S.fit[0]), pk = allSame ? S.fit[0] : -1;
-  const pos = FIT.map((p, i) => `<div class="card pos"><h3>${p.n}</h3><div class="vars">${p.v.map((o, j) => `<button class="var" data-act="fitsel" data-p="${i}" data-v="${j}" aria-pressed="${S.fit[i] === j}">
-     <span class="ck"><svg viewBox="0 0 24 24">${ICO.check}</svg></span><span class="im" style="${ph(i + 1, j)}">${ic('img')}</span><span class="t">${o[0]}</span>
-     <span class="p">${o[1] ? '+' + thb(o[1]) : 'входит'}</span><span class="stock" style="color:var(--${STOCK[i][j] ? 'ok' : 'warn'})">${STOCK[i][j] ? 'на складе' : 'под заказ, 6 недель'}</span></button>`).join('')}</div></div>`).join('');
-  const lines = FIT.map((p, i) => S.fit[i] ? `<div class="row between sm" style="padding:4px 0"><span>${p.v[S.fit[i]][0]}</span><b>+${thb(p.v[S.fit[i]][1])}</b></div>` : '').join('') || '<p class="sm soft">Всё входит в цену виллы</p>';
-  const btn = S.order ? (sur ? `<button class="btn btn-p block" data-act="order-go">Изменить заказ</button>` : `<button class="btn btn-o block" data-act="order-cancel">Отозвать заказ</button>`)
-    : sur ? `<button class="btn btn-p block" data-act="order-go">В заказ</button>` : `<button class="btn btn-p block" disabled>В заказ</button><p class="sm faint" style="text-align:center;margin-top:6px">Всё входит в цену виллы</p>`;
-  const est = `<div class="card"><span class="cap">Смета</span><div class="mt-s">${lines}</div><div class="row between" style="border-top:2px solid var(--ink);padding-top:12px;margin-top:8px"><span class="soft">Доплата</span><b class="disp" style="font-size:22px;color:var(--brass)">${sur ? '+' + thb(sur) : thb(0)}</b></div>
-    <p class="sm soft mt-s">Срок поставки: к марту 2027</p><div style="margin-top:12px">${btn}</div></div>`;
-  const ordBanner = S.order ? `<div class="card seabox row between wrap" style="margin-bottom:12px"><b>Заказ ${S.order.id} · ждёт подтверждения</b><span class="sm soft">менеджер Чен Ю. · +${thb(S.order.amt)}</span></div>` : '';
-  const bar = `<div class="estbar"><div style="flex:1"><span class="cap">Доплата</span><br><b style="color:var(--brass)">${sur ? '+' + thb(sur) : 'входит в цену'}</b></div>${S.order ? (sur ? '<button class="btn btn-p" data-act="order-go">Изменить заказ</button>' : '<button class="btn btn-o" data-act="order-cancel">Отозвать заказ</button>') : `<button class="btn btn-p" data-act="order-go" ${sur ? '' : 'disabled'}>В заказ</button>`}</div>`;
-  return `<div class="head"><div><h1>Отделка виллы V-07</h1><p class="hint">Каталог магазина группы · доставка к этапу «Отделка», март 2027. Демо: выберите пакет или меняйте позиции по одной.</p></div>
-   <div class="tools">${seg('pkg', [['0','Базовый'],['1','Комфорт'],['2','Премиум']], String(pk))}${pk < 0 ? '<span class="badge b-brass b-sea">Свой набор</span>' : ''}</div></div>
-   ${ordBanner}<div class="fit2"><div>${pos}</div><div class="estbox">${est}</div></div>${bar}`;
-}
+<section class="sec wrap rv">
+  <h2 data-i18n="journey_title">Что видит покупатель от брони до ключей</h2>
+  <ol class="jr">
+    <li><i class="jn">1</i><h3 data-i18n="journey_1" data-i18n-as="jh">Покупает виллу.</h3><p data-i18n="journey_1" data-i18n-as="jt">Менеджер ставит бронь, и вилла на схеме становится занятой. Покупатель получает ссылку на свой кабинет.</p></li>
+    <li><i class="jn">2</i><h3 data-i18n="journey_2" data-i18n-as="jh">Следит за стройкой на своём языке.</h3><p data-i18n="journey_2" data-i18n-as="jt">У каждого этапа фото и короткий отчёт. Покупатель из Шанхая читает по-китайски, из Москвы по-русски.</p></li>
+    <li><i class="jn">3</i><h3 data-i18n="journey_3" data-i18n-as="jh">Платит по этапам.</h3><p data-i18n="journey_3" data-i18n-as="jt">В кабинете видно, сколько платить дальше и до какого числа. Деньги пришли — менеджер отмечает платёж, и в кабинете появляется квитанция. Сами деньги идут как сейчас: система их не принимает, она показывает график.</p></li>
+    <li><i class="jn">4</i><h3 data-i18n="journey_4" data-i18n-as="jh">Выбирает отделку и мебель в вашем магазине.</h3><p data-i18n="journey_4" data-i18n-as="jt">Варианты берёт из каталога, смета пересчитывается сразу. Заказ уходит в магазин и привязан к его вилле.</p></li>
+    <li><i class="jn">5</i><h3 data-i18n="journey_5" data-i18n-as="jh">Получает ключи и пользуется консьержем.</h3><p data-i18n="journey_5" data-i18n-as="jt">Встречу в аэропорту, уборку перед приездом и мелкий ремонт заказывает из того же кабинета.</p></li>
+  </ol>
+</section>
 
-/* ===== 6. DEALS ===== */
-const COLN = ['Новый лид','Квалификация','Показ','Бронь','Договор'];
-const dealAmt = d => d.col >= 3 && d.villa ? PRICE[V(d.villa).type] : d.bud;
-function dealCard(d) {
-  return `<div class="card deal"><button class="top2" data-act="deal-open" data-v="${d.id}" style="width:100%;flex-direction:column;gap:4px"><b>${esc(d.name)}</b><span class="sm soft">${d.col >= 3 ? 'Вилла ' + V(d.villa).id : d.int}</span><span class="src">${d.src}</span></button>
-   <div class="row between"><b>${money(dealAmt(d), 'THB', true)}</b><span class="ini" title="${d.mgr}">${initials(d.mgr)}</span></div>
-   <span class="sm faint">${d.days} дн. на этапе</span>
-   <div class="row">${d.col > 0 && d.col < 3 ? `<button class="ibtn" data-act="deal-prev" data-v="${d.id}" aria-label="Назад">←</button>` : ''}${d.col < 4 ? `<button class="btn btn-p sm" style="flex:1" data-act="deal-next" data-v="${d.id}">Дальше →</button>` : '<span class="badge b-ok">Договор подписан</span>'}</div></div>`;
-}
-function colHtml(c) {
-  const ds = S.deals.filter(d => d.col === c);
-  return `<div class="kcol"><div class="kcol-h"><b>${COLN[c]}${c === 4 ? ' <span>за 30 дней</span>' : ''}</b><span>${ds.length} · ${money(ds.reduce((s, d) => s + dealAmt(d), 0), 'THB', true)}</span></div>${ds.map(dealCard).join('') || '<p class="sm faint" style="padding:8px">Пусто</p>'}</div>`;
-}
-function vDeals() {
-  const tab = S.dealTab, tabs = COLN.map((n, i) => `<button class="capsule" data-act="dealtab" data-v="${i}" aria-pressed="${tab === i}">${n}<i>${S.deals.filter(d => d.col === i).length}</i></button>`).join('');
-  const total = S.deals.reduce((s, d) => s + dealAmt(d), 0);
-  return `<div class="head"><div><h1>Сделки</h1><p class="hint">Воронка продаж вилл Hillside 19 · всего в воронке ${money(total, 'THB', true)}. Демо: «Дальше →» переносит сделку и меняет статус виллы.</p></div></div>
-   <div class="only-m"><div class="caps" style="margin-bottom:12px">${tabs}</div>${colHtml(tab)}</div>
-   <div class="only-d kb5">${[0,1,2,3,4].map(colHtml).join('')}</div>`;
-}
-function panelDeal(d) {
-  const ph = '+66 •• ••• ' + String(4821 - d.id.replace('D', '') * 37).slice(-4);
-  return `<div class="ph"><h2>${esc(d.name)}</h2><button class="btn btn-o sm" data-act="panel-close">Закрыть</button></div><div class="pb">
-   <div class="row wrap"><span class="badge b-sea">${COLN[d.col]}</span><span class="src">${d.src}</span></div>
-   <p class="mt-s">${d.col >= 3 ? 'Вилла ' + V(d.villa).id : d.int} · <b>${thb(dealAmt(d))}</b></p><p class="sm soft">Менеджер: ${d.mgr} · ${d.days} дн. на этапе</p>
-   <div class="card" style="margin-top:12px"><span class="cap">Контакты</span><p class="mt-s">${ph}</p><p class="sm faint">Полный номер виден только менеджеру</p></div>
-   <div class="card" style="margin-top:12px"><span class="cap">История</span><div class="mt-s sm"><p>${fdate(addDays(TODAY, -d.days - 6))} · заявка получена (${d.src})</p><p>${fdate(addDays(TODAY, -d.days - 2))} · первый звонок, уточнили бюджет</p><p>${fdate(addDays(TODAY, -d.days))} · переведён на этап «${COLN[d.col]}»</p></div></div>
-   <p class="mt-s"><span class="cap">Следующий шаг</span><br>Показ онлайн 09.10, 11:00</p>
-   ${d.col < 4 ? `<button class="btn btn-p block" style="margin-top:12px" data-act="deal-next" data-v="${d.id}">Дальше →</button>` : ''}</div>`;
-}
-/* ===== modals ===== */
-let MODAL = null, TOAST = null, toastT = null;
-const sheet = inner => `<div class="sheet-ov" data-ov="1"><div class="sheet" role="dialog" aria-modal="true">${inner}</div></div>`;
-function modalHtml() {
-  const m = MODAL; if (!m) return '';
-  if (m.type === 'menu') return sheet(`<h2>Роль в демо</h2>${Object.keys(ROLES).map(k => `<button class="opt" data-act="role" data-v="${k}" ${S.role === k ? 'style="border-color:var(--sea)"' : ''}><span class="t"><b>${ROLES[k].full}</b><br><span class="sm soft">${k === 'partner' ? 'Сводка по трём бизнесам' : k === 'sales' ? 'Сделки и лоты' : k === 'buyer' ? 'Кабинет покупателя' : 'Заявки владельцев'}</span></span>${S.role === k ? ic('check') : ''}</button>`).join('')}
-    <button class="btn btn-o block" style="margin-top:16px" data-act="reset">Сбросить демо</button><button class="btn btn-p block" style="margin-top:8px" data-act="close-modal">Закрыть</button>`);
-  if (m.type === 'pay') {
-    const v = V(7), p = v.pays[m.k];
-    return sheet(`<h2>${t('pay_sh', {s:t('pn' + m.k)})}</h2><p class="sm soft">${t('pay_amt')}</p><p class="disp" style="font-size:28px;color:var(--brass)">${money(p.amt)}</p>
-     <div class="card" style="margin:14px 0;box-shadow:none"><p class="sm">${t('pay_req', {n:m.k + 1})}</p></div>
-     <button class="btn btn-p block" data-act="pay-do" data-v="${m.k}">${t('pay_mark')}</button><button class="btn btn-o block" style="margin-top:8px" data-act="close-modal">${t('close')}</button>`);
-  }
-  if (m.type === 'doc') return sheet(`<h2>${t(m.n)}</h2><div class="docprev"><span class="cap">${t('doc_demo')}</span><p class="disp mt-s" style="font-size:18px">${t(m.n)}</p><i></i><i style="width:90%"></i><i style="width:96%"></i><i style="width:70%"></i><i style="width:84%"></i></div><button class="btn btn-p block" data-act="close-modal">${t('close')}</button>`);
-  if (m.type === 'photo') {
-    const n = m.stage === 1 ? 1 : 3;
-    return sheet(`<h2>${m.stage}. ${stageName(m.stage)}</h2><div class="ph-i" style="${ph(m.stage, m.i)};margin:8px 0">${ic('img')}</div><p class="sm soft" style="text-align:center">${m.i + 1} / ${n}</p>
-     <div class="row" style="margin-top:12px"><button class="ibtn" data-act="photo-nav" data-v="-1" aria-label="←" ${n < 2 ? 'disabled' : ''}>←</button><button class="btn btn-p" style="flex:1" data-act="close-modal">${t('close')}</button><button class="ibtn" data-act="photo-nav" data-v="1" aria-label="→" ${n < 2 ? 'disabled' : ''}>→</button></div>`);
-  }
-  if (m.type === 'assign') return sheet(`<h2>Назначить исполнителя</h2><p class="sm soft">Заявка ${m.id}</p>${PERF.map(p => `<button class="opt" data-act="assign-pick" data-v="${p.id}" ${p.busy ? 'disabled' : ''}><span class="t"><b>${p.n}</b> · <span class="sm soft">${p.role}</span><br><span class="sm soft">${p.lang}</span></span><span class="badge ${p.busy ? 'b-warn' : 'b-ok'}">${p.busy || p.note || 'свободен'}</span></button>`).join('')}<button class="btn btn-o block" style="margin-top:14px" data-act="close-modal">Отмена</button>`);
-  if (m.type === 'book') {
-    const leads = S.deals.filter(d => d.col === 1 || d.col === 2), v = vById(m.id);
-    return sheet(`<h2>Бронь ${v.id}</h2><p class="sm soft">Выберите лид — сделка уйдёт в колонку «Бронь», вилла получит статус «бронь» (${thb(PRICE[v.type])}).</p>${leads.map(d => `<button class="opt" data-act="book-pick" data-v="${d.id}" data-vid="${v.id}"><span class="t"><b>${esc(d.name)}</b> <span class="sm soft">· ${COLN[d.col]}</span><br><span class="sm soft">${d.int} · бюджет ${thb(d.bud)}</span></span>${d.bud >= PRICE[v.type] ? '<span class="badge b-ok">подходит по бюджету</span>' : ''}</button>`).join('')}<button class="btn btn-o block" style="margin-top:14px" data-act="close-modal">Отмена</button>`);
-  }
-  if (m.type === 'pickvilla') {
-    const d = S.deals.find(x => x.id === m.id), ty = /Тип (\w)/.exec(d.int), want = ty ? ty[1] : d.int.startsWith('V-') ? vById(d.int).type : null;
-    const fr = S.villas.filter(v => v.sale === 'free').sort((a, b) => (b.type === want) - (a.type === want));
-    return sheet(`<h2>Выберите свободную виллу</h2><p class="sm soft">Для ${esc(d.name)} · интерес: ${d.int}</p>${fr.length ? fr.map(v => `<button class="opt" data-act="book-pick" data-v="${d.id}" data-vid="${v.id}"><span class="t"><b>${v.id}</b> · тип ${v.type}<br><span class="sm soft">${thb(PRICE[v.type])} · ${v.pct} %</span></span>${v.type === want ? '<span class="badge b-sea">тип совпадает</span>' : ''}${d.bud >= PRICE[v.type] ? '<span class="badge b-ok">по бюджету</span>' : ''}</button>`).join('') : '<div class="empty"><p>Свободных вилл нет</p></div>'}<button class="btn btn-o block" style="margin-top:14px" data-act="close-modal">Отмена</button>`);
-  }
-  if (m.type === 'sign') {
-    const d = S.deals.find(x => x.id === m.id), v = V(d.villa);
-    return sheet(`<h2>Договор подписан?</h2><p>${esc(d.name)} · ${v.id}</p><p class="sm soft mt-s">Вилла станет «продана», в графике платежей «Договор» отметится оплаченным (${thb(v.pays[1].amt)}).</p><button class="btn btn-p block" style="margin-top:14px" data-act="sign-do" data-v="${d.id}">Да, подписан</button><button class="btn btn-o block" style="margin-top:8px" data-act="close-modal">Отмена</button>`);
-  }
-  if (m.type === 'order') return sheet(`<h2>Заказ ${S.order.id} ${m.upd ? 'обновлён' : 'создан'}</h2><p class="sm soft">Ждёт подтверждения менеджера Чен Ю.</p><div class="mt-s">${FIT.map((p, i) => S.order.sel[i] ? `<div class="row between sm" style="padding:4px 0"><span>${p.v[S.order.sel[i]][0]}</span><b>+${thb(p.v[S.order.sel[i]][1])}</b></div>` : '').join('')}</div>
-    <div class="row between" style="border-top:2px solid var(--ink);padding-top:12px;margin-top:8px"><span>Итого доплата</span><b class="disp" style="color:var(--brass)">+${thb(S.order.amt)}</b></div><p class="sm soft mt-s">Оплата — вместе с платежом «Отделка».</p><button class="btn btn-p block" style="margin-top:14px" data-act="close-modal">Готово</button>`);
-  return '';
-}
-function toast(msg) { TOAST = msg; clearTimeout(toastT); toastT = setTimeout(() => { TOAST = null; renderLayer(); }, 4000); renderLayer(); }
-function renderLayer() { $('#layer').innerHTML = modalHtml() + (TOAST ? `<div class="toast" role="status">${esc(TOAST)}</div>` : ''); }
+<section class="sec wrap rv">
+  <h2 data-i18n="process_title">Как пойдёт работа</h2>
+  <ol class="steps">
+    <li><span class="sn">1</span><p data-i18n="process_steps" data-i18n-i="0">Берём один ваш проект. Нужны список вилл, графики оплат и несколько фото со стройки. Разбираемся, как вы продаёте сейчас и кто что должен видеть.</p></li>
+    <li><span class="sn">2</span><p data-i18n="process_steps" data-i18n-i="1">Через две недели после получения данных показываем первые экраны. На них ваши виллы, ваши покупатели и ваши платежи. После показа считаем цену первой версии.</p></li>
+    <li><span class="sn">3</span><p data-i18n="process_steps" data-i18n-i="2">Первая версия, на которой можно работать, готова через 8 недель от начала. В неё входят лоты, продажи и кабинет покупателя и инвестора на трёх языках. Китайские тексты кабинета до запуска вычитывает носитель языка.</p></li>
+    <li><span class="sn">4</span><p data-i18n="process_steps" data-i18n-i="3">Потом подключаем консьержа и магазин. Они встают на ту же базу клиентов и вилл, переделывать ничего не придётся.</p></li>
+  </ol>
+  <p class="pnote" data-i18n="process_note">Систему ставим на сервер в Азии. Сервер ваш, данные тоже ваши.</p>
+</section>
 
-/* ===== render ===== */
-const fontsLoaded = {};
-function loadFont(key, href) { if (fontsLoaded[key]) return; fontsLoaded[key] = 1; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
-function render() {
-  let r = parseHash();
-  if (!r) { r = {name:ROLES[S.role].start, id:null}; history.replaceState(null, '', '#/' + PATH[r.name]); }
-  RT = r; chrome();
-  if (S.lang === 'zh' && (RT.name === 'villa' || RT.name === 'dash') || RT.name === 'conc') loadFont('sc', 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@600&display=swap');
-  if (RT.name === 'conc') loadFont('th', 'https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500&display=swap');
-  $('#app').innerHTML = {dash:vDash, lots:vLots, deals:vDeals, villa:vVilla, conc:vConc, fit:vFit}[RT.name]();
-  let p = '';
-  if (RT.name === 'lots' && RT.id && vById(RT.id)) p = panelVilla(vById(RT.id));
-  else if (RT.name === 'deals' && S.dealPanel) p = panelDeal(S.deals.find(d => d.id === S.dealPanel));
-  $('#panel').innerHTML = p ? `<div class="scrim" data-act="panel-close"></div><aside class="panel" role="dialog" aria-label="Карточка">${'<div class="grab"></div>'}${p}</aside>` : '';
-  document.body.classList.toggle('panel-open', !!p);
-  document.body.classList.toggle('has-bar', RT.name === 'fit');
-  document.title = 'Villa Group · Hillside 19 — ' + t('nav_' + RT.name);
-  renderLayer();
-}
-let lastName = null;
-function rerender() { save(); const y = scrollY; render(); scrollTo(0, y); }
+<section class="sec wrap rv">
+  <div class="cta">
+    <div class="ph"><svg class="phi" aria-hidden="true"><use href="#i-image"/></svg><img src="img/d-interior-800.webp" srcset="img/d-interior-800.webp 800w, img/d-interior-1600.webp 1600w" sizes="(min-width:1024px) 520px, 100vw" width="1600" height="900" loading="lazy" decoding="async" alt="Гостиная готовой виллы с выходом на террасу и бассейн, отделка из дерева и камня" data-i18n-attr="alt:alt_d_interior" onerror="this.hidden=true"></div>
+    <div class="cta-t">
+      <h2 data-i18n="cta_title">Откройте демо и покажите партнёрам</h2>
+      <p data-i18n="cta_text">В демо работает каждая кнопка. Можно поставить бронь, отметить платёж, переключить кабинет на китайский, собрать заказ в магазине. Данные выдуманы, демо можно сбросить в любой момент.</p>
+      <a class="btn btn-p btn-l" data-demo href="app/?lang=ru#/dashboard"><span data-i18n="cta_button">Открыть демо</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      <p class="contact" data-i18n="contact" data-i18n-as="contact">Пишите Дмитрию в Telegram <a href="https://t.me/demda" rel="noopener">@demda</a> или на почту <a href="mailto:hello@demda.pro">hello@demda.pro</a>. Пришлите один проект, и через две недели покажем его в системе.</p>
+    </div>
+  </div>
+</section>
+</main>
 
-/* ===== actions ===== */
-function book(vid, did) {
-  const v = vById(vid), d = S.deals.find(x => x.id === did);
-  v.sale = 'res'; v.buyer = d.name; v.mgr = d.mgr; v.pays = genPays(v, v.n - 1); v.pays[0].paid = TODAY; v.pays[0].due = null; v.dealId = d.id;
-  d.col = 3; d.villa = v.n; d.int = v.id; d.days = 0; S.dealPanel = null;
-  MODAL = null; toast(vid + ' забронирована за ' + d.name);
-}
-const ACT = {
- role(v) { S.role = v; MODAL = null; S.dealPanel = null; const h = '#/' + PATH[ROLES[v].start]; if (location.hash === h) rerender(); else { save(); location.hash = h; } },
- period(v) { S.period = v; rerender(); },
- cur(v) { S.cur = v; rerender(); },
- lang(v) { S.lang = v; if (v === 'zh' && S.cur === 'THB' && RT.name === 'villa') S.cur = 'CNY'; rerender(); },
- 'flt-lots'(v) { S.filterLots = v; rerender(); },
- 'flt-req'(v) { S.filterReq = v; rerender(); },
- 'panel-close'() { S.dealPanel = null; if (RT.name === 'lots') { save(); location.hash = '#/lots'; } else rerender(); },
- 'close-modal'() { MODAL = null; renderLayer(); },
- 'menu'() { MODAL = {type:'menu'}; renderLayer(); },
- reset() { S = freshState(); MODAL = null; save(); const h = '#/' + PATH[ROLES[S.role].start]; if (location.hash === h) render(); else location.hash = h; toast('Демо сброшено'); },
- remind() { S.remind = true; rerender(); toast('Напоминание отправлено покупателю'); },
- 'book-open'(v) { MODAL = {type:'book', id:v}; renderLayer(); },
- 'book-pick'(v, el) { book(el.dataset.vid, v); rerender(); },
- mile(v) { S.mile = +v; rerender(); },
- photo(v) { MODAL = {type:'photo', stage:S.mile, i:+v}; renderLayer(); },
- 'photo-nav'(v) { const n = MODAL.stage === 1 ? 1 : 3; MODAL.i = (MODAL.i + +v + n) % n; renderLayer(); },
- 'pay-open'(v) { MODAL = {type:'pay', k:+v}; renderLayer(); },
- 'pay-do'(v) { V(7).pays[+v].paid = TODAY; S.receipt = true; MODAL = null; rerender(); toast(t('pay_toast')); },
- doc(v) { MODAL = {type:'doc', n:v}; renderLayer(); },
- after(v) { S.afterMode = v; rerender(); },
- read(v) { S.readLang = v; rerender(); },
- 'assign-open'() { MODAL = {type:'assign', id:curReq().id}; renderLayer(); },
- 'assign-pick'(v) { const r = curReq(), p = PERF.find(x => x.id === v); r.perf = v; r.st = 'asg'; r.msgs.push({from:'s', text:'Назначен ' + p.n}); MODAL = null; rerender(); toast('Назначен ' + p.n); },
- 'next-status'() { const r = curReq(); r.st = r.st === 'asg' ? 'work' : 'done'; r.msgs.push({from:'s', text:'Статус: ' + RSTAT[r.st][0]}); rerender(); },
- quick(v) { const r = curReq(), q = QUICK[+v], m = {from:'d', o:'ru', x:{ru:q[0], en:q[1], zh:q[2], th:q[3]}, pending:true}; r.msgs.push(m); rerender();
-   setTimeout(() => { m.pending = false; save(); if (RT.name === 'conc') rerender(); }, 600); },
- pkg(v) { S.fit = FIT.map(() => +v); rerender(); },
- fitsel(v, el) { S.fit[+el.dataset.p] = +v; rerender(); },
- 'order-go'() { const upd = !!S.order; S.order = {id:'М-2041', sel:S.fit.slice(), amt:fitSur()}; MODAL = {type:'order', upd}; rerender(); },
- 'order-cancel'() { S.order = null; rerender(); toast('Заказ М-2041 отозван'); },
- dealtab(v) { S.dealTab = +v; rerender(); },
- 'deal-open'(v) { S.dealPanel = v; rerender(); },
- 'deal-prev'(v) { const d = S.deals.find(x => x.id === v); d.col--; d.days = 0; rerender(); },
- 'deal-next'(v) {
-   const d = S.deals.find(x => x.id === v);
-   if (d.col < 2) { d.col++; d.days = 0; rerender(); }
-   else if (d.col === 2) { MODAL = {type:'pickvilla', id:v}; renderLayer(); }
-   else if (d.col === 3) { MODAL = {type:'sign', id:v}; renderLayer(); }
- },
- 'sign-do'(v) { const d = S.deals.find(x => x.id === v), vl = V(d.villa); vl.sale = 'sold'; vl.pays[1].paid = TODAY; vl.pays[1].due = null; vl.contract = TODAY; d.col = 4; d.days = 0; MODAL = null; rerender(); toast(vl.id + ' продана. Договор оплачен: ' + thb(vl.pays[1].amt)); }
-};
-function curReq() { return S.reqs.find(r => r.key === RT.id) || S.reqs[0]; }
-document.addEventListener('click', e => {
-  const go2 = e.target.closest('[data-go-lot]');
-  if (go2) { location.hash = '#/lots/' + go2.dataset.goLot; return; }
-  if (e.target.dataset && e.target.dataset.ov && MODAL) { MODAL = null; renderLayer(); return; }
-  const el = e.target.closest('[data-act]');
-  if (!el || el.disabled) return;
-  if (el.id === 'avatar') return;
-  const fn = ACT[el.dataset.act];
-  if (fn) fn(el.dataset.v, el);
-});
-$('#avatar').addEventListener('click', () => ACT.menu());
-document.addEventListener('input', e => {
-  if (e.target.dataset.act !== 'occ') return;
-  S.occ = +e.target.value; const inc = rentInc(S.occ);
-  $('#occv').textContent = S.occ; $('#incv').textContent = thb(inc);
-  $('#yv').textContent = t('af_y', {p:(inc / PRICE.B * 100).toFixed(1).replace('.', loc() === 'ru' ? ',' : '.')}); save();
-});
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && MODAL) { MODAL = null; renderLayer(); } });
-window.addEventListener('hashchange', () => {
-  const prev = lastName, r = parseHash(); render();
-  if (r && prev !== r.name) scrollTo(0, 0);
-  lastName = r && r.name;
-});
-setInterval(() => {
-  document.querySelectorAll('[data-sla]').forEach(el => {
-    const r = S.reqs.find(x => x.id === el.dataset.sla); if (!r) return;
-    const m = slaLeft(r), long = el.dataset.long;
-    el.textContent = m > 0 ? (long ? m + ' мин' : m) : (long ? 'SLA нарушен' : 0);
-    el.className = 'sla ' + (m === 0 ? 'over' : 'warn');
-  });
-}, 20000);
-render(); lastName = RT.name;
-</script>
+<footer class="wrap foot"><span data-i18n="footer_note">Прототип demda.pro. Названия компаний, имена людей и цифры вымышлены. Фото взяты из открытых фотобанков и не изображают реальные объекты.</span> <a href="img/CREDITS.md" data-i18n="footer_credits">Авторы фото</a></footer>
+
+<script src="landing-texts.js"></script>
+<script src="landing.js"></script>
 </body>
 </html>
