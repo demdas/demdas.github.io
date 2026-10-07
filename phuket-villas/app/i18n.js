@@ -405,7 +405,7 @@ var D = {
  dd_nofree:['Нет свободных вилл — бронь невозможна','No available villas — reservation is not possible','没有可售别墅，无法预订'],
  dd_locked:['С этапа «{c}» назад нельзя: вилла уже закреплена за сделкой','You can’t move back from “{c}”: the villa is already tied to the deal','无法从“{c}”退回：别墅已与该交易绑定'],
  dd_order:['Сначала бронь','Reserve a villa first','请先预订别墅'],
- dd_moved:['{n} → {c}','{n} → {c}','{n} → {c}'],
+ dd_moved:['{n}\u00A0→\u00A0{c}','{n}\u00A0→\u00A0{c}','{n}\u00A0→\u00A0{c}'],
  dd_pick:['Сделка {n} — выберите виллу для брони','Deal {n} — pick a villa to reserve','交易 {n} — 请选择要预订的别墅'],
  dl_mgr:['Менеджер','Manager','经理'],
  dl_sub:['Воронка продаж Hillside 19 · в работе {n} · {x} · «Договор» — за 30 дней','Hillside 19 sales funnel · {n} in progress · {x} · “Contract” covers the last 30 days','Hillside 19 销售漏斗 · 在办 {n} · {x} · “签约”列为近 30 天'],

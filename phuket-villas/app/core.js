@@ -20,7 +20,8 @@ function t(k, v) {
   if (s == null || s === '') s = e[0];
   if (s && typeof s === 'object') s = s[new Intl.PluralRules(LOC[LANG]).select(v && v.n)] || s.other;
   if (v) s = s.replace(/\{(\w+)\}/g, (m, x) => x in v ? v[x] : m);
-  return /[VMPKМПК]-\d/.test(s) ? s.replace(/\b([VMPKМПК])-(\d)/g, '$1\u2060-\u2060$2') : s;     // номера не рвутся по дефису
+  /* номера не рвутся по дефису; внутри тегов (атрибуты data-*) знаки не вставляем */
+  return /[VMPKМПК]-\d/.test(s) ? s.replace(/(<[^>]*>)|\b([VMPKМПК])-(\d)/g, (m, tag, a, b) => tag ? tag : a + '\u2060-\u2060' + b) : s;
 }
 const chatTxt = (k, l) => (I18N.chat[k] && (I18N.chat[k][l] || I18N.chat[k].ru)) || k;
 /* имена людей и компаний: RU — как в данных; EN и ZH — латиницей (иероглифы для имён не придумываем) */
@@ -521,7 +522,7 @@ function render() {
   RT = r;
   document.body.dataset.page = RT.name;
   chrome();
-  if (LANG === 'zh') loadFont('sc', 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@600&display=swap');
+  if (LANG === 'zh') loadFont('sc', 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600&family=Noto+Serif+SC:wght@600&display=swap');
   if (RT.name === 'conc') loadFont('th', 'https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500&display=swap');
   const kind = pageKind(RT.name);
   $('#app').innerHTML = `<div class="page ${kind}">${VIEWS[RT.name]()}</div>`;
