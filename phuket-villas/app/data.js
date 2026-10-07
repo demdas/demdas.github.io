@@ -57,7 +57,7 @@ const DEMO = {
   mile: [['done','2026-02-18'],['done','2026-07-26'],['cur','2026-11-30'],['plan','2027-02-15'],['plan','2027-03-15'],['plan','2027-08-15'],['plan','2027-09-15']],
   /* Файлы фото: имя без ширины и расширения (../img/<имя>-<ширина>.webp). Замену кадра подключают сменой одной строки, например 'stage-3-03' -> 'stage-3-03-v2'.
      Галерея этапа работает с 0–4 кадрами; отклонённые дизайнером слоты (stage-3-02, stage-4-02, type-c до замены) сюда не входят или остаются заглушкой. */
-  stagePhotos: [['stage-1-01', 'stage-1-02'], ['stage-2-01', 'stage-2-02', 'stage-2-03'], ['stage-3-01', 'stage-3-02-v2', 'stage-3-03'], ['stage-4-01', 'stage-4-02-v2'], ['stage-5-01', 'stage-5-02', 'stage-5-03'], ['stage-6-01', 'stage-6-02'], []],
+  stagePhotos: [['stage-1-01', 'stage-1-02'], ['stage-2-01', 'stage-2-02', 'stage-2-03'], ['stage-3-02-v2', 'stage-3-03', 'stage-3-01'], ['stage-4-01', 'stage-4-02-v2'], ['stage-5-01', 'stage-5-02', 'stage-5-03'], ['stage-6-01', 'stage-6-02'], []],
   files: {hero:'villa-v07', after:['after-01', 'after-02'], type:{A:'type-a', B:'type-b', C:'type-c-v2'}},
   docs: [['dc0','ds_signed','2026-03-12'],['dc1','ds_signed','2026-03-20'],['dc2','ds_signed','2026-03-20'],['dc3','ds_got','2026-01-22'],['dc4','ds_signed','2026-07-28'],['dc5','ds_wait',null]],
   buyersConc: ['Ли Мин','Чжан Вэй','Ольга К.','Ван Фан','Андрей Л.','Лю Ян','Игорь Н.','Сергей и Мария Т.']   // пользуются консьержем (из заявок)
@@ -77,7 +77,7 @@ const SHOP = {
     ['SAN-01','plumb','pcs',24500,20800,18,6,4,'sku-wc-wall'], ['SAN-02','plumb','pcs',38000,32300,9,3,2,'sku-shower-rain'],
     ['SAN-03','plumb','pcs',16900,14400,22,0,4,'sku-basin'], ['SAN-04','plumb','pcs',92000,78000,2,1,2,'sku-bath'],
     ['KIT-01','kitchen','set',245000,208000,3,2,2,'sku-kitchen-line'], ['KIT-02','kitchen','set',555000,472000,0,0,1,'sku-kitchen-island'],
-    ['KIT-03','kitchen','lm',18500,15700,24,7,5,'sku-worktop-quartz'], ['KIT-04','kitchen','pcs',14200,12100,15,2,3,'sku-sink-granite-v2'],
+    ['KIT-03','kitchen','lm',18500,15700,24,7,5,'sku-worktop-quartz'], ['KIT-04','kitchen','pcs',14200,12100,15,2,3,''],
     ['FUR-01','furn','pcs',168000,143000,4,1,1,'sku-sofa'], ['FUR-02','furn','pcs',112000,95000,3,1,1,'sku-table-teak'],
     ['FUR-03','furn','set',210000,178000,0,0,2,'sku-lounge-outdoor'], ['FUR-04','furn','pcs',74000,63000,7,0,2,'sku-bed'],
     ['LIG-01','light','pcs',4900,4150,160,40,30,'sku-track-v2'], ['LIG-02','light','pcs',12500,10600,26,0,5,'sku-pendant'],

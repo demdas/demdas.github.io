@@ -6,6 +6,7 @@
 |---|---|---|---|---|---|
 | after-01 | Contemporary villa with an infinity pool overlooking the ocean, perfect for luxury getaways. | Keegan Checks | https://www.pexels.com/photo/white-and-brown-wooden-house-near-swimming-pool-12715498/ | Pexels License | 07.10.2026 |
 | after-02 | Spacious bedroom featuring minimalist design and stunning ocean views. | Ahmet ÇÖTÜR | https://www.pexels.com/photo/a-bedroom-with-a-large-bed-and-sliding-glass-doors-28054888/ | Pexels License | 07.10.2026 |
+| d-biz-build | Construction site featuring concrete walls with window and door frames under daylight. | Peter Dyllong | https://www.pexels.com/photo/urban-construction-site-with-concrete-structures-36833961/ | Pexels License | 07.10.2026 |
 | d-biz-build-v2 | Renovation of historic building wrapped in scaffolding and netting in Zanzibar. | Natalia Msungu | https://www.pexels.com/photo/scaffolding-around-historic-building-in-zanzibar-30357317/ | Pexels License | 07.10.2026 |
 | d-biz-service | A hotel staff member prepares a bed in a sleek, modern hotel room with copper accents. | Ken Mwaura | https://www.pexels.com/photo/hotel-staff-making-bed-in-modern-room-29006838/ | Pexels License | 07.10.2026 |
 | d-biz-shop | Modern fancy kitchen interior design with trendy furniture and decorative glass wall and vases | Max Vakhtbovych | https://www.pexels.com/photo/contemporary-kitchen-with-stylish-furniture-and-decorative-vases-6969869/ | Pexels License | 07.10.2026 |
@@ -29,7 +30,6 @@
 | sku-pendant | Minimalist pendant light fixture with a white shade and exposed bulb, ideal for modern decor. | Cats Coming | https://www.pexels.com/photo/white-pendant-lamp-2123426/ | Pexels License | 07.10.2026 |
 | sku-rug-jute | Detailed view of a beige wool textile fabric, showcasing its texture and softness. |    https://kaboompics.com/ | https://www.pexels.com/photo/a-close-up-shot-of-white-fabric-6634461/ | Pexels License | 07.10.2026 |
 | sku-shower-rain | Sleek stainless steel shower head set against a stylish bathroom with white tiles and a brick accent wall. | Polina ⠀ | https://www.pexels.com/photo/stainless-steel-shower-head-on-white-brick-wall-5644300/ | Pexels License | 07.10.2026 |
-| sku-sink-granite-v2 | Close-up view of a modern black and gold faucet in a sleek kitchen setting, showcasing elegance. | Derwin  Edwards | https://www.pexels.com/photo/close-up-photo-of-a-faucet-11208978/ | Pexels License | 07.10.2026 |
 | sku-sofa | Elegant brown L-shaped sofa featuring striped cushions and modern design, ideal for minimalist interiors. | Engin Akyurt | https://www.pexels.com/photo/brown-couch-on-white-background-4172381/ | Pexels License | 07.10.2026 |
 | sku-stone-travertine | A detailed close-up of a white wall texture showcasing natural imperfections and roughness. |    https://kaboompics.com/ | https://www.pexels.com/photo/close-up-of-a-white-wall-4709462/ | Pexels License | 07.10.2026 |
 | sku-table-teak | A stylish wooden dining table with wicker chairs and a fruit-filled decorative bowl. | Wolf  Art | https://www.pexels.com/photo/bowl-with-fruits-on-table-20130652/ | Pexels License | 07.10.2026 |
@@ -57,3 +57,4 @@
 | type-b | A modern luxury villa surrounded by lush greenery, showcasing contemporary architectural design. | Sharath G. | https://www.pexels.com/photo/modern-luxury-villa-with-lush-greenery-outdoors-31737842/ | Pexels License | 07.10.2026 |
 | type-c-v2 | Explore this luxurious modern villa in Dubai with a stunning swimming pool and palm trees. | Abid  Ali | https://www.pexels.com/photo/white-and-brown-concrete-building-near-the-swimming-pool-10647324/ | Pexels License | 07.10.2026 |
 | villa-v07 | Elegant villa with infinity pool overlooking the ocean, ideal for luxury vacations. | Keegan Checks | https://www.pexels.com/photo/white-and-gray-concrete-building-near-swimming-pool-12715491/ | Pexels License | 07.10.2026 |
+| og.jpg (превью ссылки, кроп d-hero 1200×630) | Elegant villa with an infinity pool set in a serene outdoor landscape. | Keegan Checks | https://www.pexels.com/photo/white-concrete-house-near-green-trees-under-blue-sky-12715456/ | Pexels License | 07.10.2026 |

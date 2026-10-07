@@ -85,7 +85,7 @@ html:not([data-pref]) .ti-system{display:block}
 .menu button[aria-checked=true]{background:var(--accent-soft);color:var(--accent-text)}
 @media (hover:hover){.menu button:hover{background:var(--surface-2)}.menu button[aria-checked=true]:hover{background:var(--accent-soft)}}
 /* спецификация: кнопка в шапке с 360, но RU и EN на 390 вместе с языком и темой не помещаются; показываем с 480 (на телефоне ниже есть большая кнопка первого экрана) */
-@media (min-width:480px){.top .btn{display:inline-flex}}
+@media (min-width:360px){.top .btn{display:inline-flex}}
 
 /* первый экран */
 .hero{padding-top:24px}
@@ -126,7 +126,28 @@ html:not([data-pref]) .ti-system{display:block}
 [data-theme=dark] .th-light{display:none}
 figcaption{margin-top:12px;font-size:13px;line-height:20px;color:var(--text-3);max-width:60ch}
 .mod-f figcaption{text-align:center;margin-inline:auto}
+.mod-f .open{display:flex;justify-content:center}
 .mod-w{display:none}
+
+/* кадр модуля как ссылка на свой экран демо */
+.shot-link{display:block;cursor:pointer;text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
+.open{display:inline-flex;align-items:center;min-height:44px;margin-top:4px;font-size:15px;line-height:20px;font-weight:600;color:var(--accent-text);text-decoration:none}
+:lang(zh) .open{font-weight:500}
+@media (hover:hover){.open:hover{text-decoration:underline;text-underline-offset:3px}.shot-link:hover .shot{border-color:var(--accent)}}
+.open::after{content:"\00a0→"}
+.about-l::after{content:none}
+.l-full{display:none}
+
+/* кто делает */
+.about-t{color:var(--text-2);max-width:64ch}
+.facts{list-style:none;display:grid;gap:16px;margin-top:var(--sec-h)}
+.facts li{background:var(--surface-1);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:var(--rim)}
+.fn{display:block;width:32px;height:3px;border-radius:2px;background:var(--accent)}
+.facts p{margin-top:16px;font-size:15px;line-height:22px}
+:lang(zh) .facts p{line-height:25px}
+.about-l{margin-top:16px}
+.eyebrow{margin-bottom:12px;font-size:13px;line-height:18px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3)}
+:lang(zh) .eyebrow{letter-spacing:0;text-transform:none;font-weight:500}
 
 /* путь покупателя */
 .jr{list-style:none;position:relative}
@@ -171,6 +192,8 @@ figcaption{margin-top:12px;font-size:13px;line-height:20px;color:var(--text-3);m
 
 /* >= 768 */
 @media (min-width:768px){
+  .l-full{display:inline}.l-short{display:none}
+  .mod-f .open{display:inline-flex;justify-content:flex-start;margin-top:0}
   :root{--pad:24px;--sec:96px;--sec-h:32px}
   body{font-size:16px}
   .top{height:64px}
@@ -194,6 +217,8 @@ figcaption{margin-top:12px;font-size:13px;line-height:20px;color:var(--text-3);m
   .jr li{padding-bottom:0}
   .jr li::before{display:none}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+  .facts li{padding:24px}
   .steps li{padding:24px}
   .cta .ph{aspect-ratio:21/9}
   .cta-t{padding:40px}

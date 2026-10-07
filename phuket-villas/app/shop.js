@@ -26,7 +26,7 @@ function lineName(l) { return l.fit != null ? t('fv_' + l.fit + '_' + l.j) : l.k
 function lineQty(l) { return l.sku ? unit(l.qty, PROD[l.sku].unit) : '1'; }
 function composition(o) {
   const l = o.lines[0], extra = o.lines.length - 1;
-  return `${lineName(l)} × ${lineQty(l)}` + (extra > 0 ? ` <span class="faint nw">${t('o_more', {n:extra})}</span>` : '');
+  return `<span class="cpn">${lineName(l)} × ${lineQty(l)}</span>` + (extra > 0 ? `<span class="cpm faint nw">${t('o_more', {n:extra})}</span>` : '');
 }
 const priceName = o => t('pt_' + o.price);
 const waitCell = o => { if (o.st !== 'waiting') return '—'; const w = waitDate(o); return w ? `<span class="nw">${fshort(w.date)}, ${oid(w.id)}</span>` : '—'; };
@@ -44,10 +44,10 @@ function vShop() {
   const b = bp(), list = SHOP.products.filter(matchProd), cc = catCount();
   const pv = S.priceView;
   const card = p => {
-    const big = pv === 'retail' ? p.retail : p.partner, sm = pv === 'retail' ? t('pc_partner', {x:thb(p.partner), d:discount(p)}) : t('pc_retail', {x:thb(p.retail)}), ab = availBadge(p.code);
+    const big = pv === 'retail' ? p.retail : p.partner, sm = pv === 'retail' ? `<span class="nw">${t('pc_p', {x:thb(p.partner)})}</span><span class="nw disc">${t('pc_d', {d:discount(p)})}</span>` : `<span class="nw">${t('pc_retail', {x:thb(p.retail)})}</span>`, ab = availBadge(p.code);
     return `<a class="card pcard ${RT.id === p.code ? 'sel' : ''}" href="${hrefOf('shop', p.code)}" aria-label="${esc(SKU_NAME(p.code))}">${photo(p.img, {cls:'r11', w:[400, 800], sizes:'(min-width:1280px) 214px, 45vw', alt:SKU_NAME(p.code), iw:800, ih:800})}
      <span class="cap pcat">${t('cat_' + p.cat)}</span><span class="pname" title="${esc(SKU_NAME(p.code))}">${SKU_NAME(p.code)}</span>
-     <span class="pprice"><b class="nw">${thb(big)}</b><span class="xs faint nw">/ ${t('u_' + p.unit)}</span></span><span class="xs soft nw ell">${sm}</span><span class="badge ${ab.c}">${ab.t}</span></a>`;
+     <span class="pprice"><b class="nw">${thb(big)}</b><span class="xs faint nw">/ ${t('u_' + p.unit, {n:1})}</span></span><span class="pp xs soft">${sm}</span><span class="badge ${ab.c}">${ab.t}</span></a>`;
   };
   const grid = list.length ? `<div class="pgrid">${list.map(card).join('')}</div>` : emptyBox('search', t('cat_none'), `<button class="btn btn-o" data-act="flt-reset">${t('flt_reset')}</button>`);
   const top = !b.menu ? `<div class="catbar"><div class="caps">${['all'].concat(SHOP.cats).map(c => `<button class="capsule" data-act="cat" data-v="${c}" aria-pressed="${S.cat === c}">${c === 'all' ? t('f_all') : t('cat_' + c)}<i>${cc[c]}</i></button>`).join('')}</div>
@@ -65,7 +65,7 @@ function panelSku(code) {
   const stockRows = [[t('sk_stock'), `<span class="nw">${unit(i.s, p.unit)}</span>`], [t('sk_res'), `<span class="nw">${unit(i.r, p.unit)}</span>`], [t('sk_avail'), `<b class="nw">${unit(Math.max(0, i.s - i.r), p.unit)}</b>`], [t('sk_transit'), incoming]];
   if (a.a <= 0 && !transit) stockRows.push([t('sk_order'), ordered ? t('sk_order_s', {q:unit(ordered.items.find(x => x[0] === code)[1], p.unit), id:oid(ordered.id), d:fshort(ordered.date)}) : t('sk_order_w', {n:6})]);
   const body = `${photo(p.img, {cls:'r11 skuph', w:[400, 800], sizes:'360px', alt:SKU_NAME(code), iw:800, ih:800})}
-   ${blk(t('sk_prices'), kv([[t('pt_retail'), `<span class="nw">${thb(p.retail)} / ${t('u_' + p.unit)}</span>`], [t('pt_partner'), `<span class="nw">${thb(p.partner)} / ${t('u_' + p.unit)}</span>`], [t('sk_disc'), `<span class="nw">−${discount(p)} %</span>`]]))}
+   ${blk(t('sk_prices'), kv([[t('pt_retail'), `<span class="nw">${thb(p.retail)} / ${t('u_' + p.unit, {n:1})}</span>`], [t('pt_partner'), `<span class="nw">${thb(p.partner)} / ${t('u_' + p.unit, {n:1})}</span>`], [t('sk_disc'), `<span class="nw">−${discount(p)} %</span>`]]))}
    ${blk(t('sk_stockb'), kv(stockRows))}
    ${blk(t('sk_orders'), ords.length ? `<div class="olist">${ords.map(o => `<a class="orow" href="${hrefOf('orders', o.id)}"><b class="nw">${oid(o.id)}</b><span class="ell">${esc(clientName(o))}</span><span class="nw">${lineQty(o.lines.find(l => l.sku === code))}</span><span class="badge ${OSTAT[o.st]}">${t('os_' + o.st)}</span></a>`).join('')}</div>` : `<p class="sm faint">${t('sk_orders_none')}</p>`)}`;
   return panelShell({title:SKU_NAME(code), sub:`<span class="sm faint">${code}</span>`, body, foot:`<span></span><button class="btn btn-p" data-act="nw-open" data-v="${code}">${t('sk_to_order')}</button>`, aria:SKU_NAME(code)});
@@ -76,11 +76,20 @@ MODALS.neworder = m => {
   const p = PROD[m.code], cl = SHOP.clients.find(c => c.id === m.client), max = nwMax(m.code), unitP = p[cl.price], tot = m.qty * unitP, wait = m.qty > availQ(m.code);
   const rows = SHOP.clients.map(c => `<button class="opt" role="radio" aria-checked="${m.client === c.id}" data-act="nw-client" data-v="${c.id}"><i class="rd"></i><span class="t"><b>${esc(clientName({c:c.c}))}</b></span><span class="sm soft nw">${t('pt_' + c.price)} · ${thb(p[c.price])}</span></button>`).join('');
   return sheet(`<h2>${t('nw_title')}</h2><p class="sm soft">${SKU_NAME(m.code)} · ${m.code}</p><h3 class="cap">${t('nw_client')}</h3><div class="opts" role="radiogroup">${rows}</div>
-   <h3 class="cap">${t('nw_qty')}</h3><div class="qty"><button class="ibtn" data-act="nw-q" data-v="-1" aria-label="${t('nw_minus')}" ${m.qty <= 1 ? 'disabled' : ''}>${ic('minus')}</button><input id="nwq" type="number" inputmode="numeric" min="1" ${max < Infinity ? `max="${max}"` : ''} step="${nwStep(m.code)}" value="${m.qty}" aria-label="${t('nw_qty')}" data-act="nwq"><span class="faint">${t('u_' + p.unit)}</span><button class="ibtn" data-act="nw-q" data-v="1" aria-label="${t('nw_plus')}" ${m.qty >= max ? 'disabled' : ''}>${ic('plus')}</button></div>
+   <h3 class="cap">${t('nw_qty')}</h3><div class="qty"><button class="ibtn" data-act="nw-q" data-v="-1" aria-label="${t('nw_minus')}" ${m.qty <= 1 ? 'disabled' : ''}>${ic('minus')}</button><input id="nwq" type="number" inputmode="numeric" min="1" ${max < Infinity ? `max="${max}"` : ''} step="${nwStep(m.code)}" value="${m.qty}" aria-label="${t('nw_qty')}" data-act="nwq"><span class="faint">${t('u_' + p.unit, {n:1})}</span><button class="ibtn" data-act="nw-q" data-v="1" aria-label="${t('nw_plus')}" ${m.qty >= max ? 'disabled' : ''}>${ic('plus')}</button></div>
    ${max < Infinity ? `<p class="sm faint">${t('nw_max', {q:unit(max, p.unit)})}</p>` : `<p class="sm tone-info">${t('nw_wait')}</p>`}
    <div class="row between etot"><span class="soft">${t('nw_total')}</span><b class="nw tot17" id="nwtot">${thb(tot)}</b></div>
    <div class="btns"><button class="btn btn-p block" data-act="nw-create">${t('nw_create')}</button><button class="btn btn-o block" data-act="close-modal">${t('cancel')}</button></div>`);
 };
+/* ввод с клавиатуры: только состояние и сумма, без перерисовки листа (иначе клик по «Создать заказ» после ввода терялся) */
+function nwTyped(el, final) {
+  const m = MODAL, p = PROD[m.code], cl = SHOP.clients.find(c => c.id === m.client), max = nwMax(m.code);
+  m.qty = Math.max(1, Math.min(max, Math.round(+el.value) || 1));
+  const tot = $('#nwtot'); if (tot) tot.textContent = thb(m.qty * p[cl.price]);
+  const mi = document.querySelector('[data-act=nw-q][data-v="-1"]'), pl = document.querySelector('[data-act=nw-q][data-v="1"]');
+  if (mi) mi.disabled = m.qty <= 1; if (pl) pl.disabled = m.qty >= max;
+  if (final) el.value = m.qty;
+}
 function nwSet(q) {
   const m = MODAL, max = nwMax(m.code); q = Math.max(1, Math.min(max, Math.round(q) || 1)); m.qty = q; renderLayer();
 }
@@ -102,12 +111,8 @@ Object.assign(ACT, {
   }
 });
 MODALS.avail = () => { const ac = availCount(); return sheet(`<h2>${t('flt_av')}</h2><div>${['stock', 'low', 'order', 'transit'].map(a => `<button class="frow" role="checkbox" aria-checked="${S.av[a]}" data-act="av" data-v="${a}"><i class="cb">${ic('check', 'ic')}</i><span class="ell">${t('avf_' + a)}</span><b>${ac[a]}</b></button>`).join('')}</div><button class="btn btn-p block" data-act="close-modal">${t('close')}</button>`); };
-document.addEventListener('change', e => { if (e.target.id === 'nwq' && MODAL && MODAL.type === 'neworder') nwSet(+e.target.value); });
-document.addEventListener('input', e => {
-  if (e.target.id !== 'nwq' || !MODAL || MODAL.type !== 'neworder') return;
-  const m = MODAL, p = PROD[m.code], cl = SHOP.clients.find(c => c.id === m.client), q = Math.max(0, Math.round(+e.target.value) || 0);
-  const el = $('#nwtot'); if (el) el.textContent = thb(Math.min(q, nwMax(m.code)) * p[cl.price]);
-});
+document.addEventListener('change', e => { if (e.target.id === 'nwq' && MODAL && MODAL.type === 'neworder') nwTyped(e.target, true); });
+document.addEventListener('input', e => { if (e.target.id === 'nwq' && MODAL && MODAL.type === 'neworder') nwTyped(e.target, false); });
 
 /* ===================== Заказы ===================== */
 function ordersVis() {
@@ -115,7 +120,7 @@ function ordersVis() {
     .sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : (a.id < b.id ? 1 : -1));
 }
 function vOrders() {
-  const b = bp(), all = S.shop.orders, list = ordersVis(), rv = revenue('m');
+  const b = bp(), all = S.shop.orders, list = ordersVis(), rv = {cnt:all.length, total:sumBy(all, orderAmt)};
   const cnt = {all:all.length}; SHOP.channels.forEach(c => { cnt[c] = all.filter(o => o.ch === c).length; });
   const tabs = `<div class="caps">${['all'].concat(SHOP.channels).map(c => `<button class="capsule" data-act="ord-ch" data-v="${c}" aria-pressed="${S.ordCh === c}">${c === 'all' ? t('f_all') : t('ch_' + c)}<i>${cnt[c]}</i></button>`).join('')}</div>`;
   const stSeg = seg('ord-st', [['all', t('f_all')], ['active', t('os_active')], ['done', t('os_done')]], S.ordSt, 'sm');
@@ -124,10 +129,10 @@ function vOrders() {
   else if (b.side) {
     const wide = b.w >= 1880;
     body = `<div class="tw"><table class="tbl otbl"><thead><tr><th class="c-no">${t('oc_no')}</th><th class="c-date">${t('oc_date')}</th><th>${t('oc_client')}</th><th>${t('oc_comp')}</th><th class="num c-sum">${t('oc_sum')}</th><th class="c-price">${t('oc_price')}</th><th class="c-st">${t('oc_status')}</th><th class="c-due">${t('oc_due')}</th>${wide ? `<th class="c-mgr">${t('oc_mgr')}</th>` : ''}</tr></thead><tbody>${list.map(o => `<tr tabindex="0" data-act="order-open" data-v="${normId(o.id)}" class="${RT.id === normId(o.id) ? 'sel' : ''}"><td class="c-no"><b class="nw">${oid(o.id)}</b></td><td class="c-date nw">${fshort(o.date)}</td>
-      <td><div class="cl ell" title="${esc(clientName(o))}">${esc(clientName(o))}</div><span class="chcap">${t('ch_' + o.ch)}</span></td><td><div class="cp ell">${composition(o)}</div></td><td class="num c-sum"><b class="nw">${thb(orderAmt(o))}</b></td><td class="c-price xs faint">${priceName(o)}</td>
+      <td><div class="cl ell" title="${esc(clientName(o))}">${esc(clientName(o))}</div><span class="chcap">${t('ch_' + o.ch)}</span></td><td><div class="cp">${composition(o)}</div></td><td class="num c-sum"><b class="nw">${thb(orderAmt(o))}</b></td><td class="c-price xs faint">${priceName(o)}</td>
       <td class="c-st"><span class="badge ${OSTAT[o.st]}">${t('os_' + o.st)}</span></td><td class="c-due sm">${waitCell(o)}</td>${wide ? `<td class="c-mgr sm">${esc(nm(o.mgr))}</td>` : ''}</tr>`).join('')}</tbody></table></div>`;
   } else body = `<div class="ocards">${list.map(o => `<a class="card ocard ${RT.id === normId(o.id) ? 'sel' : ''}" href="${hrefOf('orders', o.id)}"><span class="o1"><b class="nw">${oid(o.id)}</b><span class="badge ${OSTAT[o.st]}">${t('os_' + o.st)}</span></span>
-      <span class="o2 sm ell">${esc(clientName(o))}${o.c.k === 'own' || o.c.k === 'show' ? '' : ' · ' + t('ch_' + o.ch)}</span><span class="o3 sm soft ell">${composition(o)}</span><span class="o4"><span class="sm faint nw">${fshort(o.date)}</span><b class="nw">${thb(orderAmt(o))}</b></span></a>`).join('')}</div>`;
+      <span class="o2 sm ell">${esc(clientName(o))}${o.c.k === 'own' || o.c.k === 'show' ? '' : ' · ' + t('ch_' + o.ch)}</span><span class="o3 sm soft cp">${composition(o)}</span><span class="o4"><span class="sm faint nw">${fshort(o.date)}</span><b class="nw">${thb(orderAmt(o))}</b></span></a>`).join('')}</div>`;
   return `${head(t('ord_title'), t('ord_sub', {n:t('o_n', {n:rv.cnt}), x:thb(rv.total)}), b.phone ? '' : stSeg)}${tabs}${b.phone ? `<div class="stwrap">${stSeg}</div>` : ''}${body}`;
 }
 function panelOrder(key) {
@@ -184,7 +189,7 @@ function vRevenue() {
   const rows = SHOP.channels.map((c, i) => `<button class="chrow big" data-act="goto-ch" data-v="${c}"><i style="background:var(${SHOP.chart[c]})"></i><span class="chn">${t('ch_' + c)}</span><b class="nw">${moneyM(r[c])}</b><span class="sm soft nw sh">${nf(sh[i], {minimumFractionDigits:1, maximumFractionDigits:1})} %</span><span class="sm faint nw ocount">${t('o_n', {n:r.n[c]})}</span></button>`).join('');
   const mx = Math.max.apply(null, SHOP.cats.map(c => cats[c]));
   const catRows = SHOP.cats.slice().sort((a, b) => cats[b] - cats[a]).map(c => `<div class="cbar"><span class="sm cl">${t('cat_' + c)}</span><span class="bt"><i style="width:${Math.max(2, cats[c] / mx * 100)}%"></i></span><b class="nw sm">${thb(cats[c])}</b></div>`).join('');
-  return `${head(t('rv_title'), '', perSeg() + curSeg())}
+  return `${head(t('rv_title'), t('rv_note'), perSeg() + curSeg())}
    <div class="grid kpis rkpi">${kpi.map(k => `<div class="card kpi"><span class="cap">${k[0]}</span><span class="v nw ${k[2]}">${k[1]}</span>${k[3] ? `<span class="sm soft">${k[3]}</span>` : ''}</div>`).join('')}</div>
    <div class="rgrid"><div class="card rch"><h3>${t('rv_ch')}</h3>${chbar}<div class="chlist">${rows}</div><div class="row between etot"><span class="sm soft">${t('rv_villas')}</span><b class="brass nw">${moneyS(r.forVillas)}</b></div></div>
    <div class="card rcat"><h3>${t('rv_cat')}</h3><p class="sm faint">${t('rv_cat_note')}</p><div class="cbars">${catRows}</div></div></div>`;

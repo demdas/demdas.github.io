@@ -62,7 +62,7 @@ function fmonthS(s) {                                  // фев 2027 · Feb 202
 }
 const fday = fshort;
 const fdays = n => t('days_short', {n});
-const unit = (n, u) => nf(n) + NB + t('u_' + u);       // 150 м² · 6 шт.
+const unit = (n, u) => nf(n) + NB + t('u_' + u, {n});       // 150 м² · 6 шт.
 
 /* ===================== состояние ===================== */
 const TODAY = DEMO.today, PRICE = DEMO.price, TYPES = DEMO.types;
@@ -248,11 +248,14 @@ function supplyReceive(id) {
     if (!short) { o.st = 'ready'; histAdd(o, 'ready'); }
   });
 }
+/* «Новый» заказ резервирует остаток сразу (модель склад / резерв / доступно); недостающее ждёт поставку при подтверждении */
+function reserveNeeds(o) { o.needs.forEach(n => { const take = Math.min(Math.max(0, availQ(n.sku)), n.qty - n.got); inv(n.sku).r += take; n.got += take; }); }
+function releaseNeeds(o) { o.needs.forEach(n => { const i = inv(n.sku); i.r = Math.max(0, i.r - n.got); n.got = 0; }); }
 function orderCreate(cl, code, qty) {
   const p = PROD[code], id = 'M-' + (S.shop.next++);
   const o = {id, date:TODAY, c:cl.c, ch:cl.ch, price:cl.price, lines:[{sku:code, qty, amt:qty * p[cl.price]}], needs:[{sku:code, qty, got:0}], st:'new',
     mgr:cl.ch === 'retail' ? 'Елена М.' : SHOP.shopMgr, wait:[], hist:[[TODAY, 'created']], dyn:true};
-  S.shop.orders.unshift(o); return o;
+  S.shop.orders.unshift(o); reserveNeeds(o); return o;
 }
 /* заказ из «Комплектации»: М-2041, канал «Розница», цена «доплата к базовой» */
 const fitOrder = () => orderById('M-2041');
@@ -265,14 +268,14 @@ function fitLines() {
 }
 function fitOrderSave() {
   const f = fitLines(); let o = fitOrder();
-  if (o) { o.lines = f.lines; o.needs = f.needs; return o; }
+  if (o) { releaseNeeds(o); o.lines = f.lines; o.needs = f.needs; reserveNeeds(o); return o; }
   o = {id:'M-2041', date:TODAY, c:{k:'person', n:'Ли Мин', villa:'V-07'}, ch:'retail', price:'fit', lines:f.lines, needs:f.needs, st:'new', mgr:'Чен Ю.', wait:[], hist:[[TODAY, 'created']], dyn:true};
-  S.shop.orders.unshift(o); return o;
+  S.shop.orders.unshift(o); reserveNeeds(o); return o;
 }
 /* выручка по каналам за период: 30 дней — из списка заказов, квартал и год — агрегаты + заказы, созданные в демо */
 function revenue(per) {
   const r = {own:0, ext:0, retail:0, hill:0, n:{own:0, ext:0, retail:0}};
-  const add = o => { r[o.ch] += orderAmt(o); r.n[o.ch]++; if (o.ch === 'retail' && o.c.villa) r.hill += orderAmt(o); };
+  const add = o => { if (o.st === 'new') return; r[o.ch] += orderAmt(o); r.n[o.ch]++; if (o.ch === 'retail' && o.c.villa) r.hill += orderAmt(o); };
   if (per === 'm') S.shop.orders.forEach(add);
   else { const a = SHOP.agg[per]; r.own = a.own; r.ext = a.ext; r.retail = a.retail; r.hill = a.hill; r.n = {own:a.n[0], ext:a.n[1], retail:a.n[2]}; S.shop.orders.filter(o => o.dyn).forEach(add); }
   r.total = r.own + r.ext + r.retail; r.cnt = r.n.own + r.n.ext + r.n.retail; r.forVillas = r.own + r.hill;
@@ -280,7 +283,7 @@ function revenue(per) {
 }
 function revenueCats() {
   const o = {}; SHOP.cats.forEach(c => { o[c] = 0; });
-  S.shop.orders.forEach(ord => ord.lines.forEach(l => { o[l.fit != null ? FIT[l.fit].cat : l.kit ? 'furn' : PROD[l.sku].cat] += l.amt; }));
+  S.shop.orders.filter(ord => ord.st !== 'new').forEach(ord => ord.lines.forEach(l => { o[l.fit != null ? FIT[l.fit].cat : l.kit ? 'furn' : PROD[l.sku].cat] += l.amt; }));
   return o;
 }
 const waitSum = () => sumBy(waitingOrders(), orderAmt);
@@ -333,12 +336,12 @@ const ic = (n, c) => `<svg class="${c || 'ic'}" viewBox="0 0 24 24" aria-hidden=
 
 /* ===================== фото: слоты, запасной вариант ===================== */
 /* Файлы лежат в site/phuket-villas/img/ (слот-ширина.webp), их поставляет исследователь. Пока файла нет, блок показывает подложку с иконкой.
-   Слот, который один раз не загрузился, больше не запрашивается (нет шума в консоли и лишних запросов). */
+   Слот с пустым путём в data.js (кадр не принят) сразу показывает заглушку без запроса. Слот, который один раз не загрузился, больше не запрашивается (нет шума в консоли и лишних запросов). */
 const IMG_DIR = '../img/', IMG_FAIL = new Set();
 function photo(slot, o) {
   o = o || {};
   const ws = o.w || [800, 1600], cls = 'ph ' + (o.cls || ''), icn = ic(o.icon || 'img', 'ic ph-ic');
-  if (IMG_FAIL.has(slot)) return `<span class="${cls} fail">${icn}</span>`;
+  if (!slot || IMG_FAIL.has(slot)) return `<span class="${cls} fail">${icn}</span>`;
   const set = ws.map(w => `${IMG_DIR}${slot}-${w}.webp ${w}w`).join(', ');
   return `<span class="${cls}">${icn}<img src="${IMG_DIR}${slot}-${ws[0]}.webp" srcset="${set}" sizes="${o.sizes || '100vw'}" alt="${esc(o.alt || '')}" width="${o.iw || 800}" height="${o.ih || 600}" data-slot="${slot}" ${o.eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async"></span>`;
 }
@@ -423,7 +426,9 @@ function setLang(l) {
 }
 function applyStatic() {
   document.documentElement.lang = HTML_LANG[LANG];
-  $('#brandsub').textContent = t('brand_sub'); $('#foot').textContent = t('foot');
+  $('#brandsub').textContent = t('brand_sub');
+  const mail = '<a href="mailto:hello@demda.pro">hello@demda.pro</a>', tg = '<a href="https://t.me/demda" rel="noopener">Telegram @demda</a>';
+  $('#foot').innerHTML = esc(t('foot')) + '<br>' + esc(t('foot_write')) + ' ' + (LANG === 'zh' ? mail + ' · ' + tg : tg + ' · ' + mail);
   $('#side').setAttribute('aria-label', t('ui_sections')); $('#bnav').setAttribute('aria-label', t('ui_sections'));
   document.querySelector('meta[name=description]').content = t('app_desc');
 }
@@ -454,7 +459,7 @@ function chrome() {
   if (b.menu) {
     const grp = (cap, ks) => `<div class="cap grp">${cap}</div>` + ks.map(k => `<a href="${href(k)}" ${RT.name === k ? 'aria-current="page"' : ''}>${ic(k === 'shop' ? 'catalog' : k === 'villa' ? 'villa' : k, '')}<span>${t(NAV_KEY[k])}</span>${k === 'orders' && newOrders() ? `<b class="badge b-info cnt">${newOrders()}</b>` : ''}</a>`).join('');
     $('#side').innerHTML = `<div class="sidein">${grp(t('role_partner'), ['dash']) + grp(t('role_sales'), ['lots', 'deals']) + grp(t('role_buyer'), ['villa', 'fit']) + grp(t('role_conc'), ['conc']) + grp(t('sec_shop'), ['shop', 'orders', 'supplies', 'revenue'])}</div>
-      <div class="sidefoot"><button class="btn btn-t" data-act="reset">${ic('reset', 'ic sm16')}${t('reset_demo')}</button><p class="sm faint">${t('demo_note')}</p></div>`;
+      <div class="sidefoot"><a class="btn btn-t" href="../?lang=${LANG}">${ic('link', 'ic sm16')}${t('about')}</a><button class="btn btn-t" data-act="reset">${ic('reset', 'ic sm16')}${t('reset_demo')}</button><p class="sm faint">${t('demo_note')}</p></div>`;
   } else {
     $('#side').innerHTML = SECTIONS.map(s => `<a href="${href(s.names.includes(RT.name) ? RT.name : s.names[0])}" ${sec.k === s.k ? 'aria-current="page"' : ''}>${ic(s.ic, '')}<span>${t('sec_' + s.k)}</span>${s.k === 'shop' && newOrders() ? `<i class="dot" aria-label="${newOrders()}"></i>` : ''}</a>`).join('');
   }
@@ -467,7 +472,7 @@ function chrome() {
   $('#topctl').innerHTML = menuHtml('lang', LANGS.map(l => [l, LANG_NAME[l]]), LANG, t('ui_lang'), `<span>${LANG_SHORT[LANG]}</span>${ic('chev', 'ic chev')}`)
     + menuHtml('theme', [['system', t('th_system'), 'system'], ['light', t('th_light'), 'sun'], ['dark', t('th_dark'), 'moon']], THEME, t('th_label', {x:t('th_' + THEME)}), ic(themeIc))
     + `<div class="dd"><button class="ctl avatar" data-act="dd" data-v="avatar" aria-haspopup="menu" aria-expanded="${open}" aria-label="${esc(t('ui_menu'))}" title="${esc(t('ui_menu'))}">${avatarBtn}</button>
-      ${open ? `<div class="dd-menu" role="menu" aria-label="${esc(t('ui_menu'))}">${head}${roleItems.map(i => `<button role="menuitemradio" aria-checked="${S.role === i[0]}" data-act="role" data-v="${i[0]}"><span>${i[1]}</span>${S.role === i[0] ? ic('check', 'ic ck') : ''}</button>`).join('')}${roleItems.length ? '<hr>' : ''}<button role="menuitem" data-act="reset">${ic('reset')}<span>${t('reset_demo')}</span></button></div>` : ''}</div>`;
+      ${open ? `<div class="dd-menu" role="menu" aria-label="${esc(t('ui_menu'))}">${head}${roleItems.map(i => `<button role="menuitemradio" aria-checked="${S.role === i[0]}" data-act="role" data-v="${i[0]}"><span>${i[1]}</span>${S.role === i[0] ? ic('check', 'ic ck') : ''}</button>`).join('')}${roleItems.length ? '<hr>' : ''}<a class="mi" role="menuitem" href="../?lang=${LANG}">${ic('link')}<span>${t('about')}</span></a><button role="menuitem" data-act="reset">${ic('reset')}<span>${t('reset_demo')}</span></button></div>` : ''}</div>`;
 }
 /* вкладки подразделов (< 1280) */
 function subTabs() {

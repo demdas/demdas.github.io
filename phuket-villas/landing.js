@@ -57,7 +57,8 @@
       if (el.getAttribute('data-frame') === 'zh') return;
       ['src', 'srcset'].forEach(function (a) { $$('[' + a + ']', el).forEach(function (n) { n.setAttribute(a, n.getAttribute(a).replace(/-(ru|en|zh)-/g, '-' + lang + '-')); }); });
     });
-    $$('a[data-demo]').forEach(function (a) { a.href = 'app/?lang=' + lang + '#/dashboard'; });
+    $$('a[data-demo]').forEach(function (a) { a.href = 'app/?lang=' + lang + (a.getAttribute('data-demo') || '#/dashboard'); });
+    $$('a[data-href-ru]').forEach(function (a) { a.href = lang === 'ru' ? a.getAttribute('data-href-ru') : a.getAttribute('data-href-other'); });
     var lb = $('#lang-cur'); if (lb) lb.textContent = {ru: 'RU', en: 'EN', zh: '中文'}[lang];
     $$('#lang-menu [data-v]').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-v') === lang)); });
   }

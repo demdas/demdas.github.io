@@ -1,7 +1,12 @@
 'use strict';
 /* Villa Group: экраны «Сводка», «Лоты», «Моя вилла», «Консьерж», «Комплектация» (спецификация v2, разделы 6.3–6.6, 6.2.6). */
 
-const head = (title, sub, tools) => `<div class="head"><div class="ht"><h1>${title}</h1>${sub ? `<p class="hint">${sub}</p>` : ''}</div>${tools ? `<div class="tools">${tools}</div>` : ''}</div>${subTabs()}`;
+/* заголовок экрана: где есть вкладки подразделов (< 1280), они идут сразу под заголовком, настройки экрана — после них */
+function head(title, sub, tools) {
+  const st = subTabs(), h = `<div class="ht"><h1>${title}</h1>${sub ? `<p class="hint">${sub}</p>` : ''}</div>`;
+  if (st) return `<div class="head tabbed">${h}</div>${st}${tools ? `<div class="tools tools-row">${tools}</div>` : ''}`;
+  return `<div class="head">${h}${tools ? `<div class="tools">${tools}</div>` : ''}</div>`;
+}
 const emptyBox = (icn, msg, btn) => `<div class="empty">${ic(icn || 'search', 'ic big32')}<p>${msg}</p>${btn || ''}</div>`;
 
 /* ===================== 1. СВОДКА ===================== */
@@ -10,7 +15,7 @@ function vDash() {
   const dealsCnt = [0, 1, 2, 3, 4].map(c => S.deals.filter(d => d.col === c).length), mx = Math.max.apply(null, dealsCnt);
   const newReq = S.reqs.find(r => r.st === 'new' && !r.perf), fo = fitOrder(), wo = waitingOrders();
   const stgLine = Object.keys(o.stg).sort().map(k => `${t('stg_s' + k)} ${o.stg[k]}`).join(' · ');
-  const bars = S.villas.map(v => `<button class="${v.sale === 'res' ? 'reserved' : v.sale}" data-go-lot="${v.id}" aria-label="${t('bar_aria', {id:v.id, p:pct(v.pct)})}"><span style="height:${Math.max(4, v.pct * 1.2)}px"></span></button>`).join('');
+  const bars = S.villas.map(v => `<button class="${v.sale === 'res' ? 'reserved' : v.sale}" data-go-lot="${v.id}" aria-label="${t('bar_aria', {id:v.id, p:pct(v.pct)})}"><span style="height:${Math.max(4, v.pct)}%"></span></button>`).join('');
   const nums = S.villas.map(v => `<span>${v.n % 2 || window.innerWidth >= 600 ? String(v.n).padStart(2, '0') : ''}</span>`).join('');
   const over = o.overN ? `<a class="card kpi" href="#/lots/${o.overV}"><span class="cap">${t('k_over')}</span><span class="v err nw">${moneyS(o.over)}</span><span class="sm soft">${t('k_over_s', {n:o.overN, v:o.overV, d:o.overD})}</span></a>`
     : `<div class="card kpi"><span class="cap">${t('k_over')}</span><span class="v">0</span><span class="sm soft">${t('k_over_0')}</span></div>`;
@@ -28,7 +33,7 @@ function vDash() {
     ${newReq ? `<p class="sm tone-warn">${t('c_new', {id:oid(newReq.id), m:'<span class="sla" data-sla="' + newReq.id + '">' + slaLeft(newReq) + '</span>'})}</p>` : ''}
     <a class="lnk" href="#/concierge">${t('go_conc')}</a></div>`;
   const salesTile = `<div class="card tile"><h3>${t('t_sales')}</h3><div class="funnel">${dealsCnt.map((c, i) => `<a class="fun" href="#/deals"><span>${t('f' + i)}</span><i style="width:${Math.max(6, c / mx * 100)}%"></i><b>${c}</b></a>`).join('')}</div><a class="lnk" href="#/deals">${t('go_deals')}</a></div>`;
-  const one = `<div class="card tile one3"><h3>${t('one3')}</h3><p>${t('one3t', {a:mix.conc, n:mix.n, b:mix.shop})}</p></div>`;
+  const one = `<div class="card tile one3"><h3>${t('one3')}</h3><div class="o3n"><div><b class="kpi-n nw">${t('one3_n', {a:mix.conc, n:mix.n})}</b><span class="sm soft">${t('one3_a')}</span></div><div><b class="kpi-n nw">${t('one3_n', {a:mix.shop, n:mix.n})}</b><span class="sm soft">${t('one3_b')}</span></div></div><p class="sm soft">${t('one3t')}</p></div>`;
   const tools = perSeg() + curSeg();
   return `${head(t('d_title'), t('d_sub'), tools)}
   <div class="dash">
@@ -206,7 +211,7 @@ function reqDetail(r, x2) {
   const msgs = r.msgs.map(m => {
     if (m.from === 's') return `<div class="msg s">${esc(t(m.sk, m.sv.n ? {n:nm(m.sv.n)} : {s:t('rs_' + m.sv.s)}))}</div>`;
     const orig = m.o !== rl && !m.pending, shown = m.pending ? m.o : rl;
-    return `<div class="msg ${m.from}"><div class="who">${m.from === 'o' ? esc(nm(r.who)) + ' · ' + t('cn_owner') : t('cn_disp')}</div><span ${shown === 'zh' ? 'lang="zh"' : shown === 'th' ? 'lang="th"' : ''}>${esc(chatTxt(m.k, shown))}</span>${m.pending ? `<q>${t('cn_trans')}</q>` : orig ? `<q>${t('cn_orig', {l:LN[m.o], x:esc(chatTxt(m.k, m.o))})}</q>` : ''}</div>`;
+    return `<div class="msg ${m.from}"><div class="who">${m.from === 'o' ? esc(nm(r.who)) + ' · ' + t('cn_owner') : t('cn_disp')}</div><span ${shown === 'zh' ? 'lang="zh"' : shown === 'th' ? 'lang="th"' : ''}>${esc(chatTxt(m.k, shown))}</span>${m.pending ? `<q>${t('cn_trans')}</q>` : orig ? `<q>${t('cn_orig', {l:t('ln_' + m.o), x:esc(chatTxt(m.k, m.o))})}</q>` : ''}</div>`;
   }).join('');
   const nextBtn = r.st === 'asg' ? `<button class="btn btn-p" data-act="next-status">${t('cn_start')}</button>` : r.st === 'work' ? `<button class="btn btn-p" data-act="next-status">${t('cn_finish')}</button>` : '';
   const left = slaHtml(r) ? (slaLeft(r) > 0 ? '· ' + t('cn_left', {x:slaHtml(r)}) : '· ' + slaHtml(r)) : '';
@@ -227,7 +232,7 @@ function reqDetail(r, x2) {
 function reqAside(r) {
   const p = DEMO.perf.find(x => x.id === r.perf);
   return `<aside class="card caside" aria-label="${t('cn_info')}"><h3>${t('cn_info')}</h3>${kv([
-    [t('cn_owner_c'), esc(nm(r.who))], [t('cn_villa_c'), r.villa], [t('cn_lang_c'), LN[r.ol]],
+    [t('cn_owner_c'), esc(nm(r.who))], [t('cn_villa_c'), r.villa], [t('cn_lang_c'), t('ln_' + r.ol)],
     [t('cn_flight_c'), r.flight ? t('fl_arr', {n:r.flight.no, t:r.flight.t}) : '—'], [t('cn_perf_c'), p ? nm(p.n) : t('cn_noperf')]])}
    ${!r.perf ? `<button class="btn btn-p" data-act="assign-open">${t('cn_assign')}</button>` : ''}</aside>`;
 }
@@ -282,7 +287,7 @@ Object.assign(ACT, {
   pkg(v) { S.fit = FIT.map(() => +v); rerender(); },
   fitsel(v, el) { S.fit[+el.dataset.p] = +v; rerender(); },
   'order-go'() { const upd = !!fitOrder(); fitOrderSave(); MODAL = {type:'fitorder', upd}; rerender(); },
-  'order-cancel'() { const o = fitOrder(); S.shop.orders = S.shop.orders.filter(x => x !== o); rerender(); toast(t('ord_withdrawn', {id:oid(o.id)})); }
+  'order-cancel'() { const o = fitOrder(); releaseNeeds(o); S.shop.orders = S.shop.orders.filter(x => x !== o); rerender(); toast(t('ord_withdrawn', {id:oid(o.id)})); }
 });
 MODALS.fitorder = m => {
   const o = fitOrder(); if (!o) return '';
