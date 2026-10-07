@@ -134,15 +134,16 @@ a.card:hover,button.card:hover{border-color:var(--sea)}
 
 /* lots */
 .lgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.lot{text-align:left;display:flex;flex-direction:column;gap:6px;padding:12px}
+.card.lot{text-align:left;display:flex;flex-direction:column;gap:6px;padding:12px}
 .lot .n{font-size:17px;line-height:24px;font-weight:600}
 .sec-t{margin:24px 0 10px}
 .dots{display:flex;gap:6px;margin-top:6px}
 .dots i{width:10px;height:10px;border-radius:50%;background:var(--line)}
 .dots i.d{background:var(--ok)} .dots i.c{background:var(--brass)}
-.pay{display:flex;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.pay{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
 .pay:first-child{border-top:0}
-.pay .m{flex:1;min-width:0}
+.pay .m{flex:1 1 160px;min-width:0}
+.pay .m .sm{white-space:nowrap}
 .pay .a{font-weight:600;white-space:nowrap}
 
 /* panel */
@@ -228,7 +229,7 @@ input[type=range]{width:100%;accent-color:var(--sea);height:44px}
 .ini{width:30px;height:30px;border-radius:50%;background:var(--bg-alt);display:inline-grid;place-items:center;font-size:11px;font-weight:600;color:var(--soft)}
 .src{display:inline-flex;white-space:nowrap;align-self:flex-start;font-size:12px;padding:2px 8px;border-radius:999px;background:var(--bg-alt);color:var(--soft)}
 .kcol{background:var(--bg-alt);border-radius:14px;padding:10px;min-width:0}
-.kcol-h{display:flex;justify-content:space-between;align-items:baseline;gap:6px;padding:2px 4px 8px}
+.kcol-h{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:2px 4px 8px}
 .kcol-h b{font-size:14px} .kcol-h span{font-size:12px;color:var(--soft)}
 
 @media (min-width:600px){
@@ -328,7 +329,7 @@ const K = {
  k_sold:['Продано','Sold','已售'], k_sold_v:['{a} из {b}','{a} of {b}','{a} / {b}'],
  k_sold_s:['бронь {r} · свободно {f}','reserved {r} · available {f}','预订 {r} · 可售 {f}'],
  k_in:['Поступило','Received','已收款'], k_in_s:['из {x} по договорам и броням','of {x} in contracts and reservations','合同与预订总额 {x}'],
- k_over:['Просрочки','Overdue','逾期'], k_over_s:['{n} плат. · {v}, {d} дн.','{n} payment · {v}, {d} days','{n} 笔 · {v}，{d} 天'], k_over_0:['Нет просрочек','No overdue payments','无逾期'],
+ k_over:['Просрочки','Overdue','逾期'], k_over_s:['{n} платёж · {v}, {d} дн. просрочки','{n} payment · {v}, {d} days','{n} 笔 · {v}，{d} 天'], k_over_0:['Нет просрочек','No overdue payments','无逾期'],
  k_build:['Стройка','Construction','施工'], k_build_s:['3 очереди · сдача первой — март 2027','3 phases · first handover March 2027','3 期 · 首期 2027年3月交付'],
  b_title:['Стройка по виллам','Construction by villa','各别墅施工进度'],
  sold:['Продана','Sold','已售'], res:['Бронь','Reserved','预订'], free:['Свободна','Available','可售'],
@@ -366,7 +367,7 @@ const K = {
  dc0:['Договор бронирования','Reservation agreement','预订协议'], dc1:['Договор долгосрочной аренды земли','Long-term land lease agreement','土地长期租赁合同'], dc2:['Договор строительства','Construction agreement','建设合同'], dc3:['Разрешение на строительство','Building permit','建设许可'], dc4:['Акт этапа «Фундамент»','Stage act: Foundation','阶段验收单：地基'], dc5:['Акт этапа «Каркас и кровля»','Stage act: Structure & roof','阶段验收单：主体与屋顶'], dc6:['Квитанция — этап 4','Receipt — stage 4','收据 — 第 4 阶段'],
  ds_signed:['подписан','signed','已签署'], ds_got:['получено','received','已取得'], ds_wait:['ожидается','pending','待签署'], ds_rec:['оплачено','paid','已付款'],
  doc_demo:['Демо-документ','Demo document','演示文件'],
- af_t:['Ваша вилла после передачи','Your villa after handover','交付后的别墅'], af_me:['Живу сам','I live here','自住'], af_rent:['Сдаю через управляющую компанию группы','Rent via the group management company','委托集团管理公司出租'],
+ af_t:['Ваша вилла после передачи','Your villa after handover','交付后的别墅'], af_me:['Живу сам','I live here','自住'], af_rent:['Сдаю в управление','Rent it out','委托出租'],
  af_n:['Средняя цена ночи','Average nightly rate','平均每晚价格'], af_occ:['Загрузка','Occupancy','入住率'], af_inc:['Ожидаемый доход в год','Expected annual income','预计年收入'], af_y:['{p} % чистыми','{p}% net','净收益率 {p}%'],
  af_note:['Расчёт для примера, не обещание доходности: управление 25 %, расходы на содержание 300 000 ฿ в год.','Illustrative calculation, not a promise of yield: management 25%, upkeep 300,000 ฿ per year.','示例测算，不构成收益承诺：管理费 25%，年维护费 300,000 ฿。'],
  af_self:['Консьерж группы: встреча в аэропорту, уборка, ремонт — заявка в один клик.','Group concierge: airport pickup, cleaning, repairs — one-tap request.','集团礼宾：接机、保洁、维修 — 一键提交。'], af_go:['Открыть консьерж','Open concierge','打开礼宾'],
