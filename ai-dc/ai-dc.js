@@ -5,7 +5,7 @@
 (function () {
   'use strict';
   /* Видео: поставьте true, когда на сервере лежат /demo/files/ai-dc/ai-dc-1080.mp4 и ai-dc-720.mp4 и постеры video-poster-*.avif|webp рядом со страницей */
-  var VIDEO_READY = false;
+  var VIDEO_READY = true;
   var VIDEO_SRC = {hd: '/demo/files/ai-dc/ai-dc-1080.mp4', sd: '/demo/files/ai-dc/ai-dc-720.mp4'};
 
   var doc = document, html = doc.documentElement;
