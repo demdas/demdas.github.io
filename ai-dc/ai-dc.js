@@ -139,13 +139,20 @@
     put('#tpl-video-section', '[data-video-slot=section]');
     var dtpl = $('#tpl-video-dialog'); doc.body.appendChild(dtpl.content.cloneNode(true));
     var dlg = $('#vdlg'), box = $('.vbox', dlg), err = $('.verr', dlg), opener = null;
-    var build = function () {
+    /* Источники пробуются по очереди: на узких экранах сначала 720, затем 1080 (на широких наоборот). Ошибка показывается, только когда не осталось ни одного. */
+    var build = function (order) {
+      order = order || (window.matchMedia('(max-width: 1023px)').matches ? [VIDEO_SRC.sd, VIDEO_SRC.hd] : [VIDEO_SRC.hd, VIDEO_SRC.sd]);
       err.hidden = true; box.hidden = false; box.textContent = '';
       var v = doc.createElement('video');
       v.controls = true; v.setAttribute('playsinline', ''); v.preload = 'metadata';
-      var small = window.matchMedia('(max-width: 1023px)').matches;
-      (small ? [VIDEO_SRC.sd, VIDEO_SRC.hd] : [VIDEO_SRC.hd, VIDEO_SRC.sd]).forEach(function (u) { var s = doc.createElement('source'); s.src = u; s.type = 'video/mp4'; v.appendChild(s); });
-      v.addEventListener('error', fail, true);
+      order.forEach(function (u) { var s = doc.createElement('source'); s.src = u; s.type = 'video/mp4'; v.appendChild(s); });
+      v.addEventListener('error', function (e) {
+        var t = e.target;
+        if (t.tagName === 'SOURCE' && t.nextElementSibling) return; /* браузер сам возьмёт следующий источник */
+        var cur = v.currentSrc ? order.map(function (u) { return v.currentSrc.indexOf(u) >= 0; }).indexOf(true) : -1;
+        if (t === v && cur >= 0 && cur < order.length - 1) { build(order.slice(cur + 1)); return; } /* сбой воспроизведения: пробуем оставшиеся */
+        fail();
+      }, true);
       box.appendChild(v);
       var p = v.play(); if (p && p.catch) p.catch(function () {});
     };
