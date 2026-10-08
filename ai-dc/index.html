@@ -1,0 +1,673 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#F3F4F1">
+
+<script>
+(function (d) {
+  var th = null;
+  try { th = localStorage.getItem('ai-dc-theme'); } catch (e) {}
+  var dk = th === 'dark' || (th !== 'light' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+  d.setAttribute('data-theme', dk ? 'dark' : 'light'); d.className = 'js';
+  var m = d.querySelector('meta[name=theme-color]'); if (m) m.content = dk ? '#0B0D10' : '#F3F4F1';
+})(document.documentElement);
+</script>
+<title>Модуль ИИ‑ЦОД на 10 МВт у вашей ТЭЦ · demda.pro</title>
+<meta name="description" content="Предложение владельцу площадки на ТЭЦ: вычислительный модуль 10 МВт с серверами NVIDIA H200, 16 месяцев от решения до первой нагрузки, окупаемость 4,8 года с крупным клиентом.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://demda.pro/ai-dc/">
+<meta property="og:site_name" content="demda.pro">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:title" content="Модуль ИИ‑ЦОД на 10 МВт у вашей ТЭЦ за 16 месяцев">
+<meta property="og:description" content="Ставим на вашей площадке вычислительный модуль с серверами NVIDIA H200 и выводим его на первых клиентов.">
+<meta property="og:image" content="https://demda.pro/ai-dc/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Модуль ИИ‑ЦОД на 10 МВт у вашей ТЭЦ за 16 месяцев">
+<meta name="twitter:description" content="Ставим на вашей площадке вычислительный модуль с серверами NVIDIA H200 и выводим его на первых клиентов.">
+<meta name="twitter:image" content="https://demda.pro/ai-dc/og.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Onest:wght@400..650&display=swap">
+<link rel="stylesheet" href="ai-dc.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<symbol id="i-zap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></symbol>
+<symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect pathLength="1" width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect pathLength="1" width="20" height="8" x="2" y="14" rx="2" ry="2"/><path pathLength="1" d="M6 6h.01"/><path pathLength="1" d="M6 18h.01"/></symbol>
+<symbol id="i-droplets" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.71-3.19S7.29 6.75 7 5.3c-.29 1.45-1.14 2.84-2.29 3.76S3 11.1 3 12.25c0 2.22 1.8 4.05 4 4.05z"/><path pathLength="1" d="M12.56 6.6A10.97 10.97 0 0 0 14 3.02c.5 2.5 2 4.9 4 6.5s3 3.5 3 5.5a6.98 6.98 0 0 1-11.91 4.97"/></symbol>
+<symbol id="i-cable" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M17 21v-2a1 1 0 0 1-1-1v-1a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1a1 1 0 0 1-1 1"/><path pathLength="1" d="M19 15V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V9"/><path pathLength="1" d="M21 21v-2h-4"/><path pathLength="1" d="M3 5h4V3"/><path pathLength="1" d="M7 5a1 1 0 0 1 1 1v1a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1V3"/></symbol>
+<symbol id="i-shield-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path pathLength="1" d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-clipboard-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect pathLength="1" width="8" height="4" x="8" y="2" rx="1" ry="1"/><path pathLength="1" d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path pathLength="1" d="M12 11h4"/><path pathLength="1" d="M12 16h4"/><path pathLength="1" d="M8 11h.01"/><path pathLength="1" d="M8 16h.01"/></symbol>
+<symbol id="i-ship" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path pathLength="1" d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path pathLength="1" d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path pathLength="1" d="M12 10v4"/><path pathLength="1" d="M12 2v3"/></symbol>
+<symbol id="i-layout-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect pathLength="1" width="7" height="9" x="3" y="3" rx="1"/><rect pathLength="1" width="7" height="5" x="14" y="3" rx="1"/><rect pathLength="1" width="7" height="9" x="14" y="12" rx="1"/><rect pathLength="1" width="7" height="5" x="3" y="16" rx="1"/></symbol>
+<symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m12 14 4-4"/><path pathLength="1" d="M3.34 19a10 10 0 1 1 17.32 0"/></symbol>
+<symbol id="i-hard-hat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M10 10V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5"/><path pathLength="1" d="M14 6a6 6 0 0 1 6 6v3"/><path pathLength="1" d="M4 15v-3a6 6 0 0 1 6-6"/><rect pathLength="1" x="2" y="15" width="20" height="4" rx="1"/></symbol>
+<symbol id="i-compass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="10"/><path pathLength="1" d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/></symbol>
+<symbol id="i-handshake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m11 17 2 2a1 1 0 1 0 3-3"/><path pathLength="1" d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path pathLength="1" d="m21 3 1 11h-2"/><path pathLength="1" d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path pathLength="1" d="M3 4h8"/></symbol>
+<symbol id="i-key-round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"/><circle pathLength="1" cx="16.5" cy="7.5" r=".5"/></symbol>
+<symbol id="i-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path pathLength="1" d="M12 9v4"/><path pathLength="1" d="M12 17h.01"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="10"/><path pathLength="1" d="M12 16v-4"/><path pathLength="1" d="M12 8h.01"/></symbol>
+<symbol id="i-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="10"/><path pathLength="1" d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path pathLength="1" d="m21.854 2.147-10.94 10.939"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect pathLength="1" x="2" y="4" width="20" height="16" rx="2"/></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="10"/><path pathLength="1" d="M12 6v6l4 2"/></symbol>
+<symbol id="i-wallet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path pathLength="1" d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m5 12 7-7 7 7"/><path pathLength="1" d="M12 19V5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M20 6 9 17l-5-5"/></symbol>
+<symbol id="i-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon pathLength="1" points="6 3 20 12 6 21 6 3"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M18 6 6 18"/><path pathLength="1" d="m6 6 12 12"/></symbol>
+<symbol id="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="4"/><path pathLength="1" d="M12 2v2"/><path pathLength="1" d="M12 20v2"/><path pathLength="1" d="m4.93 4.93 1.41 1.41"/><path pathLength="1" d="m17.66 17.66 1.41 1.41"/><path pathLength="1" d="M2 12h2"/><path pathLength="1" d="M20 12h2"/><path pathLength="1" d="m6.34 17.66-1.41 1.41"/><path pathLength="1" d="m19.07 4.93-1.41 1.41"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+<symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="m6 9 6 6 6-6"/></symbol>
+</defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
+<linearGradient id="g-flow-h" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="100" y2="0"><stop offset="0" style="stop-color:var(--heat)"/><stop offset=".3" style="stop-color:var(--heat)"/><stop offset=".7" style="stop-color:var(--volt)"/><stop offset="1" style="stop-color:var(--volt)"/></linearGradient>
+<linearGradient id="g-flow-v" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="100"><stop offset="0" style="stop-color:var(--heat)"/><stop offset=".3" style="stop-color:var(--heat)"/><stop offset=".7" style="stop-color:var(--volt)"/><stop offset="1" style="stop-color:var(--volt)"/></linearGradient>
+</defs></svg>
+
+<header class="top"><div class="wrap top-in">
+  <a class="brand" href="https://demda.pro/" aria-label="demda.pro, на главную">demda.pro</a>
+  <span class="sp"></span>
+  <a class="btn btn-sm" id="top-cta" href="#contact">Обсудить</a>
+  <button class="theme" id="theme-btn" type="button" aria-pressed="false" aria-label="Тёмная тема">
+    <svg class="ti ti-sun" aria-hidden="true"><use href="#i-sun"/></svg><svg class="ti ti-moon" aria-hidden="true"><use href="#i-moon"/></svg>
+  </button>
+</div></header>
+
+<nav class="rail" id="rail" aria-label="Разделы страницы">
+  <ol>
+    
+    <li><a href="#what" data-sec="what"><span class="dot"></span><span class="rl mono">Что встанет на вашей площадке</span></a></li>
+    
+    <li><a href="#how" data-sec="how"><span class="dot"></span><span class="rl mono">Энергия идёт от станции к клиенту за пять шагов</span></a></li>
+    
+    <li><a href="#money" data-sec="money"><span class="dot"></span><span class="rl mono">85 % денег уходит на серверы</span></a></li>
+    
+    <li><a href="#timeline" data-sec="timeline"><span class="dot"></span><span class="rl mono">Первая нагрузка через 16 месяцев после решения</span></a></li>
+    
+    <li><a href="#payback" data-sec="payback"><span class="dot"></span><span class="rl mono">Окупается, если крупный клиент подписан до стройки</span></a></li>
+    
+    <li><a href="#energy" data-sec="energy"><span class="dot"></span><span class="rl mono">«3 рубля» за киловатт-час — цена на выходе со станции</span></a></li>
+    
+    <li><a href="#questions" data-sec="questions"><span class="dot"></span><span class="rl mono">От вас — площадка на ТЭЦ и подключение электроэнергии</span></a></li>
+    
+    <li><a href="#scope" data-sec="scope"><span class="dot"></span><span class="rl mono">Ведём проект от расчёта до первых клиентов</span></a></li>
+    
+    <li><a href="#terms" data-sec="terms"><span class="dot"></span><span class="rl mono">Фиксированная оплата по вехам и доля в результате</span></a></li>
+    
+    <li><a href="#models" data-sec="models"><span class="dot"></span><span class="rl mono">Готовы рассматривать разные варианты</span></a></li>
+    
+    <li><a href="#contact" data-sec="contact"><span class="dot"></span><span class="rl mono">Обсудим вашу площадку</span></a></li>
+    
+  </ol>
+</nav>
+
+<main>
+
+<section class="hero grid-bg" id="offer">
+  <div class="wrap hero-grid">
+    <div class="h-head">
+      <p class="eyebrow mono">Предложение для владельца площадки на ТЭЦ</p>
+      <h1>Модуль ИИ‑ЦОД на 10 МВт у вашей ТЭЦ за 16 месяцев</h1>
+    </div>
+    <div class="current" aria-hidden="true"></div>
+    <p class="lead h-lead">Ставим на вашей площадке вычислительный модуль с серверами NVIDIA H200 и выводим его на первых клиентов.</p>
+    <div class="stats">
+      
+      <div class="stat" role="group" aria-label="≈ 35 млрд ₽: вложения в модуль с оборудованием" style="--i:1">
+        <p class="stat-v mono" aria-hidden="true"><span class="u">≈ </span><span class="num" data-to="35" data-dec="0" style="--w:2">35</span><span class="u"> млрд ₽</span></p>
+        <p class="stat-l" aria-hidden="true">вложения в модуль с оборудованием</p>
+      </div>
+      
+      <div class="stat" role="group" aria-label="16 мес.: от решения до первой нагрузки" style="--i:2">
+        <p class="stat-v mono" aria-hidden="true"><span class="num" data-to="16" data-dec="0" style="--w:2">16</span><span class="u"> мес.</span></p>
+        <p class="stat-l" aria-hidden="true">от решения до первой нагрузки</p>
+      </div>
+      
+      <div class="stat" role="group" aria-label="4,8 года: простая окупаемость с крупным клиентом на весь модуль" style="--i:3">
+        <p class="stat-v mono" aria-hidden="true"><span class="num" data-to="4.8" data-dec="1" style="--w:3">4,8</span><span class="u"> года</span></p>
+        <p class="stat-l" aria-hidden="true">простая окупаемость с крупным клиентом на весь модуль</p>
+      </div>
+      
+    </div>
+    <div class="h-cta">
+      <a class="btn btn-primary" id="hero-cta" href="#contact">Обсудить</a>
+      <span data-video-slot="hero"></span>
+    </div>
+    <p class="note h-note">Оценка на 08.10.2026. Точность ±30 %. Суммы без НДС, курс ЦБ — 85 ₽ за доллар.</p>
+  </div>
+</section>
+
+
+<section class="sec" id="what">
+  <div class="wrap two">
+    <div class="two-head">
+      <h2>Что встанет на вашей площадке</h2>
+      <p class="lead">Готовый к работе модуль: здание, энергия, холод, серверы и сеть.</p>
+    </div>
+    <ul class="cards cards-5">
+      
+      <li class="card reveal ic-1" style="--i:1">
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-zap"/></svg></span>
+        <h3>8 МВт под серверы</h3>
+        <p>Из 10 МВт подведённой мощности 8 МВт уходят на вычисления. Остальное забирают охлаждение и потери.</p>
+      </li>
+      
+      <li class="card reveal ic-2" style="--i:2">
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-server"/></svg></span>
+        <h3>690 серверов NVIDIA H200</h3>
+        <p>В каждом по восемь ускорителей, всего 5 520. К ним сеть 400 Гбит/с, хранилище и 5 % запасных частей. Поставка через параллельный импорт.</p>
+      </li>
+      
+      <li class="card reveal ic-3" style="--i:3">
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-droplets"/></svg></span>
+        <h3>Жидкостное охлаждение</h3>
+        <p>Жидкость подходит прямо к чипам, тепло сбрасывают сухие градирни. Контур проектируем на мороз и делим на секции.</p>
+      </li>
+      
+      <li class="card reveal ic-4" style="--i:4">
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-cable"/></svg></span>
+        <h3>Резерв от станции</h3>
+        <p>Две независимые секции шин и работа блока в острове заменяют дизели на всю нагрузку. Дизель-генераторы ставим только на критичную часть.</p>
+      </li>
+      
+      <li class="card reveal ic-5" style="--i:5">
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-shield-check"/></svg></span>
+        <h3>Уровень Tier III, без сертификата Uptime</h3>
+        <p>Любой узел инженерии можно обслужить без остановки модуля. Сертификат Uptime в смету не входит, его можно получить отдельно.</p>
+      </li>
+      
+    </ul>
+  </div>
+</section>
+
+
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="head8">
+      <h2>Энергия идёт от станции к клиенту за пять шагов</h2>
+      <p class="lead">Модуль стоит на территории ТЭЦ и берёт энергию с её распредустройства.</p>
+    </div>
+    <div class="schema" role="group" aria-label="Энергия идёт от станции к клиенту за пять шагов">
+      <ol class="nodes" data-anim="flow">
+        <li class="node" style="--i:0">
+          <svg class="pg" viewBox="0 0 64 64" aria-hidden="true"><path d="M3 58h58"/><path d="M8 58V32h24v26"/><path d="M12 32V14h6v18"/><path d="M22 32V20h6v12"/><circle class="heat" cx="20" cy="46" r="5"/><path d="M40 58c3-9 3-17 1-26h17c-2 9-2 17 1 26"/></svg>
+          <div class="node-t"><h3>ТЭЦ</h3><p>Энергия, резерв, техническая вода и свободные здания</p></div>
+          <span class="conn c-heat" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="ln ln-h base" d="M0 50H100"/><path class="ln ln-v base" d="M50 0V100"/><path class="ln ln-h flow" d="M0 50H100"/><path class="ln ln-v flow" d="M50 0V100"/></svg><span class="cl mono">10&nbsp;МВт</span></span>
+        </li>
+        <li class="node" style="--i:1">
+          <svg class="pg" viewBox="0 0 64 64" aria-hidden="true"><path d="M3 58h58"/><rect x="5" y="10" width="12" height="44" rx="1"/><path d="M8 44h6"/><rect class="heat" x="8" y="20" width="6" height="12"/><rect x="19" y="10" width="12" height="44" rx="1"/><path d="M22 44h6"/><rect x="33" y="10" width="12" height="44" rx="1"/><path d="M36 44h6"/><rect class="heat" x="36" y="20" width="6" height="12"/><rect x="47" y="10" width="12" height="44" rx="1"/><path d="M50 44h6"/></svg>
+          <div class="node-t"><h3>Распредустройство</h3><p>Ввод 10 кВ с ячеек станции. Своя подстанция 110/10 кВ не нужна</p></div>
+          <span class="conn c-heat" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="ln ln-h base" d="M0 50H100"/><path class="ln ln-v base" d="M50 0V100"/><path class="ln ln-h flow" d="M0 50H100"/><path class="ln ln-v flow" d="M50 0V100"/></svg><span class="cl mono">10&nbsp;кВ</span></span>
+        </li>
+        <li class="node" style="--i:2">
+          <svg class="pg" viewBox="0 0 64 64" aria-hidden="true"><path d="M1 58h62"/><rect x="3" y="26" width="18" height="32" rx="1"/><rect x="23" y="26" width="18" height="32" rx="1"/><rect x="43" y="26" width="18" height="32" rx="1"/><path class="heat" d="M13 36 8 44h4l-1 7 6-9h-4z"/><rect class="volt" x="27" y="39" width="10" height="8" rx="1"/><path class="volt" d="M37 41v4"/><path class="volt" d="M52 36c3 4 5 6 5 9a5 5 0 0 1-10 0c0-3 2-5 5-9z"/></svg>
+          <div class="node-t"><h3>Модули</h3><p>Электрика, бесперебойное питание и жидкостный холод в заводских блоках</p></div>
+          <span class="conn c-mix" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="ln ln-h base" d="M0 50H100"/><path class="ln ln-v base" d="M50 0V100"/><path class="ln ln-h flow" d="M0 50H100"/><path class="ln ln-v flow" d="M50 0V100"/></svg><span class="cl mono">8&nbsp;МВт&nbsp;ИТ</span></span>
+        </li>
+        <li class="node" style="--i:3">
+          <svg class="pg" viewBox="0 0 64 64" aria-hidden="true"><path d="M1 60h62"/><rect x="4" y="8" width="8" height="52" rx="1"/><path d="M5.4 13h2.6M5.4 18.8h2.6M5.4 24.6h2.6M5.4 30.4h2.6M5.4 36.2h2.6M5.4 42h2.6M5.4 47.8h2.6M5.4 53.6h2.6"/><circle class="ind d1" cx="10" cy="13" r=".9"/><circle class="ind d1" cx="10" cy="18.8" r=".9"/><circle class="ind d1" cx="10" cy="24.6" r=".9"/><circle class="ind d1" cx="10" cy="30.4" r=".9"/><circle class="ind d1" cx="10" cy="36.2" r=".9"/><circle class="ind d1" cx="10" cy="42" r=".9"/><circle class="ind d1" cx="10" cy="47.8" r=".9"/><circle class="ind d1" cx="10" cy="53.6" r=".9"/><rect x="14" y="8" width="8" height="52" rx="1"/><path d="M15.4 13h2.6M15.4 18.8h2.6M15.4 24.6h2.6M15.4 30.4h2.6M15.4 36.2h2.6M15.4 42h2.6M15.4 47.8h2.6M15.4 53.6h2.6"/><circle class="ind d2" cx="20" cy="13" r=".9"/><circle class="ind d2" cx="20" cy="18.8" r=".9"/><circle class="ind d2" cx="20" cy="24.6" r=".9"/><circle class="ind d2" cx="20" cy="30.4" r=".9"/><circle class="ind d2" cx="20" cy="36.2" r=".9"/><circle class="ind d2" cx="20" cy="42" r=".9"/><circle class="ind d2" cx="20" cy="47.8" r=".9"/><circle class="ind d2" cx="20" cy="53.6" r=".9"/><rect x="24" y="8" width="8" height="52" rx="1"/><path d="M25.4 13h2.6M25.4 18.8h2.6M25.4 24.6h2.6M25.4 30.4h2.6M25.4 36.2h2.6M25.4 42h2.6M25.4 47.8h2.6M25.4 53.6h2.6"/><circle class="ind d3" cx="30" cy="13" r=".9"/><circle class="ind d3" cx="30" cy="18.8" r=".9"/><circle class="ind d3" cx="30" cy="24.6" r=".9"/><circle class="ind d3" cx="30" cy="30.4" r=".9"/><circle class="ind d3" cx="30" cy="36.2" r=".9"/><circle class="ind d3" cx="30" cy="42" r=".9"/><circle class="ind d3" cx="30" cy="47.8" r=".9"/><circle class="ind d3" cx="30" cy="53.6" r=".9"/><rect x="34" y="8" width="8" height="52" rx="1"/><path d="M35.4 13h2.6M35.4 18.8h2.6M35.4 24.6h2.6M35.4 30.4h2.6M35.4 36.2h2.6M35.4 42h2.6M35.4 47.8h2.6M35.4 53.6h2.6"/><circle class="ind d4" cx="40" cy="13" r=".9"/><circle class="ind d4" cx="40" cy="18.8" r=".9"/><circle class="ind d4" cx="40" cy="24.6" r=".9"/><circle class="ind d4" cx="40" cy="30.4" r=".9"/><circle class="ind d4" cx="40" cy="36.2" r=".9"/><circle class="ind d4" cx="40" cy="42" r=".9"/><circle class="ind d4" cx="40" cy="47.8" r=".9"/><circle class="ind d4" cx="40" cy="53.6" r=".9"/><rect x="44" y="8" width="8" height="52" rx="1"/><path d="M45.4 13h2.6M45.4 18.8h2.6M45.4 24.6h2.6M45.4 30.4h2.6M45.4 36.2h2.6M45.4 42h2.6M45.4 47.8h2.6M45.4 53.6h2.6"/><circle class="ind d5" cx="50" cy="13" r=".9"/><circle class="ind d5" cx="50" cy="18.8" r=".9"/><circle class="ind d5" cx="50" cy="24.6" r=".9"/><circle class="ind d5" cx="50" cy="30.4" r=".9"/><circle class="ind d5" cx="50" cy="36.2" r=".9"/><circle class="ind d5" cx="50" cy="42" r=".9"/><circle class="ind d5" cx="50" cy="47.8" r=".9"/><circle class="ind d5" cx="50" cy="53.6" r=".9"/><rect x="54" y="8" width="8" height="52" rx="1"/><path d="M55.4 13h2.6M55.4 18.8h2.6M55.4 24.6h2.6M55.4 30.4h2.6M55.4 36.2h2.6M55.4 42h2.6M55.4 47.8h2.6M55.4 53.6h2.6"/><circle class="ind d6" cx="60" cy="13" r=".9"/><circle class="ind d6" cx="60" cy="18.8" r=".9"/><circle class="ind d6" cx="60" cy="24.6" r=".9"/><circle class="ind d6" cx="60" cy="30.4" r=".9"/><circle class="ind d6" cx="60" cy="36.2" r=".9"/><circle class="ind d6" cx="60" cy="42" r=".9"/><circle class="ind d6" cx="60" cy="47.8" r=".9"/><circle class="ind d6" cx="60" cy="53.6" r=".9"/></svg>
+          <div class="node-t"><h3>Стойки</h3><p>690 серверов H200, сеть 400 Гбит/с, хранилище</p></div>
+          <span class="conn c-volt" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><path class="ln ln-h base" d="M0 50H100"/><path class="ln ln-v base" d="M50 0V100"/><path class="ln ln-h flow" d="M0 50H100"/><path class="ln ln-v flow" d="M50 0V100"/></svg><span class="cl mono">400&nbsp;Гбит/с</span></span>
+        </li>
+        <li class="node" style="--i:4">
+          <svg class="pg" viewBox="0 0 64 64" aria-hidden="true"><rect class="win" x="3" y="6" width="32" height="22" rx="2"/><path class="volt" d="M3 12h32"/><rect class="win" x="16" y="22" width="32" height="22" rx="2"/><path class="volt" d="M16 28h32"/><rect class="win" x="29" y="38" width="32" height="20" rx="2"/><path class="volt" d="M29 44h32"/><path d="M36 51h10"/></svg>
+          <div class="node-t"><h3>Клиенты</h3><p>Аренда серверов целиком или по часам. Личный кабинет и учёт энергии каждому</p></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div data-video-slot="section"></div>
+
+
+<section class="sec alt" id="money">
+  <div class="wrap two">
+    <div class="two-head">
+      <h2>85 % денег уходит на серверы</h2>
+      <p class="lead">Стройка, инженерия и подключение вместе стоят около 5,3 млрд ₽. Окупаемость решает оборудование и деньги на него, а не стройка и энергия.</p>
+      <p class="total"><span class="stat-v mono"><span class="u">≈ </span><span class="num" data-to="35" data-dec="0" style="--w:2">35</span><span class="u"> млрд ₽</span></span><span class="total-l">весь модуль без НДС</span></p>
+    </div>
+    <div class="two-body">
+      <div class="costbar" data-anim>
+        <div class="cb-track" aria-hidden="true"><span class="cb-seg cb-volt"></span><span class="cb-seg cb-heat"></span></div>
+        <div class="cb-labels">
+          <div class="cb-l cb-l-volt">
+            <p class="cb-pct mono"><i class="chip"></i><span class="num" data-to="85" data-dec="0" style="--w:2">85</span>&nbsp;%</p>
+            <p class="cb-v">30 млрд ₽</p>
+            <p class="small">серверы H200, сеть, хранилище, запчасти, доставка</p>
+          </div>
+          <div class="cb-l cb-l-heat">
+            <p class="cb-pct mono"><i class="chip"></i>15&nbsp;%</p>
+            <p class="cb-v">5,3 млрд ₽</p>
+            <p class="small">всё остальное: стройка, инженерия, подключение, запуск</p>
+          </div>
+        </div>
+      </div>
+      <details class="more" id="more-cost">
+        <summary class="btn btn-secondary"><span>Из чего 5,3 млрд ₽</span><svg class="chev" aria-hidden="true"><use href="#i-chevron-down"/></svg></summary>
+        <div class="more-body">
+          <div class="cb2-track" aria-hidden="true">
+            
+            <span class="cb2-seg" style="--w:2.7;--k:2"><b class="mono">2</b></span>
+            
+            <span class="cb2-seg" style="--w:1.2;--k:3"><b class="mono">3</b></span>
+            
+            <span class="cb2-seg" style="--w:.46;--k:4"><b class="mono">4</b></span>
+            
+            <span class="cb2-seg" style="--w:.34;--k:5"><b class="mono">5</b></span>
+            
+            <span class="cb2-seg" style="--w:.26;--k:6"><b class="mono">6</b></span>
+            
+            <span class="cb2-seg" style="--w:.25;--k:8"><b class="mono">8</b></span>
+            
+            <span class="cb2-seg" style="--w:.13;--k:7"><b class="mono">7</b></span>
+            
+          </div>
+          <ol class="cb2-list">
+            
+            <li style="--k:2"><span class="mono cb2-n">2</span><span class="mono cb2-v">2,7 млрд ₽</span><span class="cb2-t">инженерия: электрика 10 кВ, бесперебойное питание, охлаждение, безопасность</span></li>
+            
+            <li style="--k:3"><span class="mono cb2-n">3</span><span class="mono cb2-v">1,2 млрд ₽</span><span class="cb2-t">площадка, оболочка модулей, монтаж, ввод оптики</span></li>
+            
+            <li style="--k:4"><span class="mono cb2-n">4</span><span class="mono cb2-v">0,46 млрд ₽</span><span class="cb2-t">резерв 10 % на стройку</span></li>
+            
+            <li style="--k:5"><span class="mono cb2-n">5</span><span class="mono cb2-v">0,34 млрд ₽</span><span class="cb2-t">пусконаладка инженерии и серверов</span></li>
+            
+            <li style="--k:6"><span class="mono cb2-n">6</span><span class="mono cb2-v">0,26 млрд ₽</span><span class="cb2-t">предпроект, изыскания, проект, экспертиза</span></li>
+            
+            <li style="--k:8"><span class="mono cb2-n">8</span><span class="mono cb2-v">0,25 млрд ₽</span><span class="cb2-t">логистика, предзапуск, первые три месяца работы, наша работа</span></li>
+            
+            <li style="--k:7"><span class="mono cb2-n">7</span><span class="mono cb2-v">0,13 млрд ₽</span><span class="cb2-t">техприсоединение: ячейки на распредустройстве и ТУ</span></li>
+            
+          </ol>
+        </div>
+      </details>
+      <p class="insight">Энергия и зарплаты стоят примерно по 3 % выручки. Цена серверов ±20⁠–⁠30 % сдвигает результат на 4⁠–⁠6 млрд ₽. Энергия за 3 ₽ вместо 5,4 ₽ — всего на 0,4 млрд ₽.</p>
+      <p class="small soft">Ещё 7,9 млрд ₽ НДС замораживаются на 3⁠–⁠6 месяцев до возврата. Этот разрыв закрываем оборотным кредитом или лизингом заранее.</p>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="timeline">
+  <div class="wrap">
+    <div class="head8">
+      <h2>Первая нагрузка через 16 месяцев после решения</h2>
+      <p class="lead">Реальная вилка — от 14 до 20 месяцев. Дольше всего идёт техприсоединение, поэтому заявку подаём в первый же месяц.</p>
+    </div>
+    <div class="gantt" data-anim>
+      <div class="g-top">
+        <div class="g-before"><p class="mono g-b-l">До решения&nbsp;·&nbsp;М−3…М0</p><p class="small">До решения 2⁠–⁠3 месяца подготовки и около 50⁠–⁠80 млн ₽. За это время получаем ваши ответы, коммерческие предложения на серверы и инженерию и договариваемся с крупным клиентом.</p></div>
+        <div class="g-scale mono" aria-hidden="true">
+          
+          <span class="g-t t0" style="--m:0">М<b>0</b></span>
+          
+          <span class="g-t t2" style="--m:2">М<b>2</b></span>
+          
+          <span class="g-t t4" style="--m:4">М<b>4</b></span>
+          
+          <span class="g-t t6" style="--m:6">М<b>6</b></span>
+          
+          <span class="g-t t8" style="--m:8">М<b>8</b></span>
+          
+          <span class="g-t t10" style="--m:10">М<b>10</b></span>
+          
+          <span class="g-t t12" style="--m:12">М<b>12</b></span>
+          
+          <span class="g-t t14" style="--m:14">М<b>14</b></span>
+          
+          <span class="g-t t16" style="--m:16">М<b>16</b></span>
+          
+        </div>
+      </div>
+      <div class="g-body">
+      <div class="g-runwrap" aria-hidden="true"><i class="g-run"></i></div>
+      <ol class="g-rows">
+        
+        <li class="g-row c-h" style="--s:0;--e:0;--i:1">
+          <div class="g-head"><span class="g-m mono">М0</span><div><h3>Решение</h3><p class="small soft">Инвестиционное решение и заявка на техприсоединение</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-h" style="--s:0;--e:7;--i:2">
+          <div class="g-head"><span class="g-m mono">М0–М7</span><div><h3>ТУ и проект</h3><p class="small soft">Технические условия, проект и экспертиза</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-h" style="--s:1;--e:3;--i:3">
+          <div class="g-head"><span class="g-m mono">М1–М3</span><div><h3>Заказ длинных позиций</h3><p class="small soft">Аванс за серверы и за инженерию с долгим сроком изготовления</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-h" style="--s:5;--e:13;--i:4">
+          <div class="g-head"><span class="g-m mono">М5–М13</span><div><h3>Стройка</h3><p class="small soft">Площадка, фундаменты, монтаж электрики и охлаждения</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-v" style="--s:12;--e:15;--i:5">
+          <div class="g-head"><span class="g-m mono">М12–М15</span><div><h3>Поставка серверов</h3><p class="small soft">Прибытие и монтаж 690 серверов</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-v" style="--s:15;--e:16;--i:6">
+          <div class="g-head"><span class="g-m mono">М15–М16</span><div><h3>Пусконаладка</h3><p class="small soft">Прогон всего кластера под нагрузкой</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+        <li class="g-row c-v" style="--s:16;--e:16;--i:7">
+          <div class="g-head"><span class="g-m mono">М16</span><div><h3>Первая нагрузка</h3><p class="small soft">Первые клиенты. За три месяца выходим с 25 до 75 % загрузки</p></div></div>
+          <div class="g-track" aria-hidden="true"><span class="g-seg"></span></div>
+        </li>
+        
+      </ol>
+      </div>
+      <p class="risk small"><svg class="ico" aria-hidden="true"><use href="#i-alert-triangle"/></svg><span>Если поставка серверов или техприсоединение сдвигают запуск за 24-й месяц, проект пересматриваем.</span></p>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec alt" id="payback">
+  <div class="wrap">
+    <div class="head8">
+      <h2>Окупается, если крупный клиент подписан до стройки</h2>
+      <p class="lead">Считаем на 7 лет. Планка — 20 % годовых в рублях: ключевая ставка 14 % плюс риск проекта.</p>
+    </div>
+    <ul class="scen" data-anim>
+      
+      <li class="sc sc-ok reveal" style="--i:1;--v:92">
+        <h3>Крупный клиент на весь модуль</h3>
+        <p class="sc-t">Один клиент берёт все серверы на 5 лет, платит за заявленный объём и вносит предоплату.</p>
+        <div class="sc-nums">
+          <p><span class="mono sc-irr"><span class="num" data-to="23" data-dec="0" style="--w:2">23</span> %</span><span class="small soft">доходность в год</span></p>
+          <p><span class="mono sc-pb">4,8 года</span><span class="small soft">окупаемость</span></p>
+        </div>
+        <div class="bullet" aria-hidden="true"><span class="bl-fill"></span><span class="bl-plank"></span><span class="bl-lbl mono">20&nbsp;%</span><span class="bl-end mono">25&nbsp;%</span></div>
+        <p class="verdict"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Проходит планку</p>
+      </li>
+      
+      <li class="sc sc-n reveal" style="--i:2;--v:78.8">
+        <h3>Крупный клиент на 70 % и облако на остаток</h3>
+        <p class="sc-t">Большую часть берёт один клиент, остальное продаём по часам.</p>
+        <div class="sc-nums">
+          <p><span class="mono sc-irr"><span class="num" data-to="19.7" data-dec="1" style="--w:4">19,7</span> %</span><span class="small soft">доходность в год</span></p>
+          <p><span class="mono sc-pb">5,1 года</span><span class="small soft">окупаемость</span></p>
+        </div>
+        <div class="bullet" aria-hidden="true"><span class="bl-fill"></span><span class="bl-plank"></span><span class="bl-lbl mono">20&nbsp;%</span><span class="bl-end mono">25&nbsp;%</span></div>
+        <p class="verdict"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>На границе, чуть ниже планки</p>
+      </li>
+      
+      <li class="sc sc-n reveal" style="--i:3;--v:44">
+        <h3>Только облако</h3>
+        <p class="sc-t">Продаём часы без крупного клиента. Один такой модуль — около трети всего рынка аренды GPU в России.</p>
+        <div class="sc-nums">
+          <p><span class="mono sc-irr"><span class="num" data-to="11" data-dec="0" style="--w:2">11</span> %</span><span class="small soft">доходность в год</span></p>
+          <p><span class="mono sc-pb">6 лет</span><span class="small soft">окупаемость</span></p>
+        </div>
+        <div class="bullet" aria-hidden="true"><span class="bl-fill"></span><span class="bl-plank"></span><span class="bl-lbl mono">20&nbsp;%</span><span class="bl-end mono">25&nbsp;%</span></div>
+        <p class="verdict"><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Ниже ключевой ставки</p>
+      </li>
+      
+    </ul>
+    <div class="pb-foot">
+      <p class="conclusion">Проходит только первый сценарий. Поэтому строить свой парк серверов без подписанного крупного клиента не предлагаем.</p>
+      <div class="pb-side">
+        <p>Нижняя цена для такого клиента — 55 % рыночной, около 220 ₽ за час одного ускорителя.</p>
+        <p>Пиковая потребность в деньгах — около 31 млрд ₽ без НДС.</p>
+        <p class="soft">Запасной путь без своих серверов — сдать площадку под оборудование клиента. Он окупается от 22 тыс. ₽ за киловатт в месяц.</p>
+        <p class="small faint">Окупаемость простая, без учёта стоимости денег во времени. В конце седьмого года серверы учтены по остаточной стоимости.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec heat" id="energy">
+  <div class="wrap two">
+    <div class="two-head">
+      <h2>«3 рубля» за киловатт-час — цена на выходе со станции</h2>
+      <p class="lead">До ЦОД энергия доходит по 3,5⁠–⁠5,4 ₽: добавляются передача, потери и сбыт. В расчёте взято 4 ₽. Каждый рубль разницы — около 75 млн ₽ в год.</p>
+      <div class="pscale" data-anim aria-hidden="true">
+        <div class="ps-axis"></div>
+        <span class="ps-tick mono" style="--p:0">0</span><span class="ps-tick mono" style="--p:1">1</span><span class="ps-tick mono" style="--p:2">2</span><span class="ps-tick mono" style="--p:3">3</span><span class="ps-tick mono" style="--p:4">4</span><span class="ps-tick mono" style="--p:5">5</span><span class="ps-tick mono" style="--p:6">6</span>
+        <span class="ps-mark ps-station"><b></b><i class="mono">3&nbsp;₽ — на выходе со станции</i></span>
+        <span class="ps-range"></span><i class="ps-dc mono">до ЦОД</i>
+        <span class="ps-mark ps-model"><b></b><i class="mono">4&nbsp;₽ — в расчёте</i></span>
+      </div>
+      <p class="soft">ЦОД на 10 МВт покупает энергию на рознице, через гарантирующего поставщика или сбытовую компанию вашей группы. Плата за передачу остаётся, но по тарифу уровня напряжения станции.</p>
+    </div>
+    <div class="two-body">
+      <div class="gives" data-anim>
+        <h3>Что станция экономит проекту</h3>
+        <p class="gives-total mono">10⁠–⁠25 млн $ против стройки в чистом поле</p>
+        <ul>
+          
+          <li style="--i:1"><p>Ввод 10 кВ с распредустройства вместо своей подстанции: 5⁠–⁠7 млн $</p><span class="rng" aria-hidden="true"><i style="--a:5;--b:7"></i></span></li>
+          
+          <li style="--i:2"><p>Резерв от станции вместо дизелей на всю нагрузку: 3⁠–⁠9 млн $</p><span class="rng" aria-hidden="true"><i style="--a:3;--b:9"></i></span></li>
+          
+          <li style="--i:3"><p>Техническая вода и водоподготовка: 0,3⁠–⁠0,6 млн $</p><span class="rng" aria-hidden="true"><i style="--a:.3;--b:.6"></i></span></li>
+          
+          <li style="--i:4"><p>Свободные здания: 1⁠–⁠3 млн $</p><span class="rng" aria-hidden="true"><i style="--a:1;--b:3"></i></span></li>
+          
+        </ul>
+      </div>
+      <p class="info small soft"><svg class="ico" aria-hidden="true"><use href="#i-info"/></svg><span>Отдавать тепло ЦОД в теплосеть при жидкостном охлаждении невыгодно. Это можно рассмотреть после запуска.</span></p>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="questions">
+  <div class="wrap">
+    <div class="head8">
+      <h2>От вас — площадка на ТЭЦ и подключение электроэнергии</h2>
+      <p class="lead soft">Остальное закрываем мы: проект, закупку, поставку из Китая, доставку и таможню, стройку, запуск и эксплуатацию.</p>
+    </div>
+    <div class="duty" data-anim>
+      <div class="duty-you"><p class="mono tag">На вас</p><p>Площадка на ТЭЦ и подключение электроэнергии</p></div>
+      <div class="duty-us"><p class="mono tag">На нас</p><p>Проект, закупку, поставку из Китая, доставку и таможню, стройку, запуск и эксплуатацию.</p></div>
+    </div>
+    <div class="q-grid">
+      <div class="q-left">
+        <p class="q-intro">Чтобы посчитать вашу площадку, нужны три ответа. Сейчас расчёт стоит на допущениях, ваши ответы превращают их в цифры.</p>
+        <p class="anchor">И главное для окупаемости — крупный клиент на весь модуль. Если он уже есть на примете, скажите. Если нет, ищем вместе среди тех, кому мощность нужна раньше, чем они построят свою.</p>
+        <p class="soft q-fin">Источник финансирования обсуждаем на встрече: свои средства, партнёр или совместное предприятие.</p>
+        <div class="btns">
+          <a class="btn btn-primary" id="b8-cta" href="mailto:hello@demda.pro?subject=%D0%9F%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D0%BA%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8F%2010%20%D0%9C%D0%92%D1%82%3A%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%82%D1%80%D0%B8%20%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%B0&amp;body=%D0%98%D0%B7%20%D1%87%D0%B5%D0%B3%D0%BE%20%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D1%82%20%C2%AB3%20%D1%80%D1%83%D0%B1%D0%BB%D1%8F%C2%BB%3F%0A%0A%0A%D0%9A%D0%B0%D0%BA%D0%B0%D1%8F%20%D1%83%20%D0%B2%D0%B0%D1%81%20%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D1%8F%3F%0A%0A%0A%D0%9A%D0%B0%D0%BA%20%D1%81%D1%82%D0%B0%D0%BD%D1%86%D0%B8%D1%8F%20%D0%BF%D0%BE%D0%B4%D0%BA%D0%BB%D1%8E%D1%87%D0%B5%D0%BD%D0%B0%20%D0%BA%20%D1%81%D0%B5%D1%82%D0%B8%3F%0A%0A">Ответить на три вопроса</a>
+          <a class="btn btn-secondary" href="https://t.me/demda" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Написать в Telegram</a>
+        </div>
+      </div>
+      <ol class="q-list">
+        
+        <li class="reveal" style="--i:1"><span class="q-n mono">01</span><div><h3>Из чего состоят «3 рубля»?</h3><p class="soft">Это цена выработки или отпуска с шин? Входят ли мощность, передача, сбыт и НДС? Как цена будет меняться 7 лет?</p></div></li>
+        
+        <li class="reveal" style="--i:2"><span class="q-n mono">02</span><div><h3>Какая у вас станция?</h3><p class="soft">Есть ли свободные ячейки на распредустройстве и может ли блок работать в острове? Гарантирована ли подача 10 МВт круглосуточно, включая ремонты и летний останов?</p></div></li>
+        
+        <li class="reveal" style="--i:3"><span class="q-n mono">03</span><div><h3>Как станция подключена к сети?</h3><p class="soft">Через какую сетевую организацию и на каком напряжении. От этого зависят тариф на передачу и срок техприсоединения.</p></div></li>
+        
+      </ol>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec alt0" id="scope">
+  <div class="wrap">
+    <div class="head8"><h2>Ведём проект от расчёта до первых клиентов</h2></div>
+    <ul class="cards cards-4">
+      
+      <li class="card card-flow reveal" style="--i:1">
+        <i class="flowtop" aria-hidden="true"></i>
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-clipboard-list"/></svg></span>
+        <h3>Проектный офис</h3>
+        <p>План, бюджет и контроль подрядчиков. Отчитываемся вам и банку.</p>
+      </li>
+      
+      <li class="card card-flow reveal" style="--i:2">
+        <i class="flowtop" aria-hidden="true"></i>
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-ship"/></svg></span>
+        <h3>Закупка, доставка и импорт</h3>
+        <p>Заказываем серверы и инженерию, в том числе в Китае. Сами везём, проходим таможню и принимаем оборудование на площадке.</p>
+      </li>
+      
+      <li class="card card-flow reveal" style="--i:3">
+        <i class="flowtop" aria-hidden="true"></i>
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-layout-dashboard"/></svg></span>
+        <h3>ИТ-платформа и кабинет клиента</h3>
+        <p>Счета за часы и энергию, API для клиентов, мониторинг площадки. Энергию считаем каждому клиенту отдельно.</p>
+      </li>
+      
+      <li class="card card-flow reveal" style="--i:4">
+        <i class="flowtop" aria-hidden="true"></i>
+        <span class="ico-box"><svg class="ico" aria-hidden="true"><use href="#i-gauge"/></svg></span>
+        <h3>Запуск и эксплуатация</h3>
+        <p>Регламенты, приёмка, прогон под нагрузкой и вывод на клиентов. Штатное расписание, сервисные договоры, регламенты смен.</p>
+      </li>
+      
+    </ul>
+    <p class="note-ok small soft"><svg class="ico" aria-hidden="true"><use href="#i-check-circle"/></svg><span>Роли, которые берём на себя, убраны из штата проекта. Двойной оплаты нет.</span></p>
+  </div>
+</section>
+
+
+<section class="sec alt" id="terms">
+  <div class="wrap">
+    <div class="head8"><h2>Фиксированная оплата по вехам и доля в результате</h2></div>
+    <div class="tiles" data-anim>
+      <div class="tile">
+        <p class="stat-v mono t-fix"><span class="num" data-to="43" data-dec="0" style="--w:2">43</span>⁠–⁠<span class="num" data-to="50" data-dec="0" style="--w:2">50</span> млн ₽</p>
+        <p class="soft">за всю работу до запуска, меньше 1 % стоимости стройки</p>
+        <div class="stages" aria-hidden="true">
+          <span class="stg" style="--w:15;--i:1"><b class="mono">15&nbsp;%</b></span><span class="stg" style="--w:35;--i:2"><b class="mono">35&nbsp;%</b></span><span class="stg" style="--w:30;--i:3"><b class="mono">30&nbsp;%</b></span><span class="stg" style="--w:20;--i:4"><b class="mono">20&nbsp;%</b></span>
+        </div>
+        <p class="small soft">Платите по вехам: предпроект — 15 %, проект и закупка — 35 %, поставка и стройка — 30 %, запуск — 20 %.</p>
+      </div>
+      <div class="tile">
+        <p class="stat-v mono t-sup">около 0,9 млн ₽ в месяц</p>
+        <p class="soft">поддержка ИТ-платформы после запуска</p>
+      </div>
+      <div class="tile">
+        <p class="stat-v mono"><span class="num" data-to="3" data-dec="0" style="--w:1">3</span> %</p>
+        <p class="soft">доля в проекте без вложений денег</p>
+        <p class="small soft">Стоит от нуля, если проект не окупится, до 760 млн ₽ из потока за 7 лет в сценарии с крупным клиентом.</p>
+      </div>
+    </div>
+    <div class="t-foot">
+      <p class="t-why">Фикс оплачивает нашу работу. Доля связывает наш интерес с тем, что решает результат: цена серверов, договор с клиентом и срок запуска.</p>
+      <div class="times" data-anim>
+        <div class="sq" aria-hidden="true"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i><i class="s5"></i></div>
+        <p>Второй модуль на той же площадке строится на 10⁠–⁠15 % дешевле, а штат растёт медленнее мощности. Лучшая экономика — от двух до пяти модулей, если у каждого свой крупный клиент.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="sec" id="models">
+  <div class="wrap">
+    <div class="head8">
+      <h2>Готовы рассматривать разные варианты</h2>
+      <p class="lead">Форму работы выбираем под вашу площадку и под то, кто финансирует проект.</p>
+    </div>
+    <ul class="cards cards-4 models">
+      
+      <li class="card model reveal" style="--i:1">
+        <div class="m-top"><span class="mono faint">Вариант&nbsp;1</span><svg class="ico" aria-hidden="true"><use href="#i-hard-hat"/></svg></div>
+        <h3>Генподряд с фиксированной ценой</h3>
+        <p class="soft m-text">Берём модуль целиком: проект, закупку, поставку, стройку и запуск. Вы получаете работающий ЦОД по цене из договора.</p>
+        
+        <i class="m-sep" aria-hidden="true"></i>
+        <p class="m-price"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Цену фиксируем после предпроекта</span></p>
+      </li>
+      
+      <li class="card model reveal" style="--i:2">
+        <div class="m-top"><span class="mono faint">Вариант&nbsp;2</span><svg class="ico" aria-hidden="true"><use href="#i-compass"/></svg></div>
+        <h3>Управляющий партнёр</h3>
+        <p class="soft m-text">Ведём проект от вашего имени, подрядчиков и поставщиков нанимает проектная компания.</p>
+        <p class="m-extra"><span class="badge-base mono">Базовый, расчёт выше</span><a class="tlink" href="#terms">Подробно<svg class="ico" aria-hidden="true"><use href="#i-arrow-up"/></svg></a></p>
+        <i class="m-sep" aria-hidden="true"></i>
+        <p class="m-price"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>43⁠–⁠50 млн ₽ по вехам и доля 3 %</span></p>
+      </li>
+      
+      <li class="card model reveal" style="--i:3">
+        <div class="m-top"><span class="mono faint">Вариант&nbsp;3</span><svg class="ico" aria-hidden="true"><use href="#i-handshake"/></svg></div>
+        <h3>Совместное предприятие</h3>
+        <p class="soft m-text">Площадка и энергия ваши. Проект, закупка, запуск и эксплуатация наши. Доли распределяем по вкладу.</p>
+        
+        <i class="m-sep" aria-hidden="true"></i>
+        <p class="m-price"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Доли считаем вместе после предпроекта</span></p>
+      </li>
+      
+      <li class="card model reveal" style="--i:4">
+        <div class="m-top"><span class="mono faint">Вариант&nbsp;4</span><svg class="ico" aria-hidden="true"><use href="#i-key-round"/></svg></div>
+        <h3>Построить и передать</h3>
+        <p class="soft m-text">Строим и запускаем модуль, передаём его вам вместе со штатным расписанием и регламентами. Дальше сопровождаем по договору.</p>
+        
+        <i class="m-sep" aria-hidden="true"></i>
+        <p class="m-price"><svg class="ico" aria-hidden="true"><use href="#i-wallet"/></svg><span>Поддержка платформы — около 0,9 млн ₽ в месяц</span></p>
+      </li>
+      
+    </ul>
+    <p class="small soft models-note">Вариант можно сменить на этапе предпроекта, когда будут ответы площадки и коммерческие предложения.</p>
+  </div>
+</section>
+
+
+<section class="sec grid-bg contact" id="contact">
+  <div class="wrap two">
+    <div class="two-head" data-anim>
+      <h2>Обсудим вашу площадку</h2>
+      <i class="current" aria-hidden="true"></i>
+      <p class="lead">Пришлите ответы на три вопроса или просто напишите, с чего хотите начать.</p>
+    </div>
+    <div class="two-body c-btns">
+      <a class="btn btn-primary btn-lg" href="https://t.me/demda" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-send"/></svg>Telegram&nbsp;@demda</a>
+      <a class="btn btn-secondary btn-lg" href="mailto:hello@demda.pro?subject=%D0%9F%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D0%BA%D0%B0%20%D0%B4%D0%BB%D1%8F%20%D0%BC%D0%BE%D0%B4%D1%83%D0%BB%D1%8F%2010%20%D0%9C%D0%92%D1%82%3A%20%D0%BE%D1%82%D0%B2%D0%B5%D1%82%D1%8B%20%D0%BD%D0%B0%20%D1%82%D1%80%D0%B8%20%D0%B2%D0%BE%D0%BF%D1%80%D0%BE%D1%81%D0%B0"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg>hello@demda.pro</a>
+      <p class="small faint note-clock"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg><span>Отвечаем в течение рабочего дня.</span></p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot"><div class="wrap"><a href="https://demda.pro/">demda.pro</a></div></footer>
+
+
+<template id="tpl-video-link">
+  <button class="vlink" type="button" data-video-open aria-label="Смотреть видео, 1 минута 50 секунд"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg><span>Смотреть, 1:50</span></button>
+</template>
+<template id="tpl-video-section">
+  <section class="sec" id="video">
+    <div class="wrap two">
+      <div class="two-head"><h2>Как модуль появляется на вашей площадке</h2><p class="lead">От заказа на заводе до первых клиентов. Кадры иллюстративные, цифры те же, что на странице.</p></div>
+      <div class="two-body">
+        <button class="poster" type="button" data-video-open aria-label="Смотреть видео, 1 минута 50 секунд">
+          <picture><source type="image/avif" srcset="video-poster-960.avif 960w, video-poster-1920.avif 1920w" sizes="(min-width: 1024px) 820px, 100vw"><source type="image/webp" srcset="video-poster-960.webp 960w, video-poster-1920.webp 1920w" sizes="(min-width: 1024px) 820px, 100vw"><img src="video-poster-960.webp" width="960" height="540" alt="" loading="lazy" decoding="async"></picture>
+          <span class="play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+          <span class="badge mono">Иллюстрация</span>
+        </button>
+        <p class="small faint">1:50 · со звуком и субтитрами</p>
+      </div>
+    </div>
+  </section>
+</template>
+<template id="tpl-video-dialog">
+  <dialog class="vdlg" id="vdlg" aria-label="Как модуль появляется на вашей площадке">
+    <button class="vclose" type="button" data-video-close aria-label="Закрыть"><svg class="ico" aria-hidden="true"><use href="#i-x"/></svg></button>
+    <div class="vbox"></div>
+    <p class="small faint vhint">Удобнее смотреть горизонтально</p>
+    <p class="verr" hidden><span>Видео не загрузилось. Обновите страницу или напишите нам, пришлём ссылку.</span> <button class="btn btn-secondary" type="button" data-video-retry>Повторить</button></p>
+  </dialog>
+</template>
+
+<script src="ai-dc.js" defer></script>
+</body>
+</html>
