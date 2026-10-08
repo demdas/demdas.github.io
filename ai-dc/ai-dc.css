@@ -328,9 +328,10 @@ h3 { font-size: var(--fs-h3); line-height: 1.3; font-weight: 600; }
 .g-track { position: relative; height: 6px; background: var(--line); border-radius: 3px; }
 .g-seg { position: absolute; left: calc(var(--s) / 16 * 100%); width: calc((var(--e) - var(--s)) / 16 * 100%); top: 0; bottom: 0; border-radius: 3px; background: var(--heat); transform-origin: 0 50%; }
 .c-v .g-seg { background: var(--volt); }
-.g-row:first-child .g-seg, .g-row:last-child .g-seg { width: 10px; height: 10px; top: 50%; translate: -50% -50%; rotate: 45deg; border-radius: 2px; }
-.g-row:last-child .g-seg { background: var(--volt); }
+.g-pt .g-seg { width: 10px; height: 10px; top: 50%; translate: -50% -50%; rotate: 45deg; border-radius: 2px; }
+.g-row.c-v.g-pt .g-seg { background: var(--volt); }
 .g-row.c-gate { background: var(--volt-soft); border-radius: var(--r); padding-inline: 12px; margin-inline: -12px; }
+.g-row.c-gate + .g-row { border-top-color: transparent; }
 .g-row.c-gate .g-seg { background: var(--volt); }
 .g-row.c-gate h3::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; background: var(--volt); transform: rotate(45deg); vertical-align: 2px; }
 .risk { display: flex; gap: 12px; margin-top: 24px; align-items: flex-start; color: var(--soft); }
@@ -346,7 +347,7 @@ h3 { font-size: var(--fs-h3); line-height: 1.3; font-weight: 600; }
   .g-row + .g-row { border-top: 1px solid var(--line); }
   .g-track { height: 12px; background: transparent; border-radius: 0; }
   .g-seg { border-radius: var(--r-s); }
-  .g-row:first-child .g-seg, .g-row:last-child .g-seg { width: 14px; height: 14px; }
+  .g-pt .g-seg { width: 14px; height: 14px; }
   .g-runwrap { display: block; position: absolute; left: calc(var(--lab) + 24px); right: 0; top: 0; bottom: 0; container-type: inline-size; pointer-events: none; z-index: 2; }
   .g-run { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--ink); opacity: 0; }
 }
@@ -478,6 +479,14 @@ h3 { font-size: var(--fs-h3); line-height: 1.3; font-weight: 600; }
 .facts .card { grid-template-columns: 40px 1fr; gap: 16px; align-items: start; }
 .facts .card p { color: var(--ink); }
 .honest { margin: 0 0 16px; }
+
+/* ---------- блок 5а. Этап 0 ---------- */
+.team { grid-template-columns: 40px 1fr; gap: 16px; align-items: start; margin-bottom: 24px; }
+.team p { color: var(--ink); }
+.s0-p { margin-bottom: 16px; }
+.s0-stop { padding-left: 12px; border-left: 3px solid var(--heat); }
+.s0-price { margin-top: 24px; padding: 20px; background: var(--card); border: 1px solid var(--line); border-radius: var(--r); display: grid; gap: 16px; }
+.s0-price .stages { margin: 0; }
 #about .two-head .small { margin-top: 24px; }
 
 /* ---------- блок 11а. Риски ---------- */
@@ -577,8 +586,8 @@ h3 { font-size: var(--fs-h3); line-height: 1.3; font-weight: 600; }
   .js .g-seg { scale: 0 1; }
   .js .gantt.in .g-seg { scale: 1; transition: scale var(--sd, 300ms) var(--ease-out) var(--dl, 0ms); }
   .js .g-row { --dl: calc(var(--i) * var(--stagger)); --sd: 500ms; }
-  .js .g-row:first-child .g-seg, .js .g-row:last-child .g-seg { scale: 1; opacity: 0; }
-  .js .gantt.in .g-row:first-child .g-seg, .js .gantt.in .g-row:last-child .g-seg { opacity: 1; transition: opacity 240ms linear var(--dl); }
+  .js .g-pt .g-seg { scale: 1; opacity: 0; }
+  .js .gantt.in .g-pt .g-seg { opacity: 1; transition: opacity 240ms linear var(--dl); }
   .js .gantt.in .g-row:last-child .g-seg { animation: flare 400ms var(--ease-out) calc(var(--dl) + 300ms) 1; }
   @media (min-width: 1024px) {
     .js .g-row { --dl: calc(var(--s) / 16 * 2400ms); --sd: max(300ms, calc((var(--e) - var(--s)) * 150ms)); }
